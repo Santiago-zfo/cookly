@@ -1,69 +1,91 @@
-# 🍳 Cookly
+🍳 Cookly
 
-Cookly es una aplicación web desarrollada en **PHP** y **MySQL** que permite a los usuarios gestionar recetas de cocina de una manera sencilla, organizada y segura. La plataforma ofrece funciones para registrar usuarios, iniciar sesión y administrar recetas con sus respectivas categorías e ingredientes.
+Cookly es una aplicación web desarrollada en PHP, MySQL, HTML, CSS y JavaScript, diseñada para administrar recetas de cocina de forma sencilla e intuitiva. La plataforma permite a los usuarios registrarse, iniciar sesión y gestionar sus recetas, categorías e ingredientes.
 
-El proyecto fue desarrollado aplicando el patrón de arquitectura **MVC (Modelo - Vista - Controlador)** y utilizando **Programación Orientada a Objetos (POO)** para mantener un código organizado, reutilizable y fácil de mantener.
+El proyecto está organizado mediante archivos separados por funcionalidades, facilitando el mantenimiento del código y la reutilización de funciones comunes.
 
-## 🚀 Funcionalidades
+🚀 Funcionalidades
 
-- Registro de nuevos usuarios.
-- Inicio y cierre de sesión.
-- Creación de recetas.
-- Edición de recetas existentes.
-- Eliminación de recetas.
-- Visualización del detalle de cada receta.
-- Gestión de categorías.
-- Gestión de ingredientes.
-- Almacenamiento seguro de la información mediante MySQL y PDO.
+Registro de usuarios.
 
-## 🛠️ Tecnologías utilizadas
+Inicio y cierre de sesión.
 
-- PHP
-- MySQL
-- HTML5
-- CSS3
-- JavaScript
-- Docker
-- PDO
-- Programación Orientada a Objetos (POO)
-- Arquitectura MVC
+Gestión de perfiles de usuario.
 
-## 📂 Estructura del proyecto
+Creación de recetas.
 
-```text
+Edición de recetas.
+
+Eliminación de recetas.
+
+Visualización del detalle de las recetas.
+
+Administración de categorías.
+
+Administración de ingredientes.
+
+Validación de usuarios mediante sesiones.
+
+🛠️ Tecnologías utilizadas
+
+PHP
+
+MySQL
+
+HTML5
+
+CSS3
+
+JavaScript
+
+Docker
+
+PDO
+
+📂 Estructura del proyecto
+
 Cookly/
 │
 ├── config/
-├── controllers/
-├── models/
+│   └── database.php
+│
 ├── includes/
+│   ├── auth.php
+│   ├── funciones_recetas.php
+│   ├── funciones_usuarios.php
+│   ├── header.php
+│   └── footer.php
+│
 ├── public/
 │   ├── css/
 │   ├── js/
 │   └── images/
-├── views/
-└── index.php
-```
+│
+├── index.php
+├── Login.php
+├── Logout.php
+├── registro.php
+├── perfil.php
+└── ...
 
-## ⚙️ Instalación
+⚙️ Instalación
 
-1. Clonar el repositorio.
-2. Crear la base de datos `cookly`.
-3. Importar el archivo SQL del proyecto.
-4. Configurar la conexión a la base de datos en `config/database.php`.
-5. Ejecutar el servidor web o los contenedores Docker.
-6. Acceder al proyecto desde el navegador.
+Clonar el repositorio.
 
-## 🔒 Seguridad
+Crear la base de datos cookly.
 
-Cookly utiliza **PDO** con consultas preparadas para reducir el riesgo de ataques de SQL Injection y mejorar la seguridad en el acceso a la base de datos. Además, implementa sesiones para la autenticación y gestión de usuarios.
+Importar el archivo SQL del proyecto.
 
-## 🎯 Objetivo del proyecto
+Configurar la conexión en config/database.php.
 
-El propósito de Cookly es ofrecer una plataforma donde los usuarios puedan compartir y administrar recetas de cocina de forma práctica, mientras se aplican buenas prácticas de desarrollo web como el uso de MVC, Programación Orientada a Objetos, separación de responsabilidades y acceso seguro a bases de datos.
+Iniciar el servidor web o los contenedores Docker.
 
-## 👨‍💻 Autor
+Acceder a la aplicación desde el navegador.
 
-**Andrés Felipe Pabón Ardila**
+🔒 Seguridad
 
-Proyecto desarrollado como parte del proceso de formación en **Análisis y Desarrollo de Software (SENA)**.
+El proyecto utiliza PDO y consultas preparadas para acceder a la base de datos, ayudando a prevenir ataques de SQL Injection. Además, implementa sesiones para controlar el acceso de los usuarios autenticados.
+
+🎯 Objetivo
+
+Cookly busca ofrecer una plataforma donde los usuarios puedan administrar recetas de cocina de forma práctica, aplicando buenas prácticas de desarrollo web y organización del código mediante funciones reutilizables y una estructura modular.
