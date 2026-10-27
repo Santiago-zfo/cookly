@@ -55,15 +55,6 @@ Cookly/
 └── ...
 ```
 
-## ⚙️ Instalación
-
-1. Clonar el repositorio.
-2. Crear la base de datos **cookly**.
-3. Importar el archivo SQL del proyecto.
-4. Configurar la conexión en `config/database.php`.
-5. Iniciar el servidor web o los contenedores Docker.
-6. Acceder a la aplicación desde el navegador.
-
 ## 🔒 Seguridad
 
 El proyecto utiliza **PDO** y consultas preparadas para acceder a la base de datos, ayudando a prevenir ataques de SQL Injection. Además, implementa sesiones para controlar el acceso de los usuarios autenticados.
