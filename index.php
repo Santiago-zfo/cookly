@@ -31,7 +31,9 @@ require_once __DIR__ . '/includes/header.php';
                     <div class="recipe-body">
                         <div class="recipe-topline">
                             <span class="pill"><?= htmlspecialchars($r['categoria']) ?></span>
-                            <span class="rating"><?= htmlspecialchars($r['estado']) ?></span>
+                            <span class="rating" style="color: <?= $r['estado'] === 'Aceptado' ? 'var(--success)' : ($r['estado'] === 'Rechazado' ? 'var(--error)' : '#F59E0B') ?>;">
+                                <?= htmlspecialchars($r['estado']) ?>
+                            </span>
                         </div>
                         <h4><?= htmlspecialchars($r['titulo']) ?></h4>
                         <p><?= htmlspecialchars(mb_strimwidth($r['descripcion'] ?? '', 0, 80, '…')) ?></p>

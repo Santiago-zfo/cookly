@@ -7,7 +7,6 @@ requerirLogin();
 $id = (int) ($_GET['id'] ?? 0);
 $receta = obtener_receta($id);
 
-// Verificar que la receta exista y pertenezca al usuario
 if (!$receta || $receta['id_usuario'] != $_SESSION['id_usuario']) {
     header('Location: index.php'); 
     exit;
@@ -61,9 +60,11 @@ require_once __DIR__ . '/includes/header.php';
                     <?php endforeach; ?>
                 </select>
             </label>
+            
             <label>Tiempo (min)
-                <input type="number" name="tiempo_preparacion" value="<?= $receta['tiempo_preparacion'] ?>" required>
+                <input type="number" name="tiempo_preparacion" min="1" value="<?= $receta['tiempo_preparacion'] ?>" required>
             </label>
+            
             <label>Dificultad
                 <select name="dificultad">
                     <option value="Fácil" <?= $receta['dificultad'] == 'Fácil' ? 'selected' : '' ?>>Fácil</option>
@@ -71,14 +72,14 @@ require_once __DIR__ . '/includes/header.php';
                     <option value="Difícil" <?= $receta['dificultad'] == 'Difícil' ? 'selected' : '' ?>>Difícil</option>
                 </select>
             </label>
+            
             <label>Porciones
-                <input type="number" name="porciones" value="<?= $receta['porciones'] ?>" required>
+                <input type="number" name="porciones" min="1" value="<?= $receta['porciones'] ?>" required>
             </label>
             
             <label class="full-width">
                 Imagen (URL o Archivo)
                 <div style="background: var(--bg-color); padding: 1rem; border-radius: var(--radius-md); display: flex; gap: 1rem; flex-direction: column;">
-                    <!-- El ?? '' evita el error si la imagen no existe -->
                     <input type="url" name="imagen_url" value="<?= htmlspecialchars($receta['imagen_url'] ?? '') ?>" placeholder="https://...">
                     <small style="color: var(--text-muted);">Sube un archivo si quieres reemplazar la imagen actual:</small>
                     <input type="file" name="imagen_file" accept="image/*">
@@ -111,10 +112,24 @@ require_once __DIR__ . '/includes/header.php';
                         <input type="number" name="ing_cantidad[]" value="<?= $ing['cantidad'] ?>" step="0.01">
                         <select name="ing_unidad[]">
                             <option value="gramos" <?= $ing['unidad_medida'] == 'gramos' ? 'selected' : '' ?>>gramos</option>
-                            <option value="unidad" <?= $ing['unidad_medida'] == 'unidad' ? 'selected' : '' ?>>unidad</option>
+                            <option value="kilogramos" <?= $ing['unidad_medida'] == 'kilogramos' ? 'selected' : '' ?>>kilogramos</option>
+                            <option value="libras" <?= $ing['unidad_medida'] == 'libras' ? 'selected' : '' ?>>libras</option>
+                            <option value="onzas" <?= $ing['unidad_medida'] == 'onzas' ? 'selected' : '' ?>>onzas</option>
                             <option value="mililitros" <?= $ing['unidad_medida'] == 'mililitros' ? 'selected' : '' ?>>mililitros</option>
+                            <option value="litros" <?= $ing['unidad_medida'] == 'litros' ? 'selected' : '' ?>>litros</option>
                             <option value="tazas" <?= $ing['unidad_medida'] == 'tazas' ? 'selected' : '' ?>>tazas</option>
                             <option value="cucharadas" <?= $ing['unidad_medida'] == 'cucharadas' ? 'selected' : '' ?>>cucharadas</option>
+                            <option value="cucharaditas" <?= $ing['unidad_medida'] == 'cucharaditas' ? 'selected' : '' ?>>cucharaditas</option>
+                            <option value="pizcas" <?= $ing['unidad_medida'] == 'pizcas' ? 'selected' : '' ?>>pizcas</option>
+                            <option value="unidad" <?= $ing['unidad_medida'] == 'unidad' ? 'selected' : '' ?>>unidad</option>
+                            <option value="unidades" <?= $ing['unidad_medida'] == 'unidades' ? 'selected' : '' ?>>unidades</option>
+                            <option value="dientes" <?= $ing['unidad_medida'] == 'dientes' ? 'selected' : '' ?>>dientes</option>
+                            <option value="atados" <?= $ing['unidad_medida'] == 'atados' ? 'selected' : '' ?>>atados</option>
+                            <option value="rodajas" <?= $ing['unidad_medida'] == 'rodajas' ? 'selected' : '' ?>>rodajas</option>
+                            <option value="hojas" <?= $ing['unidad_medida'] == 'hojas' ? 'selected' : '' ?>>hojas</option>
+                            <option value="latas" <?= $ing['unidad_medida'] == 'latas' ? 'selected' : '' ?>>latas</option>
+                            <option value="sobres" <?= $ing['unidad_medida'] == 'sobres' ? 'selected' : '' ?>>sobres</option>
+                            <option value="ramas" <?= $ing['unidad_medida'] == 'ramas' ? 'selected' : '' ?>>ramas</option>
                         </select>
                     </div>
                 <?php endforeach; ?>

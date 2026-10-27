@@ -8,8 +8,14 @@ $id = (int) ($_GET['id'] ?? 0);
 $r = obtener_receta($id);
 if (!$r) { header('Location: recetas.php'); exit; }
 
-$ings = obtener_ingredientes_receta($id);
+// Seguridad: Si la receta NO está aceptada, solo el dueño o el admin pueden verla
 $esMia = ($r['id_usuario'] == $_SESSION['id_usuario']);
+if ($r['estado'] !== 'Aceptado' && !$esMia && !esAdmin()) {
+    header('Location: recetas.php'); 
+    exit;
+}
+
+$ings = obtener_ingredientes_receta($id);
 $titulo = $r['titulo'];
 
 require_once __DIR__ . '/includes/header.php';
@@ -20,13 +26,15 @@ require_once __DIR__ . '/includes/header.php';
             <div class="detail-meta">
                 <span class="pill"><?= htmlspecialchars($r['categoria']) ?></span>
                 <span class="difficulty-tag"><?= htmlspecialchars($r['dificultad']) ?></span>
+                <?php if ($r['estado'] !== 'Aceptado'): ?>
+                    <span class="difficulty-tag" style="background: #FEF3C7; color: #92400E;"><?= $r['estado'] ?></span>
+                <?php endif; ?>
             </div>
             <h2><?= htmlspecialchars($r['titulo']) ?></h2>
         </div>
         <a href="index.php" class="logout-btn">← Volver</a>
     </div>
     
-    <!-- AQUI ESTA LA CORRECCION (Usando !empty) -->
     <?php if (!empty($r['imagen_url'])): ?>
         <img src="<?= htmlspecialchars($r['imagen_url']) ?>" style="width: 100%; max-height: 400px; object-fit: cover; border-radius: 16px; margin-bottom: 2rem;">
     <?php endif; ?>
@@ -49,10 +57,12 @@ require_once __DIR__ . '/includes/header.php';
         </div>
     </div>
     
-    <?php if ($esMia): ?>
+    <?php if ($esMia || esAdmin()): ?>
         <div class="acciones" style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
-            <a href="receta_editar.php?id=<?= $id ?>" class="submit-btn">Editar</a>
-            <a href="receta_eliminar.php?id=<?= $id ?>" class="logout-btn" style="color: var(--error); border-color: var(--error);" data-confirm="¿Seguro que quieres eliminar esta receta?">Eliminar</a>
+            <?php if ($esMia): ?>
+                <a href="receta_editar.php?id=<?= $id ?>" class="submit-btn">Editar</a>
+                <a href="receta_eliminar.php?id=<?= $id ?>" class="logout-btn" style="color: var(--error); border-color: var(--error);" data-confirm="¿Seguro que quieres eliminar esta receta?">Eliminar</a>
+            <?php endif; ?>
         </div>
     <?php endif; ?>
 </section>

@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php if ($error): ?><p class="estado error"><?= htmlspecialchars($error) ?></p><?php endif; ?>
         <?php if ($exito): ?><p class="estado exito"><?= htmlspecialchars($exito) ?></p><?php endif; ?>
         <form method="POST">
-            <div class="campo"><label>Nombre</label><input type="text" name="usuario" required></div>
+            <div class="campo"><label>Nombre Completo</label><input type="text" name="usuario" required></div>
             <div class="campo"><label>Correo</label><input type="email" name="correo" required></div>
             <div class="campo"><label>Contraseña</label><input type="password" name="clave" required></div>
             <div class="campo"><label>Confirmar Contraseña</label><input type="password" name="confirmar" required></div>

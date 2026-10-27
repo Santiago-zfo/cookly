@@ -55,9 +55,11 @@ require_once __DIR__ . '/includes/header.php';
                     <?php endforeach; ?>
                 </select>
             </label>
+            
             <label>Tiempo (min)
-                <input type="number" name="tiempo_preparacion" required>
+                <input type="number" name="tiempo_preparacion" min="1" required>
             </label>
+            
             <label>Dificultad
                 <select name="dificultad">
                     <option value="Fácil">Fácil</option>
@@ -65,9 +67,11 @@ require_once __DIR__ . '/includes/header.php';
                     <option value="Difícil">Difícil</option>
                 </select>
             </label>
+            
             <label>Porciones
-                <input type="number" name="porciones" value="1" required>
+                <input type="number" name="porciones" min="1" value="1" required>
             </label>
+            
             <label class="full-width">
                 Imagen (URL o Archivo)
                 <div style="background: var(--bg-color); padding: 1rem; border-radius: var(--radius-md); display: flex; gap: 1rem; flex-direction: column;">
@@ -87,13 +91,27 @@ require_once __DIR__ . '/includes/header.php';
         <div id="ings">
             <div class="ing-row">
                 <input type="text" name="ing_nombre[]" placeholder="Ingrediente">
-                <input type="number" name="ing_cantidad[]" placeholder="Cant." step="0.01">
+                <input type="number" name="ing_cantidad[]" placeholder="Cantidad" step="0.01">
                 <select name="ing_unidad[]">
                     <option value="gramos">gramos</option>
-                    <option value="unidad">unidad</option>
+                    <option value="kilogramos">kilogramos</option>
+                    <option value="libras">libras</option>
+                    <option value="onzas">onzas</option>
                     <option value="mililitros">mililitros</option>
+                    <option value="litros">litros</option>
                     <option value="tazas">tazas</option>
                     <option value="cucharadas">cucharadas</option>
+                    <option value="cucharaditas">cucharaditas</option>
+                    <option value="pizcas">pizcas</option>
+                    <option value="unidad">unidad</option>
+                    <option value="unidades">unidades</option>
+                    <option value="dientes">dientes</option>
+                    <option value="atados">atados</option>
+                    <option value="rodajas">rodajas</option>
+                    <option value="hojas">hojas</option>
+                    <option value="latas">latas</option>
+                    <option value="sobres">sobres</option>
+                    <option value="ramas">ramas</option>
                 </select>
             </div>
         </div>
