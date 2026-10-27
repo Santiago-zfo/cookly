@@ -1,24 +1,5 @@
 <?php
-/**
- * includes/header.php
- * ------------------------------------------------------------
- * Cabecera HTML reutilizable.
- *
- * Uso típico en una vista:
- *
- *   <?php
- *   $titulo = 'Mis recetas';
- *   require_once __DIR__ . '/includes/header.php';
- *   ?>
- *
- * Requiere que $titulo esté definido antes de incluir.
- * Si no lo está, se usa un título por defecto.
- *
- * También detecta si hay usuario logueado para mostrar
- * su nombre y el botón de logout.
- * ------------------------------------------------------------
- */
-
+// includes/header.php
 require_once __DIR__ . '/auth.php';
 
 $titulo        = $titulo        ?? 'Cookly';
@@ -35,7 +16,6 @@ $paginaActiva  = basename($_SERVER['PHP_SELF'] ?? '');
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="public/CSS/main.css">
 </head>
 <body>
@@ -58,14 +38,25 @@ $paginaActiva  = basename($_SERVER['PHP_SELF'] ?? '');
                    href="recetas.php">Explorar</a>
                 <a class="nav-btn <?= $paginaActiva === 'receta_crear.php' ? 'active' : '' ?>"
                    href="receta_crear.php">+ Nueva receta</a>
+                
+                <!-- BOTÓN DE ADMIN (Usa la función esAdmin que acabamos de restaurar) -->
+                <?php if (esAdmin()): ?>
+                    <a class="nav-btn <?= $paginaActiva === 'admin.php' ? 'active' : '' ?>" 
+                       href="admin.php" style="background: var(--primary); color: white;">🛡️ Admin</a>
+                <?php endif; ?>
+
+                <a class="nav-btn <?= $paginaActiva === 'manual.php' ? 'active' : '' ?>"
+                   href="manual.php">📖 Manual</a>
+                <a class="nav-btn <?= $paginaActiva === 'video.php' ? 'active' : '' ?>"
+                   href="video.php">🎥 Video</a>
             </nav>
 
             <div class="user-zone">
-    <a href="perfil.php" style="text-decoration: none; color: var(--cookly-text); font-weight: 700;">
-         <?= htmlspecialchars($usuarioHeader['nombre']) ?>
-    </a>
-    <a class="logout-btn" href="logout.php">Cerrar sesión</a>
-</div>
+                <a href="perfil.php" style="text-decoration: none; color: var(--text-main); font-weight: 700;">
+                    👋 <?= htmlspecialchars($usuarioHeader['nombre']) ?>
+                </a>
+                <a class="logout-btn" href="logout.php">Cerrar sesión</a>
+            </div>
         <?php endif; ?>
     </header>
 

@@ -20,10 +20,12 @@ function listar_mis_recetas($id_usuario) {
 
 function listar_todas_las_recetas() {
     global $pdo;
+    // Solo mostramos las aceptadas en el catálogo público
     $sql = "SELECT r.*, c.nombre AS categoria, u.nombre AS autor 
             FROM Recetas r 
             INNER JOIN Categorias c ON r.id_categoria = c.id_categoria 
             INNER JOIN Usuarios u ON r.id_usuario = u.id_usuario 
+            WHERE r.estado = 'Aceptado'
             ORDER BY r.id_receta DESC";
     return $pdo->query($sql)->fetchAll();
 }
@@ -75,6 +77,17 @@ function receta_pertenece_a_usuario($id_receta, $id_usuario) {
 function guardar_receta($datos, $ingredientes, $id = null) {
     global $pdo;
     
+    $tiempo = (int)($datos['tiempo_preparacion'] ?? 0);
+    $porciones = (int)($datos['porciones'] ?? 0);
+    
+    if ($tiempo <= 0 || $porciones <= 0) {
+        die("<div style='background: #FEE2E2; color: #B91C1C; padding: 2rem; margin: 2rem auto; max-width: 800px; border-radius: 12px; font-family: sans-serif; text-align: center;'>
+                <h3 style='margin-top:0;'>Error de Validación</h3>
+                <p>El tiempo y las porciones deben ser mayores a 0.</p>
+                <a href='javascript:history.back()' style='display:inline-block; margin-top:1rem; padding: 0.5rem 1rem; background: #B91C1C; color: white; text-decoration: none; border-radius: 8px;'>Volver al formulario</a>
+             </div>");
+    }
+
     $imagen_url = trim($datos['imagen_url'] ?? '');
     if (isset($_FILES['imagen_file']) && $_FILES['imagen_file']['error'] === UPLOAD_ERR_OK) {
         $uploadDir = __DIR__ . '/../public/IMG/recetas/';
@@ -104,32 +117,27 @@ function guardar_receta($datos, $ingredientes, $id = null) {
         $pdo->beginTransaction();
 
         if ($id === null) {
-            // INSERT
             $sql = "INSERT INTO Recetas (id_categoria, id_usuario, titulo, descripcion, instrucciones, tiempo_preparacion, dificultad, porciones, estado, imagen_url) 
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = $pdo->prepare($sql);
             $stmt->execute([
                 $datos['id_categoria'], $_SESSION['id_usuario'], $datos['titulo'], 
-                $datos['descripcion'] ?? '', $datos['instrucciones'], $datos['tiempo_preparacion'], 
-                $datos['dificultad'], $datos['porciones'], $datos['estado'] ?? 'Pendiente', $imagen_url
+                $datos['descripcion'] ?? '', $datos['instrucciones'], $tiempo, 
+                $datos['dificultad'], $porciones, 'Pendiente', $imagen_url
             ]);
             $id_receta = $pdo->lastInsertId();
         } else {
-            // UPDATE
             $sql = "UPDATE Recetas SET id_categoria=?, titulo=?, descripcion=?, instrucciones=?, tiempo_preparacion=?, dificultad=?, porciones=?, estado=?, imagen_url=? WHERE id_receta=?";
             $stmt = $pdo->prepare($sql);
             $stmt->execute([
                 $datos['id_categoria'], $datos['titulo'], $datos['descripcion'] ?? '', 
-                $datos['instrucciones'], $datos['tiempo_preparacion'], $datos['dificultad'], 
-                $datos['porciones'], $datos['estado'] ?? 'Pendiente', $imagen_url, $id
+                $datos['instrucciones'], $tiempo, $datos['dificultad'], 
+                $porciones, $datos['estado'] ?? 'Pendiente', $imagen_url, $id
             ]);
             $id_receta = $id;
-            
-            // Borrar ingredientes viejos
             $pdo->prepare("DELETE FROM Receta_Ingredientes WHERE id_receta = ?")->execute([$id]);
         }
 
-        // Insertar ingredientes
         if (!empty($ings_convertidos)) {
             $stmt_ing = $pdo->prepare("INSERT INTO Receta_Ingredientes (id_receta, id_ingrediente, cantidad, unidad_medida) VALUES (?, ?, ?, ?)");
             foreach ($ings_convertidos as $ing) {
@@ -141,7 +149,6 @@ function guardar_receta($datos, $ingredientes, $id = null) {
         return true;
     } catch (Exception $e) {
         $pdo->rollBack();
-        // ESTO NOS DIRÁ EL ERROR REAL
         die("<div style='background: #FEE2E2; color: #B91C1C; padding: 2rem; margin: 2rem auto; max-width: 800px; border-radius: 12px; font-family: sans-serif; border: 1px solid #F87171;'>
                 <h3 style='margin-top:0;'>Error al guardar en la Base de Datos</h3>
                 <p>Detalle del error de MySQL:</p>
@@ -154,4 +161,44 @@ function eliminar_receta($id) {
     global $pdo;
     $stmt = $pdo->prepare("DELETE FROM Recetas WHERE id_receta = ?");
     return $stmt->execute([$id]);
+}
+
+function obtener_estadisticas_generales() {
+    global $pdo;
+    $stats = [];
+    $stats['total_usuarios'] = $pdo->query("SELECT COUNT(*) FROM Usuarios")->fetchColumn();
+    $stats['total_recetas'] = $pdo->query("SELECT COUNT(*) FROM Recetas")->fetchColumn();
+    $stats['total_categorias'] = $pdo->query("SELECT COUNT(*) FROM Categorias")->fetchColumn();
+    
+    $sql_cat = "SELECT c.nombre, COUNT(r.id_receta) as cantidad FROM Categorias c LEFT JOIN Recetas r ON c.id_categoria = r.id_categoria GROUP BY c.id_categoria ORDER BY cantidad DESC";
+    $stats['recetas_por_categoria'] = $pdo->query($sql_cat)->fetchAll();
+    
+    $sql_dif = "SELECT dificultad, COUNT(*) as cantidad FROM Recetas GROUP BY dificultad";
+    $stats['recetas_por_dificultad'] = $pdo->query($sql_dif)->fetchAll();
+    
+    $sql_top = "SELECT u.nombre, COUNT(r.id_receta) as cantidad FROM Usuarios u LEFT JOIN Recetas r ON u.id_usuario = r.id_usuario GROUP BY u.id_usuario ORDER BY cantidad DESC LIMIT 3";
+    $stats['top_usuarios'] = $pdo->query($sql_top)->fetchAll();
+
+    return $stats;
+}
+
+// FUNCIONES EXCLUSIVAS PARA EL ADMINISTRADOR
+function listar_recetas_pendientes() {
+    global $pdo;
+    $sql = "SELECT r.*, c.nombre AS categoria, u.nombre AS autor 
+            FROM Recetas r 
+            INNER JOIN Categorias c ON r.id_categoria = c.id_categoria 
+            INNER JOIN Usuarios u ON r.id_usuario = u.id_usuario 
+            WHERE r.estado = 'Pendiente'
+            ORDER BY r.id_receta DESC";
+    return $pdo->query($sql)->fetchAll();
+}
+
+function cambiar_estado_receta($id_receta, $nuevo_estado) {
+    global $pdo;
+    $estados_validos = ['Pendiente', 'Aceptado', 'Rechazado'];
+    if (!in_array($nuevo_estado, $estados_validos)) return false;
+
+    $stmt = $pdo->prepare("UPDATE Recetas SET estado = ? WHERE id_receta = ?");
+    return $stmt->execute([$nuevo_estado, $id_receta]);
 }
