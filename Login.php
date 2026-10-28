@@ -32,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <title>Cookly · Iniciar sesión</title>
     <link rel="stylesheet" href="public/CSS/auth.css">
+
 </head>
 <body>
 <main class="auth">

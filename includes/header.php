@@ -17,6 +17,7 @@ $paginaActiva  = basename($_SERVER['PHP_SELF'] ?? '');
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="public/CSS/main.css">
+        <link rel="icon" type="image/png" href="public/IMG/logo.png">
 </head>
 <body>
 <div class="page-shell">
