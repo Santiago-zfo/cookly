@@ -17,19 +17,19 @@ $paginaActiva  = basename($_SERVER['PHP_SELF'] ?? '');
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="public/CSS/main.css">
-        <link rel="icon" type="image/png" href="public/IMG/logo.png">
 </head>
 <body>
 <div class="page-shell">
 
     <header class="topbar">
-        <div class="brand-wrap">
+        <!-- LOGO CLICKEABLE -->
+        <a href="index.php" class="brand-wrap" style="text-decoration: none;">
             <img class="brand-logo" src="public/IMG/logo.png" alt="Logo de Cookly">
             <div>
                 <p class="brand-kicker">Recetas para cada momento</p>
                 <h1>Cookly</h1>
             </div>
-        </div>
+        </a>
 
         <?php if ($usuarioHeader): ?>
             <nav class="top-actions" aria-label="Navegación principal">
@@ -40,7 +40,6 @@ $paginaActiva  = basename($_SERVER['PHP_SELF'] ?? '');
                 <a class="nav-btn <?= $paginaActiva === 'receta_crear.php' ? 'active' : '' ?>"
                    href="receta_crear.php">+ Nueva receta</a>
                 
-                <!-- BOTÓN DE ADMIN (Usa la función esAdmin que acabamos de restaurar) -->
                 <?php if (esAdmin()): ?>
                     <a class="nav-btn <?= $paginaActiva === 'admin.php' ? 'active' : '' ?>" 
                        href="admin.php" style="background: var(--primary); color: white;">🛡️ Admin</a>
