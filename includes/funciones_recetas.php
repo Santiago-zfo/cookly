@@ -1,7 +1,7 @@
 <?php
 // includes/funciones_recetas.php
 require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/auth.php'; // <-- RUTA CORREGIDA
+require_once __DIR__ . '/auth.php';
 
 function listar_categorias() {
     global $pdo;
@@ -39,6 +39,26 @@ function contar_todas_las_recetas() {
     global $pdo;
     return $pdo->query("SELECT COUNT(*) FROM Recetas WHERE estado = 'Aceptado'")->fetchColumn();
 }
+
+// --- NUEVA FUNCIÓN DE BÚSQUEDA ---
+function buscar_recetas_ajax($termino) {
+    global $pdo;
+    $busqueda = "%" . $termino . "%";
+    
+    $sql = "SELECT r.*, c.nombre AS categoria, u.nombre AS autor 
+            FROM Recetas r 
+            INNER JOIN Categorias c ON r.id_categoria = c.id_categoria 
+            INNER JOIN Usuarios u ON r.id_usuario = u.id_usuario 
+            WHERE r.estado = 'Aceptado' 
+            AND (r.titulo LIKE ? OR c.nombre LIKE ? OR u.nombre LIKE ?)
+            ORDER BY r.id_receta DESC 
+            LIMIT 20";
+            
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$busqueda, $busqueda, $busqueda]);
+    return $stmt->fetchAll();
+}
+// ----------------------------------
 
 function obtener_receta($id) {
     global $pdo;
@@ -127,7 +147,6 @@ function guardar_receta($datos, $ingredientes, $id = null) {
         $pdo->beginTransaction();
 
         if ($id === null) {
-            // CREAR: Nace como Pendiente
             $sql = "INSERT INTO Recetas (id_categoria, id_usuario, titulo, descripcion, instrucciones, tiempo_preparacion, dificultad, porciones, estado, imagen_url) 
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Pendiente', ?)";
             $stmt = $pdo->prepare($sql);
@@ -138,7 +157,6 @@ function guardar_receta($datos, $ingredientes, $id = null) {
             ]);
             $id_receta = $pdo->lastInsertId();
         } else {
-            // EDITAR: Forzamos el estado a 'Pendiente' otra vez
             $sql = "UPDATE Recetas SET id_categoria=?, titulo=?, descripcion=?, instrucciones=?, tiempo_preparacion=?, dificultad=?, porciones=?, estado='Pendiente', imagen_url=? WHERE id_receta=?";
             $stmt = $pdo->prepare($sql);
             $stmt->execute([

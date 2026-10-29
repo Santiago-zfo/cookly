@@ -21,52 +21,69 @@ $todas = listar_todas_las_recetas($por_pagina, $offset);
 require_once __DIR__ . '/includes/header.php';
 ?>
 <section class="panel">
-    <div class="section-heading"><h2>Explorar recetas</h2></div>
+    <div class="section-heading" style="margin-bottom: 1rem;">
+        <h2>Explorar recetas</h2>
+    </div>
+
+    <!-- BARRA DE BÚSQUEDA -->
+    <div style="margin-bottom: 2rem; position: relative;">
+        <input 
+            type="text" 
+            id="input-busqueda" 
+            placeholder="🔍 Buscar por título, categoría o autor..." 
+            style="width: 100%; padding: 1rem 1.5rem; border-radius: var(--radius-pill); border: 2px solid var(--border-color); font-family: inherit; font-size: 1rem; background: var(--bg-color); transition: var(--transition);"
+            onfocus="this.style.borderColor='var(--primary)'; this.style.boxShadow='0 0 0 4px var(--primary-light)'"
+            onblur="this.style.borderColor='var(--border-color)'; this.style.boxShadow='none'"
+        >
+    </div>
     
-    <?php if (empty($todas)): ?>
-        <div class="empty-state"><p>No hay recetas disponibles en este momento.</p></div>
-    <?php else: ?>
-        <div class="recipe-grid">
-            <?php foreach ($todas as $r): ?>
-                <?php $esMia = ((int)$r['id_usuario'] === $usuarioId); ?>
-                <article class="recipe-card">
-                    <div class="recipe-image-wrap">
-                        <?php if (!empty($r['imagen_url'])): ?>
-                            <img src="<?= htmlspecialchars($r['imagen_url']) ?>" alt="Imagen">
-                        <?php else: ?>
-                            🍲
-                        <?php endif; ?>
-                    </div>
-                    <div class="recipe-body">
-                        <div class="recipe-topline">
-                            <span class="pill"><?= htmlspecialchars($r['categoria']) ?></span>
+    <!-- CONTENEDOR PRINCIPAL DE RECETAS -->
+    <div id="contenedor-recetas">
+        <?php if (empty($todas)): ?>
+            <div class="empty-state"><p>No hay recetas disponibles en este momento.</p></div>
+        <?php else: ?>
+            <div class="recipe-grid">
+                <?php foreach ($todas as $r): ?>
+                    <?php $esMia = ((int)$r['id_usuario'] === $usuarioId); ?>
+                    <article class="recipe-card">
+                        <div class="recipe-image-wrap">
+                            <?php if (!empty($r['imagen_url'])): ?>
+                                <img src="<?= htmlspecialchars($r['imagen_url']) ?>" alt="Imagen">
+                            <?php else: ?>
+                                🍲
+                            <?php endif; ?>
                         </div>
-                        <h4><?= htmlspecialchars($r['titulo']) ?></h4>
-                        <p>Por <strong><?= htmlspecialchars($r['autor']) ?></strong></p>
-                        <div class="acciones">
-                            <a href="receta_detalle.php?id=<?= $r['id_receta'] ?>">Ver</a>
+                        <div class="recipe-body">
+                            <div class="recipe-topline">
+                                <span class="pill"><?= htmlspecialchars($r['categoria']) ?></span>
+                            </div>
+                            <h4><?= htmlspecialchars($r['titulo']) ?></h4>
+                            <p>Por <strong><?= htmlspecialchars($r['autor']) ?></strong></p>
+                            <div class="acciones">
+                                <a href="receta_detalle.php?id=<?= $r['id_receta'] ?>">Ver</a>
+                            </div>
                         </div>
-                    </div>
-                </article>
-            <?php endforeach; ?>
-        </div>
-
-        <!-- CONTROLES DE PAGINACIÓN -->
-        <?php if ($total_paginas > 1): ?>
-            <div style="display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 2.5rem;">
-                <?php if ($pagina_actual > 1): ?>
-                    <a href="?pagina=<?= $pagina_actual - 1 ?>" class="secondary" style="padding: 0.5rem 1rem; border-radius: 8px;">&laquo; Anterior</a>
-                <?php endif; ?>
-
-                <span style="font-weight: 700; color: var(--text-muted);">
-                    Página <?= $pagina_actual ?> de <?= $total_paginas ?>
-                </span>
-
-                <?php if ($pagina_actual < $total_paginas): ?>
-                    <a href="?pagina=<?= $pagina_actual + 1 ?>" class="secondary" style="padding: 0.5rem 1rem; border-radius: 8px;">Siguiente &raquo;</a>
-                <?php endif; ?>
+                    </article>
+                <?php endforeach; ?>
             </div>
+
+            <!-- CONTROLES DE PAGINACIÓN -->
+            <?php if ($total_paginas > 1): ?>
+                <div style="display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 2.5rem;">
+                    <?php if ($pagina_actual > 1): ?>
+                        <a href="?pagina=<?= $pagina_actual - 1 ?>" class="secondary" style="padding: 0.5rem 1rem; border-radius: 8px;">&laquo; Anterior</a>
+                    <?php endif; ?>
+
+                    <span style="font-weight: 700; color: var(--text-muted);">
+                        Página <?= $pagina_actual ?> de <?= $total_paginas ?>
+                    </span>
+
+                    <?php if ($pagina_actual < $total_paginas): ?>
+                        <a href="?pagina=<?= $pagina_actual + 1 ?>" class="secondary" style="padding: 0.5rem 1rem; border-radius: 8px;">Siguiente &raquo;</a>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
         <?php endif; ?>
-    <?php endif; ?>
+    </div>
 </section>
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
