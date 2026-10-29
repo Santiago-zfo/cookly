@@ -22,7 +22,6 @@ $paginaActiva  = basename($_SERVER['PHP_SELF'] ?? '');
 <div class="page-shell">
 
     <header class="topbar">
-        <!-- LOGO CLICKEABLE -->
         <a href="index.php" class="brand-wrap" style="text-decoration: none;">
             <img class="brand-logo" src="public/IMG/logo.png" alt="Logo de Cookly">
             <div>
@@ -61,3 +60,4 @@ $paginaActiva  = basename($_SERVER['PHP_SELF'] ?? '');
     </header>
 
     <main class="dashboard">
+        <?php mostrar_flash_message(); ?>

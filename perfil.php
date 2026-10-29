@@ -8,9 +8,6 @@ $titulo = 'Mi Perfil';
 $id_usuario = $_SESSION['id_usuario'];
 $perfil = obtener_usuario_por_id($id_usuario);
 
-$msgExito = ''; 
-$msgError = '';
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $accion = $_POST['accion'] ?? '';
 
@@ -20,11 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $bio    = trim($_POST['biografia'] ?? '');
         $avatar = trim($_POST['avatar_url'] ?? '');
 
-        // Subida de archivo
         if (isset($_FILES['avatar_file']) && $_FILES['avatar_file']['error'] === UPLOAD_ERR_OK) {
             $uploadDir = __DIR__ . '/public/IMG/avatares/';
-            if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
-            
+            if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
             $ext = strtolower(pathinfo($_FILES['avatar_file']['name'], PATHINFO_EXTENSION));
             if (in_array($ext, ['jpg', 'jpeg', 'png', 'webp'])) {
                 $nombreArchivo = uniqid('avatar_') . '.' . $ext;
@@ -37,10 +32,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (actualizar_perfil($id_usuario, $nombre, $correo, $avatar, $bio)) {
             $_SESSION['nombre'] = $nombre;
             $_SESSION['correo_electronico'] = $correo;
-            $msgExito = 'Perfil actualizado correctamente.';
-            $perfil = obtener_usuario_por_id($id_usuario); // Recargar datos
+            set_flash_message('exito', 'Perfil actualizado correctamente.');
+            header('Location: perfil.php');
+            exit;
         } else {
-            $msgError = 'Error al guardar los cambios.';
+            set_flash_message('error', 'Error al guardar los cambios.');
+            header('Location: perfil.php');
+            exit;
         }
 
     } elseif ($accion === 'password') {
@@ -51,13 +49,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (password_verify($actual, $perfil['contrasena_hash'])) {
             if (strlen($nueva) >= 8 && $nueva === $confir) {
                 actualizar_password($id_usuario, $nueva);
-                $msgExito = 'Contraseña actualizada correctamente.';
+                set_flash_message('exito', 'Contraseña actualizada correctamente.');
             } else {
-                $msgError = 'La nueva contraseña debe tener al menos 8 caracteres y coincidir.';
+                set_flash_message('error', 'La nueva contraseña debe tener al menos 8 caracteres y coincidir.');
             }
         } else {
-            $msgError = 'La contraseña actual es incorrecta.';
+            set_flash_message('error', 'La contraseña actual es incorrecta.');
         }
+        header('Location: perfil.php');
+        exit;
 
     } elseif ($accion === 'eliminar_cuenta') {
         eliminar_usuario($id_usuario);
@@ -75,13 +75,6 @@ require_once __DIR__ . '/includes/header.php';
         <h2>Mi Perfil</h2>
         <a href="index.php" class="logout-btn">← Volver al inicio</a>
     </div>
-
-    <?php if ($msgExito): ?>
-        <div class="estado exito"><?= htmlspecialchars($msgExito) ?></div>
-    <?php endif; ?>
-    <?php if ($msgError): ?>
-        <div class="estado error"><?= htmlspecialchars($msgError) ?></div>
-    <?php endif; ?>
 
     <!-- FOTO Y DATOS PRINCIPALES -->
     <div style="display: flex; gap: 2rem; align-items: flex-start; margin-bottom: 2rem; flex-wrap: wrap;">

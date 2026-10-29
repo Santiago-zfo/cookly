@@ -15,7 +15,6 @@ function requerirLogin(): void {
     }
 }
 
-// Función que faltaba y causaba el error
 function esAdmin(): bool {
     return isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin';
 }
@@ -46,3 +45,18 @@ function cerrarSesion(): void {
     }
     session_destroy();
 }
+
+// --- SISTEMA DE MENSAJES FLASH ---
+function set_flash_message($tipo, $mensaje) {
+    $_SESSION['flash'] = ['tipo' => $tipo, 'mensaje' => $mensaje];
+}
+
+function mostrar_flash_message() {
+    if (isset($_SESSION['flash'])) {
+        $flash = $_SESSION['flash'];
+        unset($_SESSION['flash']); 
+        
+        $clase = $flash['tipo'] === 'exito' ? 'exito' : 'error';
+        echo "<div class='estado {$clase}' style='margin-bottom: 1.5rem; animation: slideUp 0.3s;'>{$flash['mensaje']}</div>";
+    }
+}   

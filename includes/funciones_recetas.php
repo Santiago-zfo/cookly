@@ -1,6 +1,7 @@
 <?php
 // includes/funciones_recetas.php
 require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/auth.php'; // <-- RUTA CORREGIDA
 
 function listar_categorias() {
     global $pdo;
@@ -18,16 +19,25 @@ function listar_mis_recetas($id_usuario) {
     return $stmt->fetchAll();
 }
 
-function listar_todas_las_recetas() {
+function listar_todas_las_recetas($limite = 6, $offset = 0) {
     global $pdo;
-    // Solo mostramos las aceptadas en el catálogo público
     $sql = "SELECT r.*, c.nombre AS categoria, u.nombre AS autor 
             FROM Recetas r 
             INNER JOIN Categorias c ON r.id_categoria = c.id_categoria 
             INNER JOIN Usuarios u ON r.id_usuario = u.id_usuario 
             WHERE r.estado = 'Aceptado'
-            ORDER BY r.id_receta DESC";
-    return $pdo->query($sql)->fetchAll();
+            ORDER BY r.id_receta DESC
+            LIMIT ? OFFSET ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(1, $limite, PDO::PARAM_INT);
+    $stmt->bindValue(2, $offset, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetchAll();
+}
+
+function contar_todas_las_recetas() {
+    global $pdo;
+    return $pdo->query("SELECT COUNT(*) FROM Recetas WHERE estado = 'Aceptado'")->fetchColumn();
 }
 
 function obtener_receta($id) {
@@ -91,7 +101,7 @@ function guardar_receta($datos, $ingredientes, $id = null) {
     $imagen_url = trim($datos['imagen_url'] ?? '');
     if (isset($_FILES['imagen_file']) && $_FILES['imagen_file']['error'] === UPLOAD_ERR_OK) {
         $uploadDir = __DIR__ . '/../public/IMG/recetas/';
-        if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
+        if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
         
         $ext = strtolower(pathinfo($_FILES['imagen_file']['name'], PATHINFO_EXTENSION));
         if (in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'gif'])) {
@@ -117,22 +127,24 @@ function guardar_receta($datos, $ingredientes, $id = null) {
         $pdo->beginTransaction();
 
         if ($id === null) {
+            // CREAR: Nace como Pendiente
             $sql = "INSERT INTO Recetas (id_categoria, id_usuario, titulo, descripcion, instrucciones, tiempo_preparacion, dificultad, porciones, estado, imagen_url) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Pendiente', ?)";
             $stmt = $pdo->prepare($sql);
             $stmt->execute([
                 $datos['id_categoria'], $_SESSION['id_usuario'], $datos['titulo'], 
                 $datos['descripcion'] ?? '', $datos['instrucciones'], $tiempo, 
-                $datos['dificultad'], $porciones, 'Pendiente', $imagen_url
+                $datos['dificultad'], $porciones, $imagen_url
             ]);
             $id_receta = $pdo->lastInsertId();
         } else {
-            $sql = "UPDATE Recetas SET id_categoria=?, titulo=?, descripcion=?, instrucciones=?, tiempo_preparacion=?, dificultad=?, porciones=?, estado=?, imagen_url=? WHERE id_receta=?";
+            // EDITAR: Forzamos el estado a 'Pendiente' otra vez
+            $sql = "UPDATE Recetas SET id_categoria=?, titulo=?, descripcion=?, instrucciones=?, tiempo_preparacion=?, dificultad=?, porciones=?, estado='Pendiente', imagen_url=? WHERE id_receta=?";
             $stmt = $pdo->prepare($sql);
             $stmt->execute([
                 $datos['id_categoria'], $datos['titulo'], $datos['descripcion'] ?? '', 
                 $datos['instrucciones'], $tiempo, $datos['dificultad'], 
-                $porciones, $datos['estado'] ?? 'Pendiente', $imagen_url, $id
+                $porciones, $imagen_url, $id
             ]);
             $id_receta = $id;
             $pdo->prepare("DELETE FROM Receta_Ingredientes WHERE id_receta = ?")->execute([$id]);
@@ -182,7 +194,6 @@ function obtener_estadisticas_generales() {
     return $stats;
 }
 
-// FUNCIONES EXCLUSIVAS PARA EL ADMINISTRADOR
 function listar_recetas_pendientes() {
     global $pdo;
     $sql = "SELECT r.*, c.nombre AS categoria, u.nombre AS autor 

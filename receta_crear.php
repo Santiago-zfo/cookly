@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (guardar_receta($datos, $ings)) {
+        set_flash_message('exito', '¡Receta creada con éxito! Está pendiente de aprobación.');
         header('Location: index.php'); 
         exit;
     } else {
@@ -91,7 +92,7 @@ require_once __DIR__ . '/includes/header.php';
         <div id="ings">
             <div class="ing-row">
                 <input type="text" name="ing_nombre[]" placeholder="Ingrediente">
-                <input type="number" name="ing_cantidad[]" placeholder="Cantidad" step="0.01">
+                <input type="number" name="ing_cantidad[]" placeholder="Cant." step="0.01">
                 <select name="ing_unidad[]">
                     <option value="gramos">gramos</option>
                     <option value="kilogramos">kilogramos</option>
