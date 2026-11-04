@@ -5,40 +5,65 @@ require_once __DIR__ . '/includes/funciones_recetas.php';
 requerirLogin();
 
 $titulo = 'Explorar';
-$todas = listar_todas_las_recetas(); // Esta función ya filtra por Aceptado
-$usuarioId = (int) $_SESSION['id_usuario'];
+$usuarioId = (int)$_SESSION['id_usuario'];
+
+// Configuración de paginación
+$por_pagina = 6;
+$pagina_actual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+if ($pagina_actual < 1)$pagina_actual = 1;
+
+$total_recetas = contar_todas_las_recetas();
+$total_paginas = ceil($total_recetas / $por_pagina);$offset = ($pagina_actual - 1) *$por_pagina;
+
+$todas = listar_todas_las_recetas($por_pagina,$offset);
 
 require_once __DIR__ . '/includes/header.php';
 ?>
 <section class="panel">
-    <div class="section-heading"><h2>Explorar recetas</h2></div>
-    <div class="recipe-grid">
-        <?php if (empty($todas)): ?>
-            <p style="grid-column: 1/-1; color: var(--text-muted);">Aún no hay recetas aceptadas en la comunidad.</p>
-        <?php else: ?>
-            <?php foreach ($todas as $r): ?>
-                <?php $esMia = ((int)$r['id_usuario'] === $usuarioId); ?>
-                <article class="recipe-card">
-                    <div class="recipe-image-wrap">
-                        <?php if (!empty($r['imagen_url'])): ?>
-                            <img src="<?= htmlspecialchars($r['imagen_url']) ?>" alt="Imagen">
-                        <?php else: ?>
-                            🍲
-                        <?php endif; ?>
-                    </div>
-                    <div class="recipe-body">
-                        <div class="recipe-topline">
-                            <span class="pill"><?= htmlspecialchars($r['categoria']) ?></span>
-                        </div>
-                        <h4><?= htmlspecialchars($r['titulo']) ?></h4>
-                        <p>Por <strong><?= htmlspecialchars($r['autor']) ?></strong></p>
-                        <div class="acciones">
-                            <a href="receta_detalle.php?id=<?= $r['id_receta'] ?>">Ver</a>
-                        </div>
-                    </div>
-                </article>
-            <?php endforeach; ?>
-        <?php endif; ?>
+    <div class="section-heading" style="margin-bottom: 1rem;">
+        <h2>Explorar recetas</h2>
     </div>
-</section>
-<?php require_once __DIR__ . '/includes/footer.php'; ?>
+
+    <!-- BARRA DE BÚSQUEDA -->
+    <div style="margin-bottom: 2rem; position: relative;">
+        <input 
+            type="text" 
+            id="input-busqueda" 
+            placeholder="🔍 Buscar por título, categoría o autor..." 
+            style="width: 100%; padding: 1rem 1.5rem; border-radius: var(--radius-pill); border: 2px solid var(--border-color); font-family: inherit; font-size: 1rem; background: var(--bg-color); transition: var(--transition);"
+            onfocus="this.style.borderColor='var(--primary)'; this.style.boxShadow='0 0 0 4px var(--primary-light)'"
+            onblur="this.style.borderColor='var(--border-color)'; this.style.boxShadow='none'"
+        >
+    </div>
+    
+    <!-- CONTENEDOR PRINCIPAL DE RECETAS -->
+    <div id="contenedor-recetas">
+        <?php if (empty($todas)): ?>
+            <div class="empty-state"><p>No hay recetas disponibles en este momento.</p></div>
+        <?php else: ?>
+            <div class="recipe-grid">
+                <?php foreach ($todas as$r): ?>
+                    <?php $esMia = ((int)$r['id_usuario'] ===$usuarioId); ?>
+                    <article class="recipe-card">
+                        <div class="recipe-image-wrap">
+                            <?php if (!empty($r['imagen_url'])): ?>
+                                <img src="<?= htmlspecialchars($r['imagen_url']) ?>" alt="Imagen">
+                            <?php else: ?>
+                                🍲
+                            <?php endif; ?>
+                        </div>
+                        <div class="recipe-body">
+                            <div class="recipe-topline">
+                                <span class="pill"><?= htmlspecialchars($r['categoria']) ?></span>
+                            </div>
+                            <h4><?= htmlspecialchars($r['titulo']) ?></h4>
+                            <p>Por <strong><?= htmlspecialchars($r['autor']) ?></strong></p>
+                            <div class="acciones">
+                                <a href="receta_detalle.php?id=<?= $r['id_receta'] ?>">Ver</a>
+                            </div>
+                        </div>
+                    </article>
+                <?php endforeach; ?>
+            </div>
+
+            <!-- CONT

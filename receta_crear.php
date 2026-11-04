@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (guardar_receta($datos, $ings)) {
+        set_flash_message('exito', '¡Receta creada con éxito! Está pendiente de aprobación.');
         header('Location: index.php'); 
         exit;
     } else {

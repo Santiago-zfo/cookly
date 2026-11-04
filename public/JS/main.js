@@ -1,36 +1,18 @@
-/* ============================================================
-   public/JS/main.js
-   Comportamiento del lado cliente en el dashboard.
-   ============================================================ */
-
 document.addEventListener('DOMContentLoaded', () => {
 
-    /* ============================================================
-       1. Confirmar eliminación de recetas
-       ============================================================ */
+    /* 1. Confirmar eliminación */
     document.querySelectorAll('a[data-confirm]').forEach(link => {
         link.addEventListener('click', e => {
             const msg = link.getAttribute('data-confirm') || '¿Eliminar esta receta?';
-            if (!confirm(msg)) {
-                e.preventDefault();
-            }
+            if (!confirm(msg)) e.preventDefault();
         });
     });
 
-    /* ============================================================
-       2. Formulario dinámico de ingredientes
-       (receta_crear.php y receta_editar.php)
-       ============================================================ */
+    /* 2. Formulario dinámico de ingredientes */
     const contenedor = document.getElementById('ings');
     const btnAgregar = document.getElementById('add-ing');
 
-    const UNIDADES = [
-        'gramos', 'kilogramos', 'libras', 'onzas',
-        'mililitros', 'litros', 'tazas', 'cucharadas',
-        'cucharaditas', 'pizcas', 'unidad', 'unidades',
-        'dientes', 'atados', 'rodajas', 'hojas',
-        'latas', 'sobres', 'ramas'
-    ];
+    const UNIDADES = ['gramos','kilogramos','libras','onzas','mililitros','litros','tazas','cucharadas','cucharaditas','pizcas','unidad','unidades','dientes','atados','rodajas','hojas','latas','sobres','ramas'];
 
     function crearFilaIngrediente(datos = {}) {
         const row = document.createElement('div');
@@ -45,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const inputCantidad = document.createElement('input');
         inputCantidad.type = 'number';
         inputCantidad.name = 'ing_cantidad[]';
-        inputCantidad.placeholder = 'Cantidad';
+        inputCantidad.placeholder = 'Cant.';
         inputCantidad.step = '0.01';
         inputCantidad.min = '0';
         inputCantidad.value = datos.cantidad || '';
@@ -63,11 +45,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const btnQuitar = document.createElement('button');
         btnQuitar.type = 'button';
         btnQuitar.className = 'remove-ing';
-        btnQuitar.textContent = '×';
-        btnQuitar.title = 'Quitar ingrediente';
+        btnQuitar.innerHTML = '&times;';
+        btnQuitar.title = 'Quitar';
         btnQuitar.addEventListener('click', () => {
             if (contenedor.children.length > 1) {
-                row.remove();
+                row.style.opacity = '0';
+                row.style.transform = 'translateX(-20px)';
+                setTimeout(() => row.remove(), 300);
             } else {
                 inputNombre.value = '';
                 inputCantidad.value = '';
@@ -84,67 +68,71 @@ document.addEventListener('DOMContentLoaded', () => {
             contenedor.appendChild(crearFilaIngrediente());
         });
 
-        // Añadir botón "quitar" a filas existentes (las generadas por PHP).
         contenedor.querySelectorAll('.ing-row').forEach(row => {
             if (row.querySelector('.remove-ing')) return;
-
             const btnQuitar = document.createElement('button');
             btnQuitar.type = 'button';
             btnQuitar.className = 'remove-ing';
-            btnQuitar.textContent = '×';
-            btnQuitar.title = 'Quitar ingrediente';
+            btnQuitar.innerHTML = '&times;';
             btnQuitar.addEventListener('click', () => {
-                if (contenedor.children.length > 1) {
-                    row.remove();
-                } else {
-                    row.querySelectorAll('input').forEach(i => i.value = '');
-                }
+                if (contenedor.children.length > 1) row.remove();
+                else row.querySelectorAll('input').forEach(i => i.value = '');
             });
             row.appendChild(btnQuitar);
         });
     }
 
-    /* ============================================================
-       3. Contador de caracteres para descripción / instrucciones
-       ============================================================ */
-    document.querySelectorAll('textarea[data-max]').forEach(ta => {
-        const max = parseInt(ta.getAttribute('data-max'), 10);
-        const contador = document.createElement('small');
-        contador.className = 'contador';
-        contador.style.color = 'var(--cookly-muted)';
-        contador.style.fontSize = '0.75rem';
-        contador.style.alignSelf = 'flex-end';
-
-        const actualizar = () => {
-            const len = ta.value.length;
-            contador.textContent = `${len} / ${max}`;
-            contador.style.color = len > max ? 'var(--cookly-error)' : 'var(--cookly-muted)';
-        };
-
-        ta.addEventListener('input', actualizar);
-        ta.parentElement.appendChild(contador);
-        actualizar();
+    /* 3. Animación en cascada para las tarjetas de recetas */
+    const cards = document.querySelectorAll('.recipe-card');
+    cards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
     });
 
-    /* ============================================================
-       4. Auto-cierre de mensajes de éxito
-       ============================================================ */
-    document.querySelectorAll('.estado.exito').forEach(msg => {
-        setTimeout(() => {
-            msg.style.transition = 'opacity 0.5s';
-            msg.style.opacity = '0';
-            setTimeout(() => msg.remove(), 500);
-        }, 4000);
-    });
-
-    /* ============================================================
-       5. Confirmación al enviar formulario de eliminación
-       (por si se accede desde un botón form en receta_eliminar.php)
-       ============================================================ */
-    document.querySelectorAll('form[data-confirm]').forEach(form => {
-        form.addEventListener('submit', e => {
-            const msg = form.getAttribute('data-confirm') || '¿Estás seguro?';
-            if (!confirm(msg)) e.preventDefault();
+    /* 5. Loader en formularios */
+    const recipeForms = document.querySelectorAll('form[enctype="multipart/form-data"]');
+    recipeForms.forEach(form => {
+        form.addEventListener('submit', function() {
+            const submitBtn = this.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.innerHTML = '<span class="spinner"></span> Guardando...';
+                submitBtn.disabled = true;
+            }
         });
     });
+
+    /* 6. BUSCADOR EN TIEMPO REAL (AJAX) */
+    const searchInput = document.getElementById('input-busqueda');
+    const contenedorRecetas = document.getElementById('contenedor-recetas');
+
+    if (searchInput && contenedorRecetas) {
+        // Guardamos el HTML original (con la paginación y todo) por si borran la búsqueda
+        const htmlOriginal = contenedorRecetas.innerHTML;
+        let timeoutId;
+
+        searchInput.addEventListener('input', function() {
+            clearTimeout(timeoutId);
+            const query = this.value.trim();
+
+            if (query === '') {
+                contenedorRecetas.innerHTML = htmlOriginal;
+                return;
+            }
+
+            // Pequeño delay (debounce) para no saturar la base de datos en cada tecla
+            timeoutId = setTimeout(() => {
+                fetch(`ajax_buscar.php?q=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.html === '') {
+                            contenedorRecetas.innerHTML = htmlOriginal;
+                        } else {
+                            // Reemplazamos el grid con los resultados de la búsqueda
+                            contenedorRecetas.innerHTML = `<div class="recipe-grid">${data.html}</div>`;
+                        }
+                    })
+                    .catch(err => console.error('Error en búsqueda:', err));
+            }, 300); 
+        });
+    }
+
 });

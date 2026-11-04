@@ -31,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (guardar_receta($_POST, $ings, $id)) {
+        set_flash_message('exito', '¡Receta actualizada! Ha vuelto a estado Pendiente para revisión.');
         header('Location: index.php'); 
         exit;
     } else {
