@@ -2,20 +2,24 @@
 // admin.php
 require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/includes/funciones_recetas.php';
+
+// 1. Seguridad: Solo los administradores pueden entrar aquí
 requerirAdmin();
 
 $titulo = 'Panel de Administración';
 
+// 2. Lógica para aprobar o rechazar recetas
 $mensaje = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion_receta'])) {
     $id_receta = (int)$_POST['id_receta'];
-    $accion = $_POST['accion_receta'];
+    $accion = $_POST['accion_receta']; // 'Aceptado' o 'Rechazado'
 
     if (cambiar_estado_receta($id_receta, $accion)) {
         $mensaje = "La receta ha sido marcada como: <strong>" . htmlspecialchars($accion) . "</strong>.";
     }
 }
 
+// 3. Obtener datos para la vista
 $stats = obtener_estadisticas_generales();
 $pendientes = listar_recetas_pendientes();
 
@@ -140,6 +144,7 @@ require_once __DIR__ . '/includes/header.php';
     <!-- SECCIÓN 2: REPORTES -->
     <h3 style="margin-bottom: 1.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; color: var(--text-main);">📊 Reportes y Gráficas</h3>
 
+    <!-- Tarjetas resumen -->
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
         <div style="background: var(--primary-light); padding: 1.5rem; border-radius: var(--radius-md); text-align: center; border: 1px solid var(--primary);">
             <h3 style="margin: 0; color: var(--primary-hover); font-size: 2.5rem;"><?= $stats['total_usuarios'] ?></h3>

@@ -21,6 +21,7 @@ function listar_mis_recetas($id_usuario) {
 
 function listar_todas_las_recetas($limite = 6, $offset = 0) {
     global $pdo;
+    // Solo mostramos las aceptadas en el catálogo público con soporte de paginación
     $sql = "SELECT r.*, c.nombre AS categoria, u.nombre AS autor 
             FROM Recetas r 
             INNER JOIN Categorias c ON r.id_categoria = c.id_categoria 
@@ -157,12 +158,12 @@ function guardar_receta($datos, $ingredientes, $id = null) {
             ]);
             $id_receta = $pdo->lastInsertId();
         } else {
-            $sql = "UPDATE Recetas SET id_categoria=?, titulo=?, descripcion=?, instrucciones=?, tiempo_preparacion=?, dificultad=?, porciones=?, estado='Pendiente', imagen_url=? WHERE id_receta=?";
+            $sql = "UPDATE Recetas SET id_categoria=?, titulo=?, descripcion=?, instrucciones=?, tiempo_preparacion=?, dificultad=?, porciones=?, estado=?, imagen_url=? WHERE id_receta=?";
             $stmt = $pdo->prepare($sql);
             $stmt->execute([
                 $datos['id_categoria'], $datos['titulo'], $datos['descripcion'] ?? '', 
                 $datos['instrucciones'], $tiempo, $datos['dificultad'], 
-                $porciones, $imagen_url, $id
+                $porciones, $datos['estado'] ?? 'Pendiente', $imagen_url, $id
             ]);
             $id_receta = $id;
             $pdo->prepare("DELETE FROM Receta_Ingredientes WHERE id_receta = ?")->execute([$id]);
@@ -212,6 +213,7 @@ function obtener_estadisticas_generales() {
     return $stats;
 }
 
+// FUNCIONES EXCLUSIVAS PARA EL ADMINISTRADOR
 function listar_recetas_pendientes() {
     global $pdo;
     $sql = "SELECT r.*, c.nombre AS categoria, u.nombre AS autor 

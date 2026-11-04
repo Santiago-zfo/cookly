@@ -5,18 +5,17 @@ require_once __DIR__ . '/includes/funciones_recetas.php';
 requerirLogin();
 
 $titulo = 'Explorar';
-$usuarioId = (int) $_SESSION['id_usuario'];
+$usuarioId = (int)$_SESSION['id_usuario'];
 
 // Configuración de paginación
 $por_pagina = 6;
 $pagina_actual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
-if ($pagina_actual < 1) $pagina_actual = 1;
+if ($pagina_actual < 1)$pagina_actual = 1;
 
 $total_recetas = contar_todas_las_recetas();
-$total_paginas = ceil($total_recetas / $por_pagina);
-$offset = ($pagina_actual - 1) * $por_pagina;
+$total_paginas = ceil($total_recetas / $por_pagina);$offset = ($pagina_actual - 1) *$por_pagina;
 
-$todas = listar_todas_las_recetas($por_pagina, $offset);
+$todas = listar_todas_las_recetas($por_pagina,$offset);
 
 require_once __DIR__ . '/includes/header.php';
 ?>
@@ -43,8 +42,8 @@ require_once __DIR__ . '/includes/header.php';
             <div class="empty-state"><p>No hay recetas disponibles en este momento.</p></div>
         <?php else: ?>
             <div class="recipe-grid">
-                <?php foreach ($todas as $r): ?>
-                    <?php $esMia = ((int)$r['id_usuario'] === $usuarioId); ?>
+                <?php foreach ($todas as$r): ?>
+                    <?php $esMia = ((int)$r['id_usuario'] ===$usuarioId); ?>
                     <article class="recipe-card">
                         <div class="recipe-image-wrap">
                             <?php if (!empty($r['imagen_url'])): ?>
@@ -67,23 +66,4 @@ require_once __DIR__ . '/includes/header.php';
                 <?php endforeach; ?>
             </div>
 
-            <!-- CONTROLES DE PAGINACIÓN -->
-            <?php if ($total_paginas > 1): ?>
-                <div style="display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 2.5rem;">
-                    <?php if ($pagina_actual > 1): ?>
-                        <a href="?pagina=<?= $pagina_actual - 1 ?>" class="secondary" style="padding: 0.5rem 1rem; border-radius: 8px;">&laquo; Anterior</a>
-                    <?php endif; ?>
-
-                    <span style="font-weight: 700; color: var(--text-muted);">
-                        Página <?= $pagina_actual ?> de <?= $total_paginas ?>
-                    </span>
-
-                    <?php if ($pagina_actual < $total_paginas): ?>
-                        <a href="?pagina=<?= $pagina_actual + 1 ?>" class="secondary" style="padding: 0.5rem 1rem; border-radius: 8px;">Siguiente &raquo;</a>
-                    <?php endif; ?>
-                </div>
-            <?php endif; ?>
-        <?php endif; ?>
-    </div>
-</section>
-<?php require_once __DIR__ . '/includes/footer.php'; ?>
+            <!-- CONT

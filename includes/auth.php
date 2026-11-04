@@ -15,6 +15,7 @@ function requerirLogin(): void {
     }
 }
 
+// Función que verifica si el usuario es administrador
 function esAdmin(): bool {
     return isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin';
 }
@@ -59,4 +60,4 @@ function mostrar_flash_message() {
         $clase = $flash['tipo'] === 'exito' ? 'exito' : 'error';
         echo "<div class='estado {$clase}' style='margin-bottom: 1.5rem; animation: slideUp 0.3s;'>{$flash['mensaje']}</div>";
     }
-}   
+}
