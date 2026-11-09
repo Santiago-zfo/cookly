@@ -15,6 +15,7 @@ function requerirLogin(): void {
     }
 }
 
+// Función que verifica si el usuario es administrador
 function esAdmin(): bool {
     return isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin';
 }

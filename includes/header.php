@@ -2,7 +2,7 @@
 // includes/header.php
 require_once __DIR__ . '/auth.php';
 
-$titulo        = $titulo        ?? 'Cookly';
+$titulo         = $titulo         ?? 'Cookly';
 $usuarioHeader = usuarioActual();
 $paginaActiva  = basename($_SERVER['PHP_SELF'] ?? '');
 
