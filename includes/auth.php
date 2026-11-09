@@ -59,4 +59,26 @@ function mostrar_flash_message() {
         $clase = $flash['tipo'] === 'exito' ? 'exito' : 'error';
         echo "<div class='estado {$clase}' style='margin-bottom: 1.5rem; animation: slideUp 0.3s;'>{$flash['mensaje']}</div>";
     }
-}   
+}
+
+// --- SISTEMA DE LOGS (REGISTRO) ---
+/**
+ * Registra un error o evento en el archivo de logs.
+ * 
+ * @param string $mensaje El mensaje a guardar.
+ * @param string $tipo    El tipo de log (ERROR, INFO, WARNING, CRITICAL).
+ */
+function registrar_log($mensaje, $tipo = 'ERROR') {
+    $directorio = __DIR__ . '/../logs';
+    $archivo = $directorio . '/sistema.log';
+
+    if (!is_dir($directorio)) {
+        mkdir($directorio, 0755, true);
+    }
+
+    $fecha = date('Y-m-d H:i:s');
+    $usuario = isset($_SESSION['correo_electronico']) ? $_SESSION['correo_electronico'] : 'Invitado/Anónimo';
+    
+    $linea = "[$fecha] [$tipo] [$usuario] $mensaje" . PHP_EOL;
+    file_put_contents($archivo, $linea, FILE_APPEND | LOCK_EX);
+}

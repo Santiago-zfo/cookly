@@ -40,7 +40,6 @@ function contar_todas_las_recetas() {
     return $pdo->query("SELECT COUNT(*) FROM Recetas WHERE estado = 'Aceptado'")->fetchColumn();
 }
 
-// --- NUEVA FUNCIÓN DE BÚSQUEDA ---
 function buscar_recetas_ajax($termino) {
     global $pdo;
     $busqueda = "%" . $termino . "%";
@@ -58,7 +57,6 @@ function buscar_recetas_ajax($termino) {
     $stmt->execute([$busqueda, $busqueda, $busqueda]);
     return $stmt->fetchAll();
 }
-// ----------------------------------
 
 function obtener_receta($id) {
     global $pdo;
@@ -111,6 +109,7 @@ function guardar_receta($datos, $ingredientes, $id = null) {
     $porciones = (int)($datos['porciones'] ?? 0);
     
     if ($tiempo <= 0 || $porciones <= 0) {
+        registrar_log("Intento de guardar receta con tiempo ($tiempo) o porciones ($porciones) inválidas.", 'WARNING');
         die("<div style='background: #FEE2E2; color: #B91C1C; padding: 2rem; margin: 2rem auto; max-width: 800px; border-radius: 12px; font-family: sans-serif; text-align: center;'>
                 <h3 style='margin-top:0;'>Error de Validación</h3>
                 <p>El tiempo y las porciones deben ser mayores a 0.</p>
@@ -128,7 +127,11 @@ function guardar_receta($datos, $ingredientes, $id = null) {
             $nombreArchivo = uniqid('receta_') . '.' . $ext;
             if (move_uploaded_file($_FILES['imagen_file']['tmp_name'], $uploadDir . $nombreArchivo)) {
                 $imagen_url = 'public/IMG/recetas/' . $nombreArchivo;
+            } else {
+                registrar_log("No se pudo mover la imagen subida al servidor.", 'ERROR');
             }
+        } else {
+            registrar_log("Intento de subida de archivo no permitido: .$ext", 'WARNING');
         }
     }
 
@@ -156,6 +159,8 @@ function guardar_receta($datos, $ingredientes, $id = null) {
                 $datos['dificultad'], $porciones, $imagen_url
             ]);
             $id_receta = $pdo->lastInsertId();
+            
+            registrar_log("Receta creada con éxito (ID: $id_receta) por el usuario ID: {$_SESSION['id_usuario']}", 'INFO');
         } else {
             $sql = "UPDATE Recetas SET id_categoria=?, titulo=?, descripcion=?, instrucciones=?, tiempo_preparacion=?, dificultad=?, porciones=?, estado='Pendiente', imagen_url=? WHERE id_receta=?";
             $stmt = $pdo->prepare($sql);
@@ -166,6 +171,8 @@ function guardar_receta($datos, $ingredientes, $id = null) {
             ]);
             $id_receta = $id;
             $pdo->prepare("DELETE FROM Receta_Ingredientes WHERE id_receta = ?")->execute([$id]);
+            
+            registrar_log("Receta editada (ID: $id_receta). Volvió a estado Pendiente.", 'INFO');
         }
 
         if (!empty($ings_convertidos)) {
@@ -179,10 +186,11 @@ function guardar_receta($datos, $ingredientes, $id = null) {
         return true;
     } catch (Exception $e) {
         $pdo->rollBack();
+        registrar_log("Fallo SQL al guardar receta: " . $e->getMessage(), 'CRITICAL');
+        
         die("<div style='background: #FEE2E2; color: #B91C1C; padding: 2rem; margin: 2rem auto; max-width: 800px; border-radius: 12px; font-family: sans-serif; border: 1px solid #F87171;'>
-                <h3 style='margin-top:0;'>Error al guardar en la Base de Datos</h3>
-                <p>Detalle del error de MySQL:</p>
-                <code style='display: block; background: white; padding: 1rem; border-radius: 8px;'>" . $e->getMessage() . "</code>
+                <h3 style='margin-top:0;'>Error interno al guardar</h3>
+                <p>El error ha sido registrado en el sistema. Contacta al administrador.</p>
              </div>");
     }
 }
@@ -190,7 +198,9 @@ function guardar_receta($datos, $ingredientes, $id = null) {
 function eliminar_receta($id) {
     global $pdo;
     $stmt = $pdo->prepare("DELETE FROM Recetas WHERE id_receta = ?");
-    return $stmt->execute([$id]);
+    $res = $stmt->execute([$id]);
+    if ($res) registrar_log("Receta eliminada (ID: $id)", 'INFO');
+    return $res;
 }
 
 function obtener_estadisticas_generales() {
@@ -229,5 +239,8 @@ function cambiar_estado_receta($id_receta, $nuevo_estado) {
     if (!in_array($nuevo_estado, $estados_validos)) return false;
 
     $stmt = $pdo->prepare("UPDATE Recetas SET estado = ? WHERE id_receta = ?");
-    return $stmt->execute([$nuevo_estado, $id_receta]);
+    $res = $stmt->execute([$nuevo_estado, $id_receta]);
+    
+    if ($res) registrar_log("El admin ha cambiado la receta ID $id_receta a estado: $nuevo_estado", 'INFO');
+    return $res;
 }

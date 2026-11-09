@@ -6,7 +6,6 @@ $titulo        = $titulo        ?? 'Cookly';
 $usuarioHeader = usuarioActual();
 $paginaActiva  = basename($_SERVER['PHP_SELF'] ?? '');
 
-// Detecta la carpeta raíz del proyecto (ej. /cookly) para que las rutas funcionen siempre
 $base_url = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
 ?>
 <!DOCTYPE html>
@@ -16,7 +15,6 @@ $base_url = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($titulo) ?> · Cookly</title>
 
-    <!-- FAVICON CORREGIDO -->
     <link rel="icon" type="image/png" href="<?= $base_url ?>/public/IMG/logo.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,7 +26,6 @@ $base_url = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
 <div class="page-shell">
 
     <header class="topbar">
-        <!-- Logo y enlace al inicio -->
         <a href="<?= $base_url ?>/index.php" class="brand-wrap" style="text-decoration: none;">
             <img class="brand-logo" src="<?= $base_url ?>/public/IMG/logo.png" alt="Logo de Cookly">
             <div>
@@ -46,6 +43,8 @@ $base_url = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
                 <?php if (esAdmin()): ?>
                     <a class="nav-btn <?= $paginaActiva === 'admin.php' ? 'active' : '' ?>" 
                        href="<?= $base_url ?>/admin.php" style="background: var(--primary); color: white;">🛡️ Admin</a>
+                    <a class="nav-btn <?= $paginaActiva === 'logs.php' ? 'active' : '' ?>" 
+                       href="<?= $base_url ?>/logs.php" style="background: #333; color: white;">📋 Logs</a>
                 <?php endif; ?>
 
                 <a class="nav-btn <?= $paginaActiva === 'manual.php' ? 'active' : '' ?>" href="<?= $base_url ?>/manual.php">📖 Manual</a>

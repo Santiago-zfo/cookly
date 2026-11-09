@@ -1,4 +1,6 @@
 <?php
+// config/database.php
+require_once __DIR__ . '/../includes/auth.php';
 
 $host = 'localhost';
 $dbname = 'cookly';
@@ -16,5 +18,6 @@ $options = [
 try {
     $pdo = new PDO($dsn, $user, $pass, $options);
 } catch (PDOException $e) {
-    die('Error de conexión a la base de datos: ' . $e->getMessage());
+    registrar_log("Fallo de conexión a la BD: " . $e->getMessage(), 'CRITICAL');
+    die('Error de conexión a la base de datos. Por favor, contacta al administrador.');
 }

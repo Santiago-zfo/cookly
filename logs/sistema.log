@@ -1,0 +1,4 @@
+[2026-11-09 02:04:51] [CRITICAL] [Invitado/Anónimo] Fallo de conexión a la BD: SQLSTATE[HY000] [1049] Unknown database 'cookly'
+[2026-11-09 02:05:03] [CRITICAL] [Invitado/Anónimo] Fallo de conexión a la BD: SQLSTATE[HY000] [1049] Unknown database 'cookly'
+[2026-11-09 02:09:25] [INFO] [santi06132009@gmail.com] Inicio de sesión exitoso.
+[2026-11-09 02:11:10] [INFO] [santi06132009@gmail.com] Inicio de sesión exitoso.
