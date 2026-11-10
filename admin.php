@@ -88,8 +88,9 @@ require_once __DIR__ . '/includes/header.php';
     <div class="section-heading">
         <h2>🛡️ Panel de Administración</h2>
         <div class="no-print" style="display: flex; gap: 1rem;">
-            <a href="exportar_excel.php" class="submit-btn" style="background: #10B981;">Descargar Excel</a>
-            <button onclick="window.print()" class="submit-btn" style="background: #EF4444;">Descargar PDF</button>
+            <!-- Este botón nos lleva a la nueva vista -->
+            <a href="reportes.php" class="submit-btn" style="background: #3B82F6;">📊 Ir a Reportes Detallados</a>
+            <a href="exportar_excel.php" class="submit-btn" style="background: #10B981;">Descargar Excel Global</a>
         </div>
     </div>
 

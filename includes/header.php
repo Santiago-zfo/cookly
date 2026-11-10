@@ -46,6 +46,9 @@ $base_url = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
                 <?php if (esAdmin()): ?>
                     <a class="nav-btn <?= $paginaActiva === 'admin.php' ? 'active' : '' ?>" 
                        href="<?= $base_url ?>/admin.php" style="background: var(--primary); color: white;">🛡️ Admin</a>
+                    <!-- NUEVO BOTÓN DE REPORTES -->
+                    <a class="nav-btn <?= $paginaActiva === 'reportes.php' ? 'active' : '' ?>" 
+                       href="<?= $base_url ?>/reportes.php">📊 Reportes</a>
                 <?php endif; ?>
 
                 <a class="nav-btn <?= $paginaActiva === 'manual.php' ? 'active' : '' ?>" href="<?= $base_url ?>/manual.php">📖 Manual</a>
