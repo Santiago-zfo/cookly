@@ -1,4 +1,7 @@
 <?php
+// Zona horaria utilizada por el registro de eventos.
+date_default_timezone_set('America/Bogota');
+
 /**
  * includes/auth.php
  * ------------------------------------------------------------
@@ -59,6 +62,7 @@ function usuarioActual(): ?array
         'id_usuario' => (int) $_SESSION['id_usuario'],
         'nombre'     => (string) ($_SESSION['nombre'] ?? ''),
         'correo'     => (string) ($_SESSION['correo_electronico'] ?? ''),
+        'rol'        => (string) ($_SESSION['rol'] ?? 'usuario'),
     ];
 }
 
@@ -70,7 +74,7 @@ function requerirLogin(): void
 {
     iniciarSesion();
     if (!estaAutenticado()) {
-        header('Location: login.php');
+        header('Location: Login.php');
         exit;
     }
 }
@@ -138,4 +142,55 @@ function cerrarSesion(): void
     }
 
     session_destroy();
+}
+
+// Permisos de administración compatibles con la sesión existente.
+function esAdmin(): bool {
+    return isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin';
+}
+
+function requerirAdmin(): void {
+    requerirLogin();
+    if (!esAdmin()) {
+        header('Location: index.php');
+        exit;
+    }
+}
+
+// --- SISTEMA DE MENSAJES FLASH ---
+function set_flash_message($tipo, $mensaje) {
+    $_SESSION['flash'] = ['tipo' => $tipo, 'mensaje' => $mensaje];
+}
+
+function mostrar_flash_message() {
+    if (isset($_SESSION['flash'])) {
+        $flash = $_SESSION['flash'];
+        unset($_SESSION['flash']); 
+        
+        $clase = $flash['tipo'] === 'exito' ? 'exito' : 'error';
+        echo "<div class='estado {$clase}' style='margin-bottom: 1.5rem; animation: slideUp 0.3s;'>{$flash['mensaje']}</div>";
+    }
+}
+
+// --- SISTEMA DE LOGS (REGISTRO) ---
+/**
+ * Registra un error o evento en el archivo de logs.
+ * 
+ * @param string $mensaje El mensaje a guardar.
+ * @param string $tipo    El tipo de log (ERROR, INFO, WARNING, CRITICAL).
+ */
+function registrar_log($mensaje, $tipo = 'ERROR') {
+    $directorio = __DIR__ . '/../logs';
+    $archivo = $directorio . '/sistema.log';
+
+    if (!is_dir($directorio)) {
+        mkdir($directorio, 0755, true);
+    }
+
+    // La función date() usará la zona horaria que definimos al principio
+    $fecha = date('Y-m-d H:i:s');
+    $usuario = isset($_SESSION['correo_electronico']) ? $_SESSION['correo_electronico'] : 'Invitado/Anónimo';
+    
+    $linea = "[$fecha] [$tipo] [$usuario] $mensaje" . PHP_EOL;
+    file_put_contents($archivo, $linea, FILE_APPEND | LOCK_EX);
 }

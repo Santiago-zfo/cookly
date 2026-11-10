@@ -1,0 +1,1282 @@
+{
+  "version": "2.0",
+  "fecha": "2026-11-09",
+  "fecha_visible": "9 de noviembre de 2026",
+  "autor": "Equipo Cookly",
+  "capitulos": [
+    {
+      "id": "introduccion",
+      "titulo": "Bienvenido a Cookly",
+      "intro": "Esta guía te acompaña desde la creación de tu cuenta hasta la publicación de tus recetas. Puedes leerla en orden o buscar el tema que necesitas.",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Cookly es un recetario web. Cada persona tiene un espacio llamado «Mis recetas» y puede consultar las recetas aprobadas de la comunidad desde «Explorar». Las imágenes de esta guía se tomaron en Cookly con usuarios y recetas de prueba."
+        },
+        {
+          "tipo": "paso",
+          "titulo": "Cómo consultar esta guía",
+          "texto": "Usa el índice para abrir un capítulo, escribe una palabra en el buscador o recorre las secciones con «Anterior» y «Siguiente». En un celular, toca «Ver índice». Haz clic en una captura para ampliarla y pulsa Escape o «Cerrar» para regresar."
+        },
+        {
+          "tipo": "nota",
+          "titulo": "También puedes llevarla contigo",
+          "texto": "«Descargar PDF completo» guarda todos los capítulos y capturas, aunque hayas usado el buscador. «Imprimir» abre las opciones de impresión de tu navegador.",
+          "nivel": "consejo"
+        }
+      ],
+      "grupo": "Antes de empezar",
+      "claves": []
+    },
+    {
+      "id": "objetivo",
+      "titulo": "Objetivo de Cookly",
+      "intro": "Organizar tus preparaciones y compartirlas con otras personas mediante un recetario claro y fácil de consultar.",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "titulo": "Qué puedes hacer",
+          "columnas": [
+            "Necesidad",
+            "Opción en Cookly"
+          ],
+          "filas": [
+            [
+              "Guardar una preparación",
+              "+ Nueva receta"
+            ],
+            [
+              "Encontrar tus publicaciones y su estado",
+              "Mis recetas"
+            ],
+            [
+              "Buscar ideas de la comunidad",
+              "Explorar"
+            ],
+            [
+              "Leer cantidades y pasos de cocina",
+              "Ver"
+            ],
+            [
+              "Actualizar tus datos personales",
+              "Tu nombre, en el encabezado"
+            ]
+          ]
+        },
+        {
+          "tipo": "nota",
+          "titulo": "Publicación con revisión",
+          "texto": "Una receta nueva queda en estado «Pendiente». Un administrador debe aprobarla para que aparezca en «Explorar». Al editarla, vuelve a «Pendiente».",
+          "nivel": "consejo"
+        }
+      ],
+      "grupo": "Antes de empezar",
+      "claves": []
+    },
+    {
+      "id": "requisitos",
+      "titulo": "Requisitos para usar el sistema",
+      "intro": "Puedes utilizar Cookly desde un computador, una tableta o un celular que tenga acceso al servidor de la aplicación.",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "titulo": "Lo que necesitas",
+          "columnas": [
+            "Requisito",
+            "Qué debes comprobar"
+          ],
+          "filas": [
+            [
+              "Navegador",
+              "Un navegador actualizado, con cookies y JavaScript activados para las interacciones."
+            ],
+            [
+              "Acceso al servidor",
+              "Conexión a internet o a la red local donde esté instalado Cookly."
+            ],
+            [
+              "Cuenta",
+              "Correo electrónico y contraseña registrados."
+            ],
+            [
+              "Imágenes",
+              "Un archivo permitido o una URL accesible. No incluyas información privada en tus fotos."
+            ]
+          ]
+        },
+        {
+          "tipo": "nota",
+          "titulo": "Si Cookly está instalado en tu equipo",
+          "texto": "El servidor web y la base de datos deben estar encendidos. Si trabajas con Laragon, abre el proyecto mediante su dirección local; no abras los archivos PHP con doble clic.",
+          "nivel": "consejo"
+        },
+        {
+          "tipo": "nota",
+          "titulo": "Una dirección para cada instalación",
+          "texto": "La dirección de Cookly depende de dónde lo haya instalado tu equipo. Solicítala al responsable del proyecto; esta guía no supone una dirección pública.",
+          "nivel": "consejo"
+        }
+      ],
+      "grupo": "Antes de empezar",
+      "claves": []
+    },
+    {
+      "id": "acceso",
+      "titulo": "Acceso a la plataforma",
+      "intro": "El formulario de inicio de sesión es la puerta de entrada a las recetas y al perfil.",
+      "bloques": [
+        {
+          "tipo": "paso",
+          "titulo": "Paso 1. Abre la dirección de Cookly",
+          "texto": "Escribe en el navegador la dirección que te entregó el responsable. Si la carpeta del proyecto se llama cookly, una instalación local podría usar http://localhost/cookly/Login.php. Esa dirección es solo un ejemplo de instalación."
+        },
+        {
+          "tipo": "paso",
+          "titulo": "Paso 2. Identifica el formulario",
+          "texto": "Verás el logo, los campos «Correo electrónico» y «Contraseña» y el botón «Iniciar sesión». Si todavía no tienes cuenta, usa «¿No tienes cuenta? Regístrate».",
+          "imagen": "login"
+        },
+        {
+          "tipo": "nota",
+          "titulo": "Respeta el nombre del archivo",
+          "texto": "El archivo de acceso del proyecto es Login.php. En algunos servidores las mayúsculas y las minúsculas cuentan.",
+          "nivel": "consejo"
+        }
+      ],
+      "grupo": "Tu cuenta",
+      "claves": [
+        "entrar",
+        "url",
+        "dirección"
+      ]
+    },
+    {
+      "id": "registro",
+      "titulo": "Registro de nuevos usuarios",
+      "intro": "Crea una cuenta para guardar tus preparaciones y consultar el recetario compartido.",
+      "bloques": [
+        {
+          "tipo": "paso",
+          "titulo": "Paso 1. Abre «Regístrate»",
+          "texto": "Desde el inicio de sesión, selecciona «¿No tienes cuenta? Regístrate». Se abrirá «Crea tu cuenta».",
+          "imagen": "registro"
+        },
+        {
+          "tipo": "paso",
+          "titulo": "Paso 2. Completa tus datos",
+          "texto": "Escribe tu nombre completo, con al menos 3 caracteres, y un correo electrónico válido que no esté registrado. Crea una contraseña de al menos 8 caracteres y repítela en «Confirmar Contraseña»."
+        },
+        {
+          "tipo": "paso",
+          "titulo": "Paso 3. Pulsa «Crear cuenta»",
+          "texto": "Cuando el registro termine, aparecerá «Cuenta creada. Ya puedes iniciar sesión.». Selecciona «¿Ya tienes cuenta? Inicia sesión».",
+          "imagen": "registro_ok"
+        },
+        {
+          "tipo": "nota",
+          "titulo": "Si aparece un error",
+          "texto": "Comprueba que las contraseñas coincidan, que tengan al menos 8 caracteres y que el correo no esté registrado. La creación de la cuenta no inicia sesión automáticamente.",
+          "nivel": "consejo"
+        }
+      ],
+      "grupo": "Tu cuenta",
+      "claves": [
+        "registrarme",
+        "crear cuenta"
+      ]
+    },
+    {
+      "id": "sesion",
+      "titulo": "Inicio de sesión",
+      "intro": "Accede a tu espacio personal con los datos de tu cuenta.",
+      "bloques": [
+        {
+          "tipo": "paso",
+          "titulo": "Paso 1. Escribe el correo y la contraseña",
+          "texto": "Usa el correo con el que te registraste y tu contraseña. La captura muestra el formulario vacío para proteger los datos de acceso.",
+          "imagen": "login"
+        },
+        {
+          "tipo": "paso",
+          "titulo": "Paso 2. Selecciona «Iniciar sesión»",
+          "texto": "Si los datos son correctos, Cookly abre «Mis recetas». Allí verás tus publicaciones y el menú de navegación.",
+          "imagen": "inicio"
+        },
+        {
+          "tipo": "nota",
+          "titulo": "Si no puedes entrar",
+          "texto": "El aviso «Correo o contraseña incorrectos.» indica que los datos no coinciden. Revisa el correo y el uso de mayúsculas en la contraseña. No compartas tu contraseña ni dejes tu sesión abierta en un equipo compartido.",
+          "nivel": "consejo"
+        }
+      ],
+      "grupo": "Tu cuenta",
+      "claves": [
+        "login",
+        "ingresar",
+        "autenticación"
+      ]
+    },
+    {
+      "id": "contrasena",
+      "titulo": "Contraseña y recuperación",
+      "intro": "Esta versión permite cambiar tu contraseña desde el perfil cuando ya has iniciado sesión.",
+      "bloques": [
+        {
+          "tipo": "nota",
+          "titulo": "No hay recuperación automática",
+          "texto": "No existe un formulario «Olvidé mi contraseña» ni envío de enlaces de recuperación. Si olvidaste la contraseña y no puedes entrar, contacta al responsable de Cookly. No se documenta una recuperación que el sistema no ofrece.",
+          "nivel": "aviso"
+        },
+        {
+          "tipo": "paso",
+          "titulo": "Paso 1. Abre tu perfil",
+          "texto": "Haz clic en tu nombre en el encabezado y baja hasta «Cambiar Contraseña».",
+          "imagen": "password"
+        },
+        {
+          "tipo": "paso",
+          "titulo": "Paso 2. Completa y confirma el cambio",
+          "texto": "Introduce la contraseña actual, una nueva de al menos 8 caracteres y su confirmación. Pulsa «Actualizar Contraseña» y revisa el mensaje de resultado."
+        },
+        {
+          "tipo": "nota",
+          "titulo": "Recuerda la nueva contraseña",
+          "texto": "La contraseña actual debe ser correcta. Si la nueva no coincide con su confirmación o tiene menos de 8 caracteres, el cambio se rechaza.",
+          "nivel": "consejo"
+        }
+      ],
+      "grupo": "Tu cuenta",
+      "claves": [
+        "recuperar",
+        "olvidé",
+        "clave",
+        "password"
+      ]
+    },
+    {
+      "id": "inicio",
+      "titulo": "Página principal: Mis recetas",
+      "intro": "Es tu espacio de trabajo. Muestra únicamente las recetas que has creado y el estado de revisión de cada una.",
+      "bloques": [
+        {
+          "tipo": "paso",
+          "titulo": "Paso 1. Revisa tus tarjetas",
+          "texto": "Abre «Mis recetas». Cada tarjeta muestra su imagen, categoría, título, descripción breve y estado. Si aún no has creado recetas, verás «Aún no has publicado recetas».",
+          "imagen": "inicio"
+        },
+        {
+          "tipo": "tabla",
+          "titulo": "Estados de las recetas",
+          "columnas": [
+            "Estado",
+            "Qué significa"
+          ],
+          "filas": [
+            [
+              "Pendiente",
+              "Está esperando revisión; todavía no aparece en Explorar."
+            ],
+            [
+              "Aceptado",
+              "Está aprobada y puede aparecer en Explorar."
+            ],
+            [
+              "Rechazado",
+              "No está publicada en Explorar. Puedes revisarla y editarla para enviarla de nuevo."
+            ]
+          ]
+        },
+        {
+          "tipo": "paso",
+          "titulo": "Paso 2. Elige una acción",
+          "texto": "Usa «Ver» para abrir el detalle, «Editar» para cambiarla o «Eliminar» para borrarla. «+ Nueva receta» abre el formulario de creación.",
+          "imagen": "acciones"
+        }
+      ],
+      "grupo": "Usar Cookly",
+      "claves": [
+        "principal",
+        "dashboard",
+        "pendiente",
+        "aprobada"
+      ]
+    },
+    {
+      "id": "navegacion",
+      "titulo": "Menú de navegación",
+      "intro": "El encabezado te permite cambiar de sección sin perder la orientación.",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La siguiente captura muestra el menú de una cuenta de usuario. En pantallas pequeñas, desliza horizontalmente la fila de opciones para encontrar los enlaces que quedan fuera de la vista.",
+          "imagen": "navegacion"
+        },
+        {
+          "tipo": "tabla",
+          "titulo": "Opciones del encabezado",
+          "columnas": [
+            "Opción",
+            "Destino o utilidad"
+          ],
+          "filas": [
+            [
+              "Logo / Cookly",
+              "Regresa a Mis recetas."
+            ],
+            [
+              "Mis recetas",
+              "Tus preparaciones y sus acciones."
+            ],
+            [
+              "Explorar",
+              "Recetas aceptadas de la comunidad y buscador."
+            ],
+            [
+              "+ Nueva receta",
+              "Formulario para crear una preparación."
+            ],
+            [
+              "Manual de Usuario",
+              "Esta guía y su PDF descargable."
+            ],
+            [
+              "Video",
+              "Página de presentación. El archivo de video no viene incluido en el ZIP revisado."
+            ],
+            [
+              "Tu nombre",
+              "Perfil, contraseña y opciones de cuenta."
+            ],
+            [
+              "Cerrar sesión",
+              "Termina tu acceso a Cookly."
+            ],
+            [
+              "Admin / Logs",
+              "Opciones adicionales visibles para cuentas con rol administrador."
+            ]
+          ]
+        },
+        {
+          "tipo": "nota",
+          "titulo": "Enlaces según tu cuenta",
+          "texto": "Las cuentas normales no ven «Admin» ni «Logs». «Reportes del Sistema» también existe en reportes.php, aunque no tiene un enlace propio en el menú actual.",
+          "nivel": "consejo"
+        }
+      ],
+      "grupo": "Usar Cookly",
+      "claves": [
+        "menú",
+        "barra",
+        "video",
+        "rutas"
+      ]
+    },
+    {
+      "id": "crear",
+      "titulo": "Crear una receta",
+      "intro": "Guarda una preparación con sus ingredientes, cantidades e instrucciones.",
+      "bloques": [
+        {
+          "tipo": "paso",
+          "titulo": "Paso 1. Inicia sesión y abre «+ Nueva receta»",
+          "texto": "Encontrarás esta opción en el menú y en «Mis recetas».",
+          "imagen": "nueva_boton"
+        },
+        {
+          "tipo": "paso",
+          "titulo": "Paso 2. Completa la información principal",
+          "texto": "Escribe el título, selecciona una categoría y define el tiempo en minutos, la dificultad y las porciones. El tiempo y las porciones deben ser mayores que cero. Puedes añadir una descripción y una imagen.",
+          "imagen": "crear_datos"
+        },
+        {
+          "tipo": "nota",
+          "titulo": "Imágenes de recetas",
+          "texto": "Puedes pegar una URL o seleccionar un archivo JPG, JPEG, PNG, WEBP o GIF. Si seleccionas un archivo permitido, este reemplaza la URL. El límite de tamaño depende de la configuración del servidor.",
+          "nivel": "consejo"
+        },
+        {
+          "tipo": "paso",
+          "titulo": "Paso 3. Escribe las instrucciones y los ingredientes",
+          "texto": "Describe la preparación con pasos claros. En cada fila escribe el ingrediente, la cantidad y su unidad. Pulsa «+ Ingrediente» para añadir otra fila; «×» quita la fila o limpia la última que queda.",
+          "imagen": "crear_ingredientes"
+        },
+        {
+          "tipo": "paso",
+          "titulo": "Paso 4. Pulsa «Guardar»",
+          "texto": "Cookly regresa a «Mis recetas» y muestra «¡Receta creada con éxito! Está pendiente de aprobación.». Comprueba el título y el estado «Pendiente».",
+          "imagen": "crear_resultado"
+        },
+        {
+          "tipo": "nota",
+          "titulo": "Antes de enviarla",
+          "texto": "Revisa ortografía, cantidades y unidades. Guardar no publica inmediatamente la receta en «Explorar». Un administrador debe aceptarla.",
+          "nivel": "consejo"
+        }
+      ],
+      "grupo": "Usar Cookly",
+      "claves": [
+        "nueva",
+        "publicar",
+        "guardar",
+        "formulario",
+        "imagen"
+      ]
+    },
+    {
+      "id": "consultar",
+      "titulo": "Consultar, explorar y buscar",
+      "intro": "Encuentra una receta y abre su detalle para leer los ingredientes y la preparación.",
+      "bloques": [
+        {
+          "tipo": "paso",
+          "titulo": "Paso 1. Abre «Explorar»",
+          "texto": "Esta sección muestra las recetas con estado «Aceptado». Se presentan hasta 6 por página; si hay más, usa «Anterior» y «Siguiente».",
+          "imagen": "explorar"
+        },
+        {
+          "tipo": "paso",
+          "titulo": "Paso 2. Escribe en el buscador",
+          "texto": "Puedes buscar por título, categoría o autor. Los resultados se actualizan mientras escribes y la búsqueda devuelve hasta 20 coincidencias. Borra el texto para recuperar la lista con su paginación.",
+          "imagen": "busqueda"
+        },
+        {
+          "tipo": "paso",
+          "titulo": "Paso 3. Selecciona «Ver»",
+          "texto": "El detalle muestra la categoría, dificultad, autor, tiempo, porciones, descripción, ingredientes y preparación. También puedes abrir tus recetas desde «Mis recetas», aunque estén pendientes o rechazadas.",
+          "imagen": "detalle"
+        },
+        {
+          "tipo": "nota",
+          "titulo": "Qué puedes modificar",
+          "texto": "Solo puedes editar y eliminar tus propias recetas. Las recetas sin aprobar se pueden consultar por su autor y por un administrador; los demás usuarios no pueden abrirlas.",
+          "nivel": "consejo"
+        }
+      ],
+      "grupo": "Usar Cookly",
+      "claves": [
+        "ver",
+        "detalle",
+        "buscar",
+        "paginación",
+        "comunidad"
+      ]
+    },
+    {
+      "id": "editar",
+      "titulo": "Editar una receta",
+      "intro": "Actualiza la información de una preparación que hayas creado.",
+      "bloques": [
+        {
+          "tipo": "paso",
+          "titulo": "Paso 1. Busca tu receta y pulsa «Editar»",
+          "texto": "Abre «Mis recetas» y localiza la tarjeta. También puedes usar «Editar» dentro del detalle de una receta propia.",
+          "imagen": "acciones"
+        },
+        {
+          "tipo": "paso",
+          "titulo": "Paso 2. Revisa los datos precargados",
+          "texto": "Cambia los campos necesarios. Puedes ajustar el título, categoría, tiempo, dificultad, porciones, descripción, instrucciones, imagen e ingredientes.",
+          "imagen": "editar"
+        },
+        {
+          "tipo": "paso",
+          "titulo": "Paso 3. Selecciona «Actualizar receta»",
+          "texto": "Cookly vuelve a «Mis recetas» y muestra el aviso de actualización. La receta vuelve a estado «Pendiente» para revisión.",
+          "imagen": "editar_resultado"
+        },
+        {
+          "tipo": "nota",
+          "titulo": "Si estaba publicada",
+          "texto": "Después de editar una receta aceptada, deja de mostrarse en «Explorar» hasta que un administrador la apruebe otra vez.",
+          "nivel": "aviso"
+        }
+      ],
+      "grupo": "Usar Cookly",
+      "claves": [
+        "actualizar",
+        "modificar",
+        "revisión"
+      ]
+    },
+    {
+      "id": "eliminar",
+      "titulo": "Eliminar una receta",
+      "intro": "Borra una receta propia que ya no necesites. Revisa el título antes de confirmar.",
+      "bloques": [
+        {
+          "tipo": "paso",
+          "titulo": "Paso 1. Abre las acciones de tu receta",
+          "texto": "En «Mis recetas» o en el detalle de una receta propia, localiza «Eliminar». La captura usa una receta de prueba creada para esta demostración.",
+          "imagen": "eliminar_boton"
+        },
+        {
+          "tipo": "paso",
+          "titulo": "Paso 2. Lee la confirmación del navegador",
+          "texto": "Al pulsar «Eliminar» en la tarjeta, aparece «¿Eliminar?». En el detalle, aparece «¿Seguro que quieres eliminar esta receta?». «Cancelar» conserva la receta; «Aceptar» continúa con el borrado. El aspecto y el idioma de los botones dependen del navegador."
+        },
+        {
+          "tipo": "nota",
+          "titulo": "Sobre la confirmación",
+          "texto": "El mensaje del cuadro nativo del navegador se verificó automáticamente. El navegador disponible no permite incluir ese cuadro en la captura de la página; por eso se muestran el botón real y el resultado, sin recrear el diálogo."
+        },
+        {
+          "tipo": "paso",
+          "titulo": "Paso 3. Comprueba el resultado",
+          "texto": "Si aceptaste, Cookly vuelve a «Mis recetas» y la tarjeta de esa receta deja de aparecer.",
+          "imagen": "eliminar_resultado"
+        },
+        {
+          "tipo": "nota",
+          "titulo": "Es definitivo",
+          "texto": "No hay papelera ni botón para deshacer el borrado. Guarda una copia de la información que necesites antes de eliminarla.",
+          "nivel": "aviso"
+        }
+      ],
+      "grupo": "Usar Cookly",
+      "claves": [
+        "borrar",
+        "confirmar",
+        "cancelar"
+      ]
+    },
+    {
+      "id": "categorias",
+      "titulo": "Categorías de las recetas",
+      "intro": "Las categorías te ayudan a clasificar las preparaciones y a encontrarlas en el recetario.",
+      "bloques": [
+        {
+          "tipo": "paso",
+          "titulo": "Paso 1. Abre una receta nueva o propia para editar",
+          "texto": "Localiza el selector «Categoría». Abre la lista y elige la opción que mejor describa la preparación.",
+          "imagen": "categorias"
+        },
+        {
+          "tipo": "paso",
+          "titulo": "Paso 2. Guarda o actualiza la receta",
+          "texto": "La categoría elegida aparecerá como una etiqueta en su tarjeta y en el detalle. También puedes escribir el nombre de una categoría en el buscador de «Explorar»."
+        },
+        {
+          "tipo": "nota",
+          "titulo": "Alcance de esta versión",
+          "texto": "No existe una pantalla para crear, editar o eliminar categorías desde la interfaz. Las opciones dependen del catálogo cargado por el responsable de la instalación. Las categorías de las capturas pertenecen a la base de prueba y pueden diferir de las tuyas.",
+          "nivel": "consejo"
+        }
+      ],
+      "grupo": "Usar Cookly",
+      "claves": [
+        "clasificar",
+        "catálogo",
+        "categoría"
+      ]
+    },
+    {
+      "id": "ingredientes",
+      "titulo": "Ingredientes, cantidades y unidades",
+      "intro": "Registra qué necesita cada receta y cuánto se utiliza de cada ingrediente.",
+      "bloques": [
+        {
+          "tipo": "paso",
+          "titulo": "Paso 1. Completa una fila de ingrediente",
+          "texto": "En el formulario de creación o edición escribe un nombre claro, una cantidad y la unidad correspondiente. Por ejemplo: «Arroz», «200» y «gramos».",
+          "imagen": "ingredientes"
+        },
+        {
+          "tipo": "paso",
+          "titulo": "Paso 2. Añade o quita filas",
+          "texto": "Pulsa «+ Ingrediente» para añadir otra fila. Usa «×» para quitarla; si solo queda una fila, sus campos se limpian. Evita dejar un nombre sin cantidad o sin revisar la unidad."
+        },
+        {
+          "tipo": "paso",
+          "titulo": "Paso 3. Guarda y consulta el detalle",
+          "texto": "Pulsa «Guardar» o «Actualizar receta». Abre «Ver» para comprobar la lista con las cantidades y unidades. Los ingredientes se muestran ordenados alfabéticamente.",
+          "imagen": "detalle_ingredientes"
+        },
+        {
+          "tipo": "nota",
+          "titulo": "No hay un administrador independiente",
+          "texto": "El catálogo de ingredientes se utiliza automáticamente al guardar las recetas. Quitar una fila modifica los ingredientes de esa receta; no es una acción para borrar el ingrediente de todo el sistema.",
+          "nivel": "consejo"
+        }
+      ],
+      "grupo": "Usar Cookly",
+      "claves": [
+        "unidad",
+        "cantidad",
+        "agregar",
+        "gramos",
+        "quitar"
+      ]
+    },
+    {
+      "id": "perfil",
+      "titulo": "Perfil de usuario",
+      "intro": "Mantén tus datos de contacto, foto y biografía actualizados desde tu espacio personal.",
+      "bloques": [
+        {
+          "tipo": "paso",
+          "titulo": "Paso 1. Selecciona tu nombre en el encabezado",
+          "texto": "Se abrirá «Mi Perfil», con tus datos actuales.",
+          "imagen": "perfil"
+        },
+        {
+          "tipo": "paso",
+          "titulo": "Paso 2. Edita tus datos y tu foto",
+          "texto": "Puedes cambiar el nombre, el correo y la biografía. Para la foto, pega una URL o selecciona un archivo JPG, JPEG, PNG o WEBP. Usa un correo válido que no esté usado por otra cuenta."
+        },
+        {
+          "tipo": "paso",
+          "titulo": "Paso 3. Pulsa «Guardar Cambios»",
+          "texto": "Los cambios se aplican al guardar. Revisa el mensaje «Perfil actualizado correctamente.». Si cambiaste el correo, úsalo la próxima vez que inicies sesión."
+        },
+        {
+          "tipo": "texto",
+          "texto": "La sección «Cambiar Contraseña» se explica en el capítulo «Contraseña y recuperación». La foto no cambia solo por seleccionar el archivo: es necesario guardar."
+        },
+        {
+          "tipo": "texto",
+          "texto": "Al final del perfil está «Zona de Peligro». Para eliminar la cuenta, el sistema pide escribir exactamente ELIMINAR en una confirmación. Cancelar o escribir otra palabra conserva la cuenta.",
+          "titulo": "Eliminación de la cuenta",
+          "imagen": "cuenta"
+        },
+        {
+          "tipo": "nota",
+          "titulo": "Antes de eliminar tu cuenta",
+          "texto": "La propia interfaz advierte que perderás tus recetas. Esta acción es permanente y no hay una opción de recuperación de cuenta. Conserva una copia de tu información si la necesitas.",
+          "nivel": "aviso"
+        }
+      ],
+      "grupo": "Tu cuenta",
+      "claves": [
+        "foto",
+        "avatar",
+        "biografía",
+        "correo",
+        "eliminar cuenta"
+      ]
+    },
+    {
+      "id": "cerrar",
+      "titulo": "Cerrar sesión",
+      "intro": "Finaliza tu acceso cuando termines de usar Cookly, especialmente en equipos compartidos.",
+      "bloques": [
+        {
+          "tipo": "paso",
+          "titulo": "Paso 1. Selecciona «Cerrar sesión»",
+          "texto": "Está en el encabezado, junto a tu nombre. En una pantalla pequeña, busca el botón en la parte superior.",
+          "imagen": "cerrar"
+        },
+        {
+          "tipo": "paso",
+          "titulo": "Paso 2. Comprueba que aparece el inicio de sesión",
+          "texto": "Cookly regresa al formulario de acceso. Para volver a consultar tus recetas, tendrás que iniciar sesión otra vez.",
+          "imagen": "login"
+        },
+        {
+          "tipo": "nota",
+          "titulo": "Cerrar no significa borrar",
+          "texto": "Cerrar sesión conserva tu cuenta y tus recetas. Para proteger tu acceso, no guardes contraseñas en navegadores de equipos compartidos.",
+          "nivel": "consejo"
+        }
+      ],
+      "grupo": "Tu cuenta",
+      "claves": [
+        "salir",
+        "logout"
+      ]
+    },
+    {
+      "id": "administracion",
+      "titulo": "Administración y aprobación",
+      "intro": "Las cuentas con rol administrador disponen de herramientas para revisar las recetas enviadas.",
+      "bloques": [
+        {
+          "tipo": "paso",
+          "titulo": "Paso 1. Abre «Admin»",
+          "texto": "Este enlace aparece solo con una cuenta administradora. En «Recetas Pendientes de Aprobación» se muestran las recetas que esperan revisión.",
+          "imagen": "admin"
+        },
+        {
+          "tipo": "paso",
+          "titulo": "Paso 2. Revisa antes de decidir",
+          "texto": "Usa «Leer» para abrir el detalle en otra pestaña. Comprueba los ingredientes y las instrucciones; después regresa al panel de administración."
+        },
+        {
+          "tipo": "paso",
+          "titulo": "Paso 3. Selecciona «Aprobar» o «Rechazar»",
+          "texto": "Cookly cambia el estado a «Aceptado» o «Rechazado» y muestra un aviso. Al aprobar, la receta puede aparecer en «Explorar». Al rechazar, permanece fuera de esa lista."
+        },
+        {
+          "tipo": "nota",
+          "titulo": "No es una edición de contenido",
+          "texto": "El panel permite cambiar el estado. No ofrece una pantalla para editar recetas ajenas, gestionar categorías, gestionar ingredientes o asignar roles a usuarios.",
+          "nivel": "consejo"
+        }
+      ],
+      "grupo": "Herramientas adicionales",
+      "claves": [
+        "admin",
+        "moderación",
+        "aprobar",
+        "rechazar"
+      ]
+    },
+    {
+      "id": "reportes",
+      "titulo": "Reportes, exportación y registros",
+      "intro": "Consulta las herramientas que ya existen para revisar la actividad de Cookly.",
+      "bloques": [
+        {
+          "tipo": "paso",
+          "titulo": "Reportes del administrador",
+          "texto": "En «Admin», baja hasta «Reportes y Gráficas». Verás los totales de usuarios, recetas y categorías, además de resúmenes por categoría, dificultad y usuarios con más recetas. Los totales incluyen recetas en distintos estados.",
+          "imagen": "reportes_admin"
+        },
+        {
+          "tipo": "paso",
+          "titulo": "Descargar Excel o imprimir el reporte",
+          "texto": "«Descargar Excel» obtiene un archivo .xls con tablas del resumen. «Descargar PDF» del panel abre la impresión del navegador: elige «Guardar como PDF». Este botón del panel es distinto de la descarga directa del PDF de este manual."
+        },
+        {
+          "tipo": "nota",
+          "titulo": "Gráficas y conexión",
+          "texto": "Las gráficas del panel usan Google Charts y necesitan que el navegador pueda cargar ese servicio. Si no aparecen, las tarjetas y tablas siguen disponibles.",
+          "nivel": "consejo"
+        },
+        {
+          "tipo": "paso",
+          "titulo": "Reportes del Sistema",
+          "texto": "También existe reportes.php. Un usuario con sesión puede abrir esa dirección dentro de su instalación para consultar estadísticas. La versión revisada no tiene un enlace propio a esa página en el menú.",
+          "imagen": "reportes"
+        },
+        {
+          "tipo": "paso",
+          "titulo": "Consultar los registros del sistema",
+          "texto": "Con una cuenta administradora, abre «Logs». Verás los eventos más recientes primero. Las capturas muestran únicamente registros de la instalación de prueba. Usa «Volver al Admin» para regresar.",
+          "imagen": "logs"
+        },
+        {
+          "tipo": "nota",
+          "titulo": "Datos de los registros",
+          "texto": "Los registros pueden contener correos y detalles de actividad. Compártelos únicamente con el responsable que vaya a revisar una incidencia.",
+          "nivel": "consejo"
+        }
+      ],
+      "grupo": "Herramientas adicionales",
+      "claves": [
+        "estadísticas",
+        "logs",
+        "excel",
+        "pdf",
+        "exportar"
+      ]
+    },
+    {
+      "id": "preguntas",
+      "titulo": "Preguntas frecuentes",
+      "intro": "Resuelve las dudas más habituales sobre el uso del recetario.",
+      "bloques": [
+        {
+          "tipo": "pregunta",
+          "titulo": "¿Por qué mi receta no aparece en Explorar?",
+          "texto": "Explorar muestra solo recetas con estado «Aceptado». Revisa su estado en «Mis recetas». Una receta nueva o editada queda «Pendiente» hasta que un administrador la apruebe."
+        },
+        {
+          "tipo": "pregunta",
+          "titulo": "¿Puedo editar una receta de otra persona?",
+          "texto": "No. Los botones de edición y eliminación corresponden a tus propias recetas. Puedes consultar las recetas aprobadas de la comunidad."
+        },
+        {
+          "tipo": "pregunta",
+          "titulo": "¿Por qué no tengo los botones Admin y Logs?",
+          "texto": "Solo aparecen al iniciar sesión con una cuenta que tenga rol administrador."
+        },
+        {
+          "tipo": "pregunta",
+          "titulo": "¿Puedo recuperar una receta eliminada?",
+          "texto": "Esta versión no tiene papelera ni recuperación desde la interfaz. Revisa bien antes de aceptar el borrado."
+        },
+        {
+          "tipo": "pregunta",
+          "titulo": "¿Dónde se agregan categorías e ingredientes?",
+          "texto": "Las categorías se seleccionan desde un catálogo existente. Los ingredientes se escriben en el formulario de cada receta. No hay pantallas independientes para administrar esos catálogos."
+        },
+        {
+          "tipo": "pregunta",
+          "titulo": "¿Puedo leer el manual sin entrar a mi cuenta?",
+          "texto": "Sí. Abre manual.php. Puedes leerlo y descargar su PDF sin iniciar sesión."
+        },
+        {
+          "tipo": "pregunta",
+          "titulo": "¿El buscador del manual busca recetas?",
+          "texto": "No. Busca dentro de los capítulos de esta guía. Para encontrar recetas, usa el buscador de «Explorar»."
+        },
+        {
+          "tipo": "pregunta",
+          "titulo": "¿Por qué no se reproduce el video de presentación?",
+          "texto": "La página Video existe, pero el ZIP revisado no contiene public/video_presentacion.mp4. El responsable debe añadir ese archivo antes de que pueda reproducirse."
+        }
+      ],
+      "grupo": "Ayuda",
+      "claves": [
+        "faq",
+        "dudas"
+      ]
+    },
+    {
+      "id": "problemas",
+      "titulo": "Solución de problemas",
+      "intro": "Identifica qué revisar cuando una acción no da el resultado esperado.",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "titulo": "Problemas y acciones recomendadas",
+          "columnas": [
+            "Situación",
+            "Qué puedes hacer"
+          ],
+          "filas": [
+            [
+              "No abre la plataforma",
+              "Comprueba la dirección y que tengas conexión con el servidor. Si es local, revisa que el servidor web esté encendido."
+            ],
+            [
+              "Error de conexión a la base de datos",
+              "Informa al responsable. Debe revisar el servicio y la configuración; no publiques credenciales."
+            ],
+            [
+              "No se crea la cuenta",
+              "Usa nombre de al menos 3 caracteres, correo válido y único, y contraseñas iguales de al menos 8 caracteres."
+            ],
+            [
+              "No puedo iniciar sesión",
+              "Comprueba correo y contraseña. No hay recuperación automática desde el formulario."
+            ],
+            [
+              "El tiempo o las porciones se rechazan",
+              "Introduce un número mayor que cero en ambos campos."
+            ],
+            [
+              "No aparece una categoría",
+              "El catálogo depende de la instalación. Solicita su revisión al responsable."
+            ],
+            [
+              "No aparece una imagen",
+              "Comprueba formato, tamaño permitido y disponibilidad de la URL. Si es posible, sube el archivo y guarda de nuevo."
+            ],
+            [
+              "No puedo guardar el perfil",
+              "Revisa el formato del correo y evita un correo que ya use otra cuenta."
+            ],
+            [
+              "El navegador pide una URL al editar una imagen subida",
+              "Si el campo muestra una ruta que empieza por public/, copia la dirección completa de la imagen visible y pégala en el campo URL antes de guardar. Si necesitas ayuda, contacta al responsable."
+            ],
+            [
+              "Mi compañero no ve mis recetas",
+              "Para Explorar, la receta debe estar aceptada y ambos deben usar la misma instalación y base de datos."
+            ],
+            [
+              "Faltan gráficas en Admin",
+              "Revisa la conexión a Google Charts. Puedes consultar los totales y las tablas."
+            ],
+            [
+              "El PDF del manual no descarga",
+              "Vuelve a intentar. Si falta el archivo, usa «Imprimir» y elige «Guardar como PDF», o contacta al responsable."
+            ],
+            [
+              "Una página pide iniciar sesión",
+              "Tu sesión pudo terminar. Vuelve a entrar desde Login.php."
+            ]
+          ]
+        },
+        {
+          "tipo": "nota",
+          "titulo": "Al reportar un problema",
+          "texto": "Describe la acción que realizaste, la pantalla y el mensaje que apareció. Si envías una captura, oculta contraseñas y datos personales.",
+          "nivel": "consejo"
+        }
+      ],
+      "grupo": "Ayuda",
+      "claves": [
+        "error",
+        "falla",
+        "no funciona",
+        "soporte"
+      ]
+    },
+    {
+      "id": "recomendaciones",
+      "titulo": "Recomendaciones de uso",
+      "intro": "Pequeñas comprobaciones hacen que tus recetas sean más claras y fáciles de preparar.",
+      "bloques": [
+        {
+          "tipo": "paso",
+          "titulo": "Antes de guardar",
+          "texto": "Usa un título concreto, una categoría adecuada, una foto propia o autorizada y una descripción breve. Comprueba que el tiempo y las porciones sean mayores que cero."
+        },
+        {
+          "tipo": "paso",
+          "titulo": "Al escribir la preparación",
+          "texto": "Presenta los pasos en orden. Incluye cantidades, unidades y tiempos de cocción. Revisa que todos los ingredientes mencionados aparezcan en la lista."
+        },
+        {
+          "tipo": "paso",
+          "titulo": "Al compartir un equipo",
+          "texto": "Cierra sesión al terminar y evita guardar tu contraseña en el navegador. Conserva una copia de las recetas que sean importantes para ti."
+        },
+        {
+          "tipo": "nota",
+          "titulo": "Al revisar publicaciones",
+          "texto": "Recuerda que cada edición vuelve a enviar la receta a revisión. Antes de borrar una receta o tu cuenta, asegúrate de que ya no necesitas la información.",
+          "nivel": "consejo"
+        }
+      ],
+      "grupo": "Ayuda",
+      "claves": []
+    },
+    {
+      "id": "glosario",
+      "titulo": "Glosario",
+      "intro": "Consulta el significado de las palabras utilizadas en Cookly y en esta guía.",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "titulo": "Términos principales",
+          "columnas": [
+            "Término",
+            "Significado"
+          ],
+          "filas": [
+            [
+              "Receta",
+              "Preparación que reúne ingredientes e instrucciones."
+            ],
+            [
+              "Categoría",
+              "Grupo con el que se clasifica una receta."
+            ],
+            [
+              "Ingrediente",
+              "Producto necesario para preparar el plato."
+            ],
+            [
+              "Cantidad",
+              "Valor numérico que indica cuánto se usa."
+            ],
+            [
+              "Unidad de medida",
+              "Referencia de la cantidad: gramos, tazas, unidades, etc."
+            ],
+            [
+              "Porciones",
+              "Número de raciones que rinde una preparación."
+            ],
+            [
+              "Pendiente",
+              "Receta que espera revisión."
+            ],
+            [
+              "Aceptado",
+              "Estado de una receta aprobada."
+            ],
+            [
+              "Rechazado",
+              "Estado de una receta que no fue aprobada."
+            ],
+            [
+              "Perfil",
+              "Pantalla con tus datos personales y opciones de cuenta."
+            ],
+            [
+              "Sesión",
+              "Acceso que mantiene tu identidad después de iniciar sesión."
+            ],
+            [
+              "Administrador",
+              "Persona con permiso para revisar recetas y consultar registros."
+            ],
+            [
+              "URL",
+              "Dirección de una página o una imagen."
+            ],
+            [
+              "PDF",
+              "Documento que conserva su presentación al descargarlo o imprimirlo."
+            ],
+            [
+              "Registro / Log",
+              "Evento guardado para revisar actividad o problemas."
+            ]
+          ]
+        }
+      ],
+      "grupo": "Referencia",
+      "claves": []
+    },
+    {
+      "id": "creditos",
+      "titulo": "Créditos y alcance",
+      "intro": "Manual preparado a partir de las pantallas, formularios y procesos incluidos en esta entrega de Cookly.",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "titulo": "Datos del documento",
+          "columnas": [
+            "Dato",
+            "Detalle"
+          ],
+          "filas": [
+            [
+              "Sistema",
+              "Cookly · Plataforma de gestión de recetas"
+            ],
+            [
+              "Documento",
+              "Manual de Usuario"
+            ],
+            [
+              "Edición del manual",
+              "2.0 · La aplicación no declara una versión propia."
+            ],
+            [
+              "Fecha",
+              "9 de noviembre de 2026"
+            ],
+            [
+              "Autor del sistema",
+              "Equipo de desarrollo de Cookly"
+            ],
+            [
+              "Capturas",
+              "Navegación real de la aplicación local con usuarios y recetas de prueba."
+            ],
+            [
+              "Identidad visual",
+              "Logo original de Cookly, verde #0F766E, fondos claros y tipografía Nunito con alternativas del sistema."
+            ]
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "El ZIP no incluía un script SQL. Para verificar los flujos y obtener capturas se utilizó una base local aislada con una estructura derivada de las consultas del proyecto. No se conectó a una base de producción. Los usuarios, correos y recetas visibles son de demostración."
+        },
+        {
+          "tipo": "texto",
+          "texto": "No se incluyen funciones de recuperación automática de contraseña, favoritos ni pantallas de administración de categorías o ingredientes, porque no existen en la interfaz revisada. La página Video se conserva, pero su archivo multimedia no estaba incluido."
+        },
+        {
+          "tipo": "nota",
+          "titulo": "Consultar una incidencia",
+          "texto": "Contacta al responsable de la instalación de Cookly. Esta versión no publica un correo ni un canal de soporte propios.",
+          "nivel": "consejo"
+        }
+      ],
+      "grupo": "Referencia",
+      "claves": [
+        "versión",
+        "autor",
+        "alcance",
+        "capturas"
+      ]
+    }
+  ],
+  "imagenes": {
+    "login": {
+      "archivo": "01-inicio-sesion.png",
+      "alt": "Formulario real de inicio de sesión",
+      "descripcion": "Inicio de sesión con los campos vacíos; no se muestran contraseñas.",
+      "ancho": 1050,
+      "alto": 532
+    },
+    "registro": {
+      "archivo": "02-registro.png",
+      "alt": "Formulario real de registro",
+      "descripcion": "Campos de registro de una cuenta de Cookly.",
+      "ancho": 1050,
+      "alto": 702
+    },
+    "registro_ok": {
+      "archivo": "03-registro-correcto.png",
+      "alt": "Confirmación real de registro exitoso",
+      "descripcion": "Mensaje de cuenta creada con los campos de contraseña vacíos.",
+      "ancho": 1050,
+      "alto": 783
+    },
+    "inicio": {
+      "archivo": "04-mis-recetas.png",
+      "alt": "Página Mis recetas con preparaciones de prueba",
+      "descripcion": "Mis recetas y estados de las publicaciones del usuario de demostración.",
+      "ancho": 1192,
+      "alto": 980
+    },
+    "acciones": {
+      "archivo": "05-acciones-receta.png",
+      "alt": "Acciones Ver, Editar y Eliminar de una receta propia",
+      "descripcion": "Tarjeta de una receta propia con sus acciones disponibles.",
+      "ancho": 360,
+      "alto": 411
+    },
+    "navegacion": {
+      "archivo": "06-menu-navegacion.png",
+      "alt": "Encabezado y menú original de Cookly",
+      "descripcion": "Menú de una cuenta de usuario con la opción Manual de Usuario.",
+      "ancho": 1380,
+      "alto": 75
+    },
+    "nueva_boton": {
+      "archivo": "07-nueva-receta-boton.png",
+      "alt": "Botón real para crear una receta",
+      "descripcion": "Acceso a Nueva receta desde el panel personal.",
+      "ancho": 1126,
+      "alto": 46
+    },
+    "crear_datos": {
+      "archivo": "08-crear-receta-datos.png",
+      "alt": "Información principal del formulario de creación",
+      "descripcion": "Formulario con título, categoría, tiempo, dificultad y porciones de una receta de prueba.",
+      "ancho": 1180,
+      "alto": 610
+    },
+    "crear_ingredientes": {
+      "archivo": "09-crear-receta-ingredientes.png",
+      "alt": "Instrucciones e ingredientes antes de guardar",
+      "descripcion": "Preparación, filas de ingredientes y botón Guardar de la receta de prueba.",
+      "ancho": 1180,
+      "alto": 461
+    },
+    "crear_resultado": {
+      "archivo": "10-receta-creada.png",
+      "alt": "Mensaje real de receta guardada y pendiente",
+      "descripcion": "Resultado después de guardar: receta creada y pendiente de aprobación.",
+      "ancho": 1192,
+      "alto": 1093
+    },
+    "explorar": {
+      "archivo": "11-explorar.png",
+      "alt": "Recetas aceptadas en Explorar",
+      "descripcion": "Listado de recetas aprobadas de la base de demostración.",
+      "ancho": 1192,
+      "alto": 593
+    },
+    "busqueda": {
+      "archivo": "12-busqueda-recetas.png",
+      "alt": "Búsqueda real por título en Explorar",
+      "descripcion": "Resultados al buscar una receta en la sección Explorar.",
+      "ancho": 1192,
+      "alto": 593
+    },
+    "detalle": {
+      "archivo": "13-detalle-receta.png",
+      "alt": "Detalle real con los datos de una receta",
+      "descripcion": "Categoría, tiempo, porciones, ingredientes y preparación de la receta consultada.",
+      "ancho": 1192,
+      "alto": 504
+    },
+    "editar": {
+      "archivo": "14-editar-receta.png",
+      "alt": "Formulario precargado para editar una receta propia",
+      "descripcion": "Datos cargados al abrir Editar en una receta de demostración.",
+      "ancho": 1180,
+      "alto": 680
+    },
+    "editar_resultado": {
+      "archivo": "15-receta-actualizada.png",
+      "alt": "Mensaje real de actualización y vuelta a Pendiente",
+      "descripcion": "Confirmación de edición: la receta vuelve a Pendiente para revisión.",
+      "ancho": 1192,
+      "alto": 1093
+    },
+    "eliminar_boton": {
+      "archivo": "16-eliminar-boton.png",
+      "alt": "Botón Eliminar de una receta desechable de prueba",
+      "descripcion": "La receta de prueba que se utilizará para comprobar el borrado.",
+      "ancho": 360,
+      "alto": 411
+    },
+    "eliminar_resultado": {
+      "archivo": "18-eliminar-resultado.png",
+      "alt": "Mis recetas tras eliminar la receta de prueba",
+      "descripcion": "La receta de demostración borrada ya no aparece en Mis recetas.",
+      "ancho": 1192,
+      "alto": 980
+    },
+    "categorias": {
+      "archivo": "19-categorias.png",
+      "alt": "Selector real de categorías de la receta",
+      "descripcion": "Selector Categoría con una opción real de la instalación de prueba. Tu catálogo puede ser diferente.",
+      "ancho": 551,
+      "alto": 78
+    },
+    "ingredientes": {
+      "archivo": "20-ingredientes.png",
+      "alt": "Filas reales para añadir y quitar ingredientes",
+      "descripcion": "Nombre, cantidad, unidad y controles para agregar o quitar ingredientes.",
+      "ancho": 1126,
+      "alto": 108
+    },
+    "detalle_ingredientes": {
+      "archivo": "21-ingredientes-detalle.png",
+      "alt": "Ingredientes guardados y preparación en el detalle",
+      "descripcion": "Ingredientes de una receta con sus cantidades y unidades.",
+      "ancho": 1126,
+      "alto": 162
+    },
+    "perfil": {
+      "archivo": "22-perfil.png",
+      "alt": "Formulario real del perfil con datos de demostración",
+      "descripcion": "Edición de nombre, correo, foto y biografía; todos los datos son de prueba.",
+      "ancho": 1126,
+      "alto": 526
+    },
+    "password": {
+      "archivo": "23-cambiar-contrasena.png",
+      "alt": "Formulario real para cambiar la contraseña, vacío",
+      "descripcion": "Cambio de contraseña desde el perfil; no se muestran datos de acceso.",
+      "ancho": 500,
+      "alto": 362
+    },
+    "cuenta": {
+      "archivo": "24-opciones-cuenta.png",
+      "alt": "Zona de Peligro real del perfil",
+      "descripcion": "Opción de eliminación de cuenta y advertencia que muestra Cookly.",
+      "ancho": 1126,
+      "alto": 178
+    },
+    "cerrar": {
+      "archivo": "25-cerrar-sesion.png",
+      "alt": "Enlace real para cerrar la sesión de Cookly",
+      "descripcion": "Botón Cerrar sesión junto al nombre del usuario de prueba.",
+      "ancho": 242,
+      "alto": 37
+    },
+    "admin": {
+      "archivo": "26-administracion.png",
+      "alt": "Panel real de moderación con recetas de prueba",
+      "descripcion": "Cuenta administradora de demostración revisando recetas pendientes.",
+      "ancho": 1200,
+      "alto": 560
+    },
+    "reportes_admin": {
+      "archivo": "27-reportes-admin.png",
+      "alt": "Resumen real de estadísticas en el panel Admin",
+      "descripcion": "Totales de usuarios, recetas y categorías calculados en el panel de administración con datos de prueba.",
+      "ancho": 1126,
+      "alto": 123
+    },
+    "reportes": {
+      "archivo": "28-reportes-sistema.png",
+      "alt": "Página real de Reportes del Sistema",
+      "descripcion": "Página reportes.php consultada con una sesión iniciada.",
+      "ancho": 1192,
+      "alto": 565
+    },
+    "logs": {
+      "archivo": "29-registro-sistema.png",
+      "alt": "Registro real con eventos de la instalación de prueba",
+      "descripcion": "Eventos generados al probar la aplicación; no corresponden a una instalación real del usuario.",
+      "ancho": 1192,
+      "alto": 297
+    }
+  }
+}

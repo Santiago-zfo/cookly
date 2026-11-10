@@ -1,29 +1,12 @@
 <?php
-/**
- * includes/header.php
- * ------------------------------------------------------------
- * Cabecera HTML reutilizable.
- *
- * Uso típico en una vista:
- *
- *   <?php
- *   $titulo = 'Mis recetas';
- *   require_once __DIR__ . '/includes/header.php';
- *   ?>
- *
- * Requiere que $titulo esté definido antes de incluir.
- * Si no lo está, se usa un título por defecto.
- *
- * También detecta si hay usuario logueado para mostrar
- * su nombre y el botón de logout.
- * ------------------------------------------------------------
- */
-
+// includes/header.php
 require_once __DIR__ . '/auth.php';
 
-$titulo        = $titulo        ?? 'Cookly';
+$titulo         = $titulo         ?? 'Cookly';
 $usuarioHeader = usuarioActual();
 $paginaActiva  = basename($_SERVER['PHP_SELF'] ?? '');
+
+$base_url = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -32,41 +15,63 @@ $paginaActiva  = basename($_SERVER['PHP_SELF'] ?? '');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($titulo) ?> · Cookly</title>
 
+    <link rel="icon" type="image/png" href="<?= $base_url ?>/public/IMG/logo.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="public/CSS/main.css">
+    <link rel="stylesheet" href="<?= $base_url ?>/public/css/main.css">
+    <?php foreach (($estilosPagina ?? []) as $estilo): ?>
+        <link rel="stylesheet" href="<?= htmlspecialchars($base_url . '/' . $estilo) ?>">
+    <?php endforeach; ?>
 </head>
-<body>
+<body class="<?= htmlspecialchars($claseBody ?? '') ?>">
 <div class="page-shell">
 
     <header class="topbar">
-        <div class="brand-wrap">
-            <img class="brand-logo" src="public/IMG/logo.png" alt="Logo de Cookly">
+        <a href="<?= $base_url ?>/index.php" class="brand-wrap" style="text-decoration: none;">
+            <img class="brand-logo" src="<?= $base_url ?>/public/IMG/logo.png" alt="Logo de Cookly">
             <div>
                 <p class="brand-kicker">Recetas para cada momento</p>
                 <h1>Cookly</h1>
             </div>
-        </div>
+        </a>
 
         <?php if ($usuarioHeader): ?>
             <nav class="top-actions" aria-label="Navegación principal">
-                <a class="nav-btn <?= $paginaActiva === 'index.php' ? 'active' : '' ?>"
-                   href="index.php">Mis recetas</a>
-                <a class="nav-btn <?= $paginaActiva === 'recetas.php' ? 'active' : '' ?>"
-                   href="recetas.php">Explorar</a>
-                <a class="nav-btn <?= $paginaActiva === 'receta_crear.php' ? 'active' : '' ?>"
-                   href="receta_crear.php">+ Nueva receta</a>
+                <a class="nav-btn <?= $paginaActiva === 'index.php' ? 'active' : '' ?>" href="<?= $base_url ?>/index.php">Mis recetas</a>
+                <a class="nav-btn <?= $paginaActiva === 'recetas.php' ? 'active' : '' ?>" href="<?= $base_url ?>/recetas.php">Explorar</a>
+                <a class="nav-btn <?= $paginaActiva === 'receta_crear.php' ? 'active' : '' ?>" href="<?= $base_url ?>/receta_crear.php">+ Nueva receta</a>
+                
+                <?php if (esAdmin() && is_file(__DIR__ . '/../admin.php')): ?>
+                    <a class="nav-btn <?= $paginaActiva === 'admin.php' ? 'active' : '' ?>" 
+                       href="<?= $base_url ?>/admin.php" style="background: var(--primary); color: white;">🛡️ Admin</a>
+                    <?php if (is_file(__DIR__ . '/../logs.php')): ?>
+                    <a class="nav-btn <?= $paginaActiva === 'logs.php' ? 'active' : '' ?>" 
+                       href="<?= $base_url ?>/logs.php" style="background: #333; color: white;">📋 Logs</a>
+                    <?php endif; ?>
+                <?php endif; ?>
+
+                <a class="nav-btn <?= $paginaActiva === 'manual.php' ? 'active' : '' ?>" href="<?= $base_url ?>/manual.php">Manual de Usuario</a>
+                <?php if (is_file(__DIR__ . '/../video.php')): ?>
+                <a class="nav-btn <?= $paginaActiva === 'video.php' ? 'active' : '' ?>" href="<?= $base_url ?>/video.php">🎥 Video</a>
+                <?php endif; ?>
             </nav>
 
             <div class="user-zone">
-    <a href="perfil.php" style="text-decoration: none; color: var(--cookly-text); font-weight: 700;">
-         <?= htmlspecialchars($usuarioHeader['nombre']) ?>
-    </a>
-    <a class="logout-btn" href="logout.php">Cerrar sesión</a>
-</div>
+                <a href="<?= $base_url ?>/perfil.php" style="text-decoration: none; color: var(--text-main); font-weight: 700;">
+                    👋 <?= htmlspecialchars($usuarioHeader['nombre']) ?>
+                </a>
+                <a class="logout-btn" href="<?= $base_url ?>/Logout.php">Cerrar sesión</a>
+            </div>
+        <?php elseif ($paginaActiva === 'manual.php'): ?>
+            <nav class="top-actions" aria-label="Navegación principal">
+                <a class="nav-btn" href="<?= $base_url ?>/Login.php">Iniciar sesión</a>
+                <a class="nav-btn" href="<?= $base_url ?>/registro.php">Crear cuenta</a>
+                <a class="nav-btn active" href="<?= $base_url ?>/manual.php" aria-current="page">Manual de Usuario</a>
+            </nav>
         <?php endif; ?>
     </header>
 
     <main class="dashboard">
+        <?php mostrar_flash_message(); ?>

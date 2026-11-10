@@ -1,0 +1,204 @@
+{
+  "fecha": "2026-11-09",
+  "origen": "Aplicación PHP real ejecutada localmente; capturas con Playwright/Chromium.",
+  "datos": "Cuentas y recetas de demostración; sin conexión a producción.",
+  "limitacion": "El diálogo nativo de eliminación se verificó por su mensaje, cancelación y aceptación, pero no admite captura de página. No se ha recreado.",
+  "archivos": [
+    {
+      "nombre": "01-inicio-sesion.png",
+      "ancho": 1050,
+      "alto": 532,
+      "descripcion": "Inicio de sesión con los campos vacíos; no se muestran contraseñas.",
+      "sha256": "7c8aedf2f140becf0197e404b33be6511fb6f40f239cdc697da3a0ca06a71d9f"
+    },
+    {
+      "nombre": "02-registro.png",
+      "ancho": 1050,
+      "alto": 702,
+      "descripcion": "Campos de registro de una cuenta de Cookly.",
+      "sha256": "00025fbeebfd0779b886bb2d287f11e83753a97fe0524883778b963a3bc29217"
+    },
+    {
+      "nombre": "03-registro-correcto.png",
+      "ancho": 1050,
+      "alto": 783,
+      "descripcion": "Mensaje de cuenta creada con los campos de contraseña vacíos.",
+      "sha256": "47d54f5928150cb3c3bc35a1e5ca1bffd51cf4d82a6c7ed1d16346431f4c376f"
+    },
+    {
+      "nombre": "04-mis-recetas.png",
+      "ancho": 1192,
+      "alto": 980,
+      "descripcion": "Mis recetas y estados de las publicaciones del usuario de demostración.",
+      "sha256": "36a5a1be2553b7fe496257fa9e9572eb86ed982956e7d71883e6f40b36343624"
+    },
+    {
+      "nombre": "05-acciones-receta.png",
+      "ancho": 360,
+      "alto": 411,
+      "descripcion": "Tarjeta de una receta propia con sus acciones disponibles.",
+      "sha256": "41a36fd41557e033ed2ee4691f59e1cce9e92094731f37b9e4bc9ed0a50e2f86"
+    },
+    {
+      "nombre": "06-menu-navegacion.png",
+      "ancho": 1380,
+      "alto": 75,
+      "descripcion": "Menú de una cuenta de usuario con la opción Manual de Usuario.",
+      "sha256": "8b2451497424846ef01a7af7e0219008c343ea9305fa28304a29e8a1c310ce76"
+    },
+    {
+      "nombre": "07-nueva-receta-boton.png",
+      "ancho": 1126,
+      "alto": 46,
+      "descripcion": "Acceso a Nueva receta desde el panel personal.",
+      "sha256": "54d5927003686abb0fd6b79f1acb527cf02fdd0420a12c29fa20b0eca85da2d7"
+    },
+    {
+      "nombre": "08-crear-receta-datos.png",
+      "ancho": 1180,
+      "alto": 610,
+      "descripcion": "Formulario con título, categoría, tiempo, dificultad y porciones de una receta de prueba.",
+      "sha256": "de78d7dd8abad28c90c64a80ce17b63c6dc7066131c8bd27ebaf6a4d68f7a615"
+    },
+    {
+      "nombre": "09-crear-receta-ingredientes.png",
+      "ancho": 1180,
+      "alto": 461,
+      "descripcion": "Preparación, filas de ingredientes y botón Guardar de la receta de prueba.",
+      "sha256": "28a696b73784b3ba3b410da67f1e3f0b0f4856cbadd4eeddfcb377a0d8833829"
+    },
+    {
+      "nombre": "10-receta-creada.png",
+      "ancho": 1192,
+      "alto": 1093,
+      "descripcion": "Resultado después de guardar: receta creada y pendiente de aprobación.",
+      "sha256": "29f2987996f9d52a89b6f58e3b0621e604728c49cdc95481e5bd2d0d9ac8d226"
+    },
+    {
+      "nombre": "11-explorar.png",
+      "ancho": 1192,
+      "alto": 593,
+      "descripcion": "Listado de recetas aprobadas de la base de demostración.",
+      "sha256": "14a986c8da462b409d20107d5d8710f32889176409441dfec77bee19eee3d082"
+    },
+    {
+      "nombre": "12-busqueda-recetas.png",
+      "ancho": 1192,
+      "alto": 593,
+      "descripcion": "Resultados al buscar una receta en la sección Explorar.",
+      "sha256": "4df1cea53f46b0677685bd37941796dedec35735203de9c7d831c93429a5bbd4"
+    },
+    {
+      "nombre": "13-detalle-receta.png",
+      "ancho": 1192,
+      "alto": 504,
+      "descripcion": "Categoría, tiempo, porciones, ingredientes y preparación de la receta consultada.",
+      "sha256": "7a97503c67421843f73b3d5612bbebeefb6f97642bb39884a8e8918a7810b3f1"
+    },
+    {
+      "nombre": "14-editar-receta.png",
+      "ancho": 1180,
+      "alto": 680,
+      "descripcion": "Datos cargados al abrir Editar en una receta de demostración.",
+      "sha256": "942eacef538264244cd933a6a90a487c72feee0ad17e55ed8ea4e2a101f12ad3"
+    },
+    {
+      "nombre": "15-receta-actualizada.png",
+      "ancho": 1192,
+      "alto": 1093,
+      "descripcion": "Confirmación de edición: la receta vuelve a Pendiente para revisión.",
+      "sha256": "a05e8d10c869ef7d96c800d3157ad3b0bad6f761844e9aa70d5b136975f439b4"
+    },
+    {
+      "nombre": "16-eliminar-boton.png",
+      "ancho": 360,
+      "alto": 411,
+      "descripcion": "La receta de prueba que se utilizará para comprobar el borrado.",
+      "sha256": "5a79a609daf6cf6de76d492a1fcdbe46075bb2bf57035a2d7716f5e056faf880"
+    },
+    {
+      "nombre": "18-eliminar-resultado.png",
+      "ancho": 1192,
+      "alto": 980,
+      "descripcion": "La receta de demostración borrada ya no aparece en Mis recetas.",
+      "sha256": "57f1fff194e06dfcd7acbdc8d3d76a180eee197217afa776eec894fdcfa99655"
+    },
+    {
+      "nombre": "19-categorias.png",
+      "ancho": 551,
+      "alto": 78,
+      "descripcion": "Selector Categoría con una opción real de la instalación de prueba. Tu catálogo puede ser diferente.",
+      "sha256": "8f64e956f4a3e2e46d9c17187fbe2ac1d4d58b7430dc13451e3b6ead37b95ca5"
+    },
+    {
+      "nombre": "20-ingredientes.png",
+      "ancho": 1126,
+      "alto": 108,
+      "descripcion": "Nombre, cantidad, unidad y controles para agregar o quitar ingredientes.",
+      "sha256": "31cdc388107da2cf32f8b00dbac2368bd6dd6f4063537b27694877e94f8ada89"
+    },
+    {
+      "nombre": "21-ingredientes-detalle.png",
+      "ancho": 1126,
+      "alto": 162,
+      "descripcion": "Ingredientes de una receta con sus cantidades y unidades.",
+      "sha256": "b397783105c918265ee427cbce1de729d7bd8580463a5cf081e2d891e831e816"
+    },
+    {
+      "nombre": "22-perfil.png",
+      "ancho": 1126,
+      "alto": 526,
+      "descripcion": "Edición de nombre, correo, foto y biografía; todos los datos son de prueba.",
+      "sha256": "7c33c2988e7ca9d5b467e11b64f460b5324fcac0d6823c20c9029aa6838db448"
+    },
+    {
+      "nombre": "23-cambiar-contrasena.png",
+      "ancho": 500,
+      "alto": 362,
+      "descripcion": "Cambio de contraseña desde el perfil; no se muestran datos de acceso.",
+      "sha256": "f224547b30c23685b65b3ff872cd448994275a653fc65b1d3eabc803dde84127"
+    },
+    {
+      "nombre": "24-opciones-cuenta.png",
+      "ancho": 1126,
+      "alto": 178,
+      "descripcion": "Opción de eliminación de cuenta y advertencia que muestra Cookly.",
+      "sha256": "80c231febba55a8b8cde8f48050f63ee7888d115738ee644979917d017c52cf0"
+    },
+    {
+      "nombre": "25-cerrar-sesion.png",
+      "ancho": 242,
+      "alto": 37,
+      "descripcion": "Botón Cerrar sesión junto al nombre del usuario de prueba.",
+      "sha256": "845ecf504cc13773909c7452a074c98b0ecd32126815d8e031196b0a5217adca"
+    },
+    {
+      "nombre": "26-administracion.png",
+      "ancho": 1200,
+      "alto": 560,
+      "descripcion": "Cuenta administradora de demostración revisando recetas pendientes.",
+      "sha256": "58afd12f36907b3741a2355bc06490adc5af36bcf6479012416491b4e8f00f5c"
+    },
+    {
+      "nombre": "27-reportes-admin.png",
+      "ancho": 1126,
+      "alto": 123,
+      "descripcion": "Totales de usuarios, recetas y categorías calculados en el panel de administración con datos de prueba.",
+      "sha256": "07be0d64c741dc29aa8c7f224a0765d559d8148a92c12c3f2231ddebea262952"
+    },
+    {
+      "nombre": "28-reportes-sistema.png",
+      "ancho": 1192,
+      "alto": 565,
+      "descripcion": "Página reportes.php consultada con una sesión iniciada.",
+      "sha256": "337862e224adeeb8dec195aaf55a0c766d813c357b6bd9bb04169f8248e5f834"
+    },
+    {
+      "nombre": "29-registro-sistema.png",
+      "ancho": 1192,
+      "alto": 297,
+      "descripcion": "Eventos generados al probar la aplicación; no corresponden a una instalación real del usuario.",
+      "sha256": "8b05b907920194dd96cddb511435bc2f5040975eb86f534de6ef0ff1b26b5dbf"
+    }
+  ]
+}
