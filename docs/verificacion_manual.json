@@ -1,0 +1,243 @@
+{
+  "fecha": "2026-11-09",
+  "pruebas": [
+    {
+      "prueba": "Manual accesible sin sesión",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "24 capítulos presentes",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "La tipografía local carga sin Google Fonts",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "Todas las capturas del manual cargan",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "No se usan capturas de ejemplo ni reemplazos de internet",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "Buscador encuentra palabras sin tildes",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "Buscador muestra estado sin coincidencias",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "Restablecer recupera todos los capítulos",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "Índice abre el capítulo seleccionado",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "Siguiente cambia al capítulo de consulta",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "Anterior vuelve al capítulo de creación",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "Captura se amplía en un diálogo",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "Escape cierra el visor y devuelve el foco",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "Preguntas frecuentes se despliegan",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "Descarga responde como PDF real",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "El PDF se entrega como archivo adjunto",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "La búsqueda no altera el PDF descargado",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "Sin desbordamiento horizontal en movil",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "Encabezado no tapa la portada en movil",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "Índice móvil empieza plegado",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "Índice móvil se despliega",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "Índice móvil cierra al elegir capítulo",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "Sin desbordamiento horizontal en tableta",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "Encabezado no tapa la portada en tableta",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "Sin desbordamiento horizontal en escritorio",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "Encabezado no tapa la portada en escritorio",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "El inicio mantiene la protección de sesión",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "Manual integrado en el menú de una sesión",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "Usuario normal no accede a Admin",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "Cambio de contraseña conserva su funcionamiento",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "Cancelar eliminación conserva la cuenta",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "La contraseña actualizada permite iniciar sesión",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "Eliminar cuenta de prueba finaliza la sesión",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "Manual sin errores de JavaScript",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "Sin JavaScript se conservan los capítulos",
+      "resultado": "Correcto"
+    },
+    {
+      "prueba": "Sin JavaScript se conserva la descarga",
+      "resultado": "Correcto"
+    }
+  ],
+  "pruebas_flujos": [
+    {
+      "check": "Registro mediante formulario",
+      "ok": true
+    },
+    {
+      "check": "El registro no expone la contraseña",
+      "ok": true
+    },
+    {
+      "check": "Inicio de sesión abre Mis recetas",
+      "ok": true
+    },
+    {
+      "check": "El menú contiene Manual de Usuario",
+      "ok": true
+    },
+    {
+      "check": "Agregar filas de ingredientes funciona",
+      "ok": true
+    },
+    {
+      "check": "Crear receta muestra Pendiente",
+      "ok": true
+    },
+    {
+      "check": "Editar vuelve a Pendiente",
+      "ok": true
+    },
+    {
+      "check": "Confirmación real de borrado",
+      "ok": true
+    },
+    {
+      "check": "Se verificó el mensaje del diálogo nativo",
+      "ok": true
+    },
+    {
+      "check": "Cancelar conserva la receta",
+      "ok": true
+    },
+    {
+      "check": "Aceptar elimina solo la receta de prueba",
+      "ok": true
+    },
+    {
+      "check": "Búsqueda real devuelve la receta esperada",
+      "ok": true
+    },
+    {
+      "check": "Guardar perfil funciona",
+      "ok": true
+    },
+    {
+      "check": "Cerrar sesión regresa a Login.php",
+      "ok": true
+    },
+    {
+      "check": "Administrador aprueba una receta",
+      "ok": true
+    },
+    {
+      "check": "La receta aceptada aparece en Explorar",
+      "ok": true
+    }
+  ],
+  "archivos_conservados": [
+    "config/database.php",
+    "includes/funciones_recetas.php",
+    "includes/funciones_usuarios.php",
+    "index.php",
+    "recetas.php",
+    "receta_crear.php",
+    "receta_detalle.php",
+    "receta_editar.php",
+    "receta_eliminar.php",
+    "admin.php",
+    "ajax_buscar.php",
+    "reportes.php",
+    "exportar_excel.php",
+    "public/JS/main.js"
+  ],
+  "entorno": "PHP 8.3, MariaDB 10.11 y Chromium; base local de prueba con esquema derivado de las consultas, porque no se adjuntó SQL.",
+  "capturas_reales": 28,
+  "verificacion_final": {
+    "paginas_pdf": 38,
+    "marcadores_pdf": 24,
+    "figuras_pdf": 32,
+    "capturas_distintas": 28,
+    "archivos_php_sin_errores_de_sintaxis": 25,
+    "manual_sin_conexion_a_bd": "Verificado con los archivos de configuración originales.",
+    "descarga_pdf_final": "Verificada por cabeceras HTTP y coincidencia exacta de bytes.",
+    "revision_visual": "Portada, índice, 38 páginas y vista web de escritorio, tableta y móvil revisados."
+  }
+}

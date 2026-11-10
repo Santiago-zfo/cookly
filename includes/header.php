@@ -20,9 +20,12 @@ $base_url = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="<?= $base_url ?>/public/CSS/main.css">
+    <link rel="stylesheet" href="<?= $base_url ?>/public/css/main.css">
+    <?php foreach (($estilosPagina ?? []) as $estilo): ?>
+        <link rel="stylesheet" href="<?= htmlspecialchars($base_url . '/' . $estilo) ?>">
+    <?php endforeach; ?>
 </head>
-<body>
+<body class="<?= htmlspecialchars($claseBody ?? '') ?>">
 <div class="page-shell">
 
     <header class="topbar">
@@ -47,7 +50,7 @@ $base_url = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
                        href="<?= $base_url ?>/logs.php" style="background: #333; color: white;">📋 Logs</a>
                 <?php endif; ?>
 
-                <a class="nav-btn <?= $paginaActiva === 'manual.php' ? 'active' : '' ?>" href="<?= $base_url ?>/manual.php">📖 Manual</a>
+                <a class="nav-btn <?= $paginaActiva === 'manual.php' ? 'active' : '' ?>" href="<?= $base_url ?>/manual.php">Manual de Usuario</a>
                 <a class="nav-btn <?= $paginaActiva === 'video.php' ? 'active' : '' ?>" href="<?= $base_url ?>/video.php">🎥 Video</a>
             </nav>
 
@@ -55,8 +58,14 @@ $base_url = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
                 <a href="<?= $base_url ?>/perfil.php" style="text-decoration: none; color: var(--text-main); font-weight: 700;">
                     👋 <?= htmlspecialchars($usuarioHeader['nombre']) ?>
                 </a>
-                <a class="logout-btn" href="<?= $base_url ?>/logout.php">Cerrar sesión</a>
+                <a class="logout-btn" href="<?= $base_url ?>/Logout.php">Cerrar sesión</a>
             </div>
+        <?php elseif ($paginaActiva === 'manual.php'): ?>
+            <nav class="top-actions" aria-label="Navegación principal">
+                <a class="nav-btn" href="<?= $base_url ?>/Login.php">Iniciar sesión</a>
+                <a class="nav-btn" href="<?= $base_url ?>/registro.php">Crear cuenta</a>
+                <a class="nav-btn active" href="<?= $base_url ?>/manual.php" aria-current="page">Manual de Usuario</a>
+            </nav>
         <?php endif; ?>
     </header>
 

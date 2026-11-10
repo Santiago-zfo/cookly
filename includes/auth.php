@@ -1,5 +1,9 @@
 <?php
 // includes/auth.php
+
+// Configurar la zona horaria (Para Colombia)
+date_default_timezone_set('America/Bogota');
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -15,7 +19,6 @@ function requerirLogin(): void {
     }
 }
 
-// Función que verifica si el usuario es administrador
 function esAdmin(): bool {
     return isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin';
 }
@@ -77,6 +80,7 @@ function registrar_log($mensaje, $tipo = 'ERROR') {
         mkdir($directorio, 0755, true);
     }
 
+    // La función date() usará la zona horaria que definimos al principio
     $fecha = date('Y-m-d H:i:s');
     $usuario = isset($_SESSION['correo_electronico']) ? $_SESSION['correo_electronico'] : 'Invitado/Anónimo';
     
