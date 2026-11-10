@@ -231,3 +231,49 @@ function cambiar_estado_receta($id_receta, $nuevo_estado) {
     $stmt = $pdo->prepare("UPDATE Recetas SET estado = ? WHERE id_receta = ?");
     return $stmt->execute([$nuevo_estado, $id_receta]);
 }
+// --- NUEVA FUNCIÓN PARA REPORTES FILTRADOS ---
+// --- FUNCIÓN PARA REPORTES FILTRADOS (ACTUALIZADA) ---
+function obtener_recetas_filtradas($filtros = []) {
+    global $pdo;
+    
+    // Agregamos dificultad y porciones a la consulta
+    $sql = "SELECT r.id_receta, r.titulo, r.estado, r.fecha_creacion, 
+                   r.dificultad, r.porciones,
+                   c.nombre AS categoria, u.nombre AS autor 
+            FROM Recetas r 
+            INNER JOIN Categorias c ON r.id_categoria = c.id_categoria 
+            INNER JOIN Usuarios u ON r.id_usuario = u.id_usuario 
+            WHERE 1=1";
+            
+    $params = [];
+
+    // Filtro por Categoría
+    if (!empty($filtros['categoria'])) {
+        $sql .= " AND r.id_categoria = ?";
+        $params[] = $filtros['categoria'];
+    }
+    
+    // Filtro por Fecha Inicio
+    if (!empty($filtros['fecha_inicio'])) {
+        $sql .= " AND DATE(r.fecha_creacion) >= ?";
+        $params[] = $filtros['fecha_inicio'];
+    }
+    
+    // Filtro por Fecha Fin
+    if (!empty($filtros['fecha_fin'])) {
+        $sql .= " AND DATE(r.fecha_creacion) <= ?";
+        $params[] = $filtros['fecha_fin'];
+    }
+
+    // Filtro por Autor (Búsqueda parcial)
+    if (!empty($filtros['autor'])) {
+        $sql .= " AND u.nombre LIKE ?";
+        $params[] = "%" . $filtros['autor'] . "%";
+    }
+
+    $sql .= " ORDER BY r.fecha_creacion DESC";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($params);
+    return $stmt->fetchAll();
+}

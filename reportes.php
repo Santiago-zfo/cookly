@@ -2,99 +2,146 @@
 // reportes.php
 require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/includes/funciones_recetas.php';
-requerirLogin();
+requerirAdmin();
 
 $titulo = 'Reportes y Estadísticas';
-$stats = obtener_estadisticas_generales();
+
+$filtros = [
+    'categoria' => $_GET['categoria'] ?? '',
+    'fecha_inicio' => $_GET['fecha_inicio'] ?? '',
+    'fecha_fin' => $_GET['fecha_fin'] ?? '',
+    'autor' => $_GET['autor'] ?? ''
+];
+
+$categorias = listar_categorias();
+$recetas_filtradas = obtener_recetas_filtradas($filtros);
 
 require_once __DIR__ . '/includes/header.php';
 ?>
 
+<!-- ESTILOS PARA LA IMPRESIÓN EN PDF -->
+<style>
+    @media print {
+        .topbar, .site-footer, .no-print, form, .logout-btn, h2 button { 
+            display: none !important; 
+        }
+        body, .page-shell, .panel { 
+            background: white !important; 
+            box-shadow: none !important; 
+            padding: 0 !important; 
+            margin: 0 !important; 
+        }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #000; padding: 8px; text-align: left; font-size: 12px; }
+        th { background-color: #f2f2f2 !important; -webkit-print-color-adjust: exact; }
+        h2 { text-align: center; margin-bottom: 10px; }
+        .print-header { display: block !important; text-align: center; margin-bottom: 20px; }
+    }
+    .print-header { display: none; }
+</style>
+
 <section class="panel">
-    <div class="section-heading">
+    <div class="section-heading no-print">
         <h2>📊 Reportes del Sistema</h2>
-        <a href="index.php" class="logout-btn">← Volver</a>
+        <a href="index.php" class="logout-btn">← Volver al Inicio</a>
     </div>
 
-    <!-- TARJETAS DE RESUMEN (KPIs) -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
-        <div style="background: var(--primary-light); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--primary); text-align: center;">
-            <h3 style="margin: 0; color: var(--primary-hover); font-size: 2.5rem;"><?= $stats['total_usuarios'] ?></h3>
-            <p style="margin: 0.5rem 0 0; color: var(--primary-hover); font-weight: 700; text-transform: uppercase; font-size: 0.85rem;">Usuarios Registrados</p>
+    <!-- ENCABEZADO QUE SOLO APARECE AL IMPRIMIR -->
+    <div class="print-header">
+        <h2>Reporte de Recetas - Cookly</h2>
+        <p>Generado el: <?= date('d/m/Y H:i') ?></p>
+        <p>
+            Filtros: Categoría (<?= $filtros['categoria'] ?: 'Todas' ?>) | 
+            Desde (<?= $filtros['fecha_inicio'] ?: 'N/A' ?>) | 
+            Hasta (<?= $filtros['fecha_fin'] ?: 'N/A' ?>) | 
+            Autor (<?= $filtros['autor'] ?: 'Todos' ?>)
+        </p>
+        <hr>
+    </div>
+
+    <!-- FORMULARIO DE FILTROS -->
+    <form method="GET" class="no-print" style="background: var(--bg-color); padding: 1.5rem; border-radius: var(--radius-md); margin-bottom: 2rem; display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-end;">
+        <div style="flex: 1; min-width: 200px;">
+            <label style="font-weight: bold; font-size: 0.9rem;">Categoría</label>
+            <select name="categoria" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                <option value="">Todas las categorías</option>
+                <?php foreach ($categorias as $c): ?>
+                    <option value="<?= $c['id_categoria'] ?>" <?= $filtros['categoria'] == $c['id_categoria'] ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($c['nombre']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
         </div>
 
-        <div style="background: #F0FDF4; padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid #BBF7D0; text-align: center;">
-            <h3 style="margin: 0; color: #166534; font-size: 2.5rem;"><?= $stats['total_recetas'] ?></h3>
-            <p style="margin: 0.5rem 0 0; color: #166534; font-weight: 700; text-transform: uppercase; font-size: 0.85rem;">Recetas Publicadas</p>
+        <div style="flex: 1; min-width: 150px;">
+            <label style="font-weight: bold; font-size: 0.9rem;">Desde Fecha</label>
+            <input type="date" name="fecha_inicio" value="<?= htmlspecialchars($filtros['fecha_inicio']) ?>" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-color);">
         </div>
 
-        <div style="background: #EFF6FF; padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid #BFDBFE; text-align: center;">
-            <h3 style="margin: 0; color: #1E3A8A; font-size: 2.5rem;"><?= $stats['total_categorias'] ?></h3>
-            <p style="margin: 0.5rem 0 0; color: #1E3A8A; font-weight: 700; text-transform: uppercase; font-size: 0.85rem;">Categorías Activas</p>
+        <div style="flex: 1; min-width: 150px;">
+            <label style="font-weight: bold; font-size: 0.9rem;">Hasta Fecha</label>
+            <input type="date" name="fecha_fin" value="<?= htmlspecialchars($filtros['fecha_fin']) ?>" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-color);">
+        </div>
+
+        <div style="flex: 1; min-width: 200px;">
+            <label style="font-weight: bold; font-size: 0.9rem;">Autor</label>
+            <input type="text" name="autor" placeholder="Ej. Santiago" value="<?= htmlspecialchars($filtros['autor']) ?>" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-color);">
+        </div>
+
+        <div style="display: flex; gap: 0.5rem;">
+            <button type="submit" class="submit-btn">Filtrar</button>
+            <a href="reportes.php" class="secondary" style="padding: 0.8rem; text-decoration: none; border-radius: 8px; background: white; border: 1px solid var(--border-color); color: var(--text-main); font-weight: bold;">Limpiar</a>
+        </div>
+    </form>
+
+    <!-- RESULTADOS Y EXPORTACIÓN -->
+    <div class="section-heading no-print" style="margin-top: 2rem;">
+        <h3>Resultados (<?= count($recetas_filtradas) ?> recetas encontradas)</h3>
+        <div style="display: flex; gap: 1rem;">
+            <?php 
+            $queryString = http_build_query($filtros);
+            $url_excel = "exportar_excel.php?" . $queryString; 
+            ?>
+            <a href="<?= $url_excel ?>" class="submit-btn" style="background: #10B981;">📥 Descargar Excel (CSV)</a>
+            <button onclick="window.print()" class="submit-btn" style="background: #EF4444;">📄 Descargar PDF</button>
         </div>
     </div>
 
-    <!-- TABLAS DE DETALLE -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-        
-        <!-- Recetas por Categoría -->
-        <div style="background: var(--bg-color); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
-            <h3 style="margin-top: 0; color: var(--text-main); font-size: 1.2rem;">Recetas por Categoría</h3>
-            <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 1rem;">
-                <?php 
-                $max_cat = 0;
-                foreach($stats['recetas_por_categoria'] as $c) { if ($c['cantidad'] > $max_cat) $max_cat = $c['cantidad']; }
-                
-                foreach ($stats['recetas_por_categoria'] as $c): 
-                    $porcentaje = $max_cat > 0 ? ($c['cantidad'] / $max_cat) * 100 : 0;
-                ?>
-                    <li>
-                        <div style="display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.3rem;">
-                            <span><?= htmlspecialchars($c['nombre']) ?></span>
-                            <span><?= $c['cantidad'] ?></span>
-                        </div>
-                        <div style="width: 100%; background: var(--border-color); height: 8px; border-radius: 4px; overflow: hidden;">
-                            <div style="width: <?= $porcentaje ?>%; background: var(--primary); height: 100%; border-radius: 4px;"></div>
-                        </div>
-                    </li>
+    <!-- TABLA DE RESULTADOS AMPLIADA -->
+    <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-top: 1rem;">
+        <thead>
+            <tr style="background: var(--primary); color: white; text-align: left;">
+                <th style="padding: 10px;">Fecha</th>
+                <th style="padding: 10px;">Título</th>
+                <th style="padding: 10px;">Categoría</th>
+                <th style="padding: 10px;">Autor</th>
+                <th style="padding: 10px;">Dificultad</th>
+                <th style="padding: 10px; text-align: center;">Porciones</th>
+                <th style="padding: 10px;">Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if (empty($recetas_filtradas)): ?>
+                <tr><td colspan="7" style="text-align: center; padding: 2rem;">No hay recetas que coincidan con los filtros.</td></tr>
+            <?php else: ?>
+                <?php foreach ($recetas_filtradas as $r): ?>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 10px;"><?= date('d/m/Y', strtotime($r['fecha_creacion'])) ?></td>
+                        <td style="padding: 10px; font-weight: bold;"><?= htmlspecialchars($r['titulo']) ?></td>
+                        <td style="padding: 10px;"><?= htmlspecialchars($r['categoria']) ?></td>
+                        <td style="padding: 10px;"><?= htmlspecialchars($r['autor']) ?></td>
+                        <td style="padding: 10px;"><?= htmlspecialchars($r['dificultad']) ?></td>
+                        <td style="padding: 10px; text-align: center;"><?= $r['porciones'] ?></td>
+                        <td style="padding: 10px;">
+                            <span class="pill" style="background: <?= $r['estado'] === 'Aceptado' ? '#D1FAE5' : ($r['estado'] === 'Rechazado' ? '#FEE2E2' : '#FEF3C7') ?>; color: <?= $r['estado'] === 'Aceptado' ? '#065F46' : ($r['estado'] === 'Rechazado' ? '#991B1B' : '#92400E') ?>;">
+                                <?= $r['estado'] ?>
+                            </span>
+                        </td>
+                    </tr>
                 <?php endforeach; ?>
-            </ul>
-        </div>
-
-        <!-- Recetas por Dificultad -->
-        <div style="background: var(--bg-color); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
-            <h3 style="margin-top: 0; color: var(--text-main); font-size: 1.2rem;">Recetas por Dificultad</h3>
-            <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 1rem;">
-                <?php foreach ($stats['recetas_por_dificultad'] as $d): ?>
-                    <li style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem; background: var(--surface); border-radius: 8px; border: 1px solid var(--border-color);">
-                        <span style="font-weight: 700; color: var(--text-main);"><?= htmlspecialchars($d['dificultad']) ?></span>
-                        <span class="pill" style="background: var(--surface); border: 1px solid var(--border-color);"><?= $d['cantidad'] ?> recetas</span>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-
-        <!-- Top Usuarios -->
-        <div style="background: var(--bg-color); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
-            <h3 style="margin-top: 0; color: var(--text-main); font-size: 1.2rem;">🏆 Top Usuarios (Más recetas)</h3>
-            <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 1rem;">
-                <?php foreach ($stats['top_usuarios'] as $index => $u): ?>
-                    <li style="display: flex; align-items: center; gap: 1rem; padding: 0.8rem; background: var(--surface); border-radius: 8px; border: 1px solid var(--border-color);">
-                        <div style="width: 30px; height: 30px; background: var(--primary-light); color: var(--primary-hover); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800;">
-                            <?= $index + 1 ?>
-                        </div>
-                        <div style="flex: 1; font-weight: 700; color: var(--text-main);">
-                            <?= htmlspecialchars($u['nombre']) ?>
-                        </div>
-                        <div style="font-weight: 800; color: var(--primary);">
-                            <?= $u['cantidad'] ?>
-                        </div>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-
-    </div>
+            <?php endif; ?>
+        </tbody>
+    </table>
 </section>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

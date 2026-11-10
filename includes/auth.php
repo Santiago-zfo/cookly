@@ -22,6 +22,8 @@ function esAdmin(): bool {
 function requerirAdmin(): void {
     requerirLogin();
     if (!esAdmin()) {
+        require_once __DIR__ . '/logger.php'; // Incluir logger
+        registrar_log('ACCESO DENEGADO', 'Intento de acceder al panel de administración sin permisos.', 'WARNING');
         header('Location: index.php');
         exit;
     }
