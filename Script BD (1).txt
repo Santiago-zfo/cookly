@@ -1,0 +1,199 @@
+/*-- =========================================================
+-- CREACIÓN DE LA BASE DE DATOS
+-- =========================================================
+CREATE DATABASE IF NOT EXISTS cookly CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE cookly;
+
+-- =========================================================
+-- 1. CREACIÓN DE TABLAS
+-- =========================================================
+
+-- Tabla de Usuarios
+CREATE TABLE IF NOT EXISTS Usuarios (
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    correo_electronico VARCHAR(150) NOT NULL UNIQUE,
+    contrasena_hash VARCHAR(255) NOT NULL
+);
+
+-- Tabla de Categorías
+CREATE TABLE IF NOT EXISTS Categorias (
+    id_categoria INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(60) NOT NULL UNIQUE
+);
+
+-- Tabla de Ingredientes
+CREATE TABLE IF NOT EXISTS Ingredientes (
+    id_ingrediente INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(80) NOT NULL UNIQUE
+);
+
+-- Tabla de Recetas
+CREATE TABLE IF NOT EXISTS Recetas (
+    id_receta INT AUTO_INCREMENT PRIMARY KEY,
+    id_categoria INT NOT NULL,
+    id_usuario INT NOT NULL,
+    titulo VARCHAR(120) NOT NULL,
+    descripcion TEXT,
+    instrucciones TEXT NOT NULL,
+    tiempo_preparacion INT NOT NULL,
+    dificultad ENUM('Fácil', 'Media', 'Difícil') NOT NULL DEFAULT 'Media',
+    porciones INT NOT NULL DEFAULT 1,
+    estado ENUM('Pendiente','Aceptado','Rechazado') NOT NULL DEFAULT 'Pendiente',
+
+    CONSTRAINT chk_recetas_tiempo CHECK (tiempo_preparacion > 0),
+    CONSTRAINT chk_recetas_porciones CHECK (porciones > 0),
+
+    CONSTRAINT fk_recetas_categorias FOREIGN KEY (id_categoria) 
+        REFERENCES Categorias(id_categoria) ON UPDATE CASCADE ON DELETE RESTRICT,
+
+    -- CASCADE: Si se borra el usuario, se borran sus recetas
+    CONSTRAINT fk_recetas_usuarios FOREIGN KEY (id_usuario) 
+        REFERENCES Usuarios(id_usuario) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+-- Tabla Intermedia Receta_Ingredientes
+CREATE TABLE IF NOT EXISTS Receta_Ingredientes (
+    id_receta INT NOT NULL,
+    id_ingrediente INT NOT NULL,
+    cantidad DECIMAL(10,2) NOT NULL,
+    unidad_medida ENUM(
+        'gramos', 'kilogramos', 'libras', 'onzas',
+        'mililitros', 'litros', 'tazas', 'cucharadas', 'cucharaditas', 'pizcas', 'mililitros (ml)',
+        'unidad', 'unidades', 'dientes', 'atados', 'rodajas', 'hojas', 'latas', 'sobres', 'ramas'
+    ) NOT NULL,
+
+    PRIMARY KEY (id_receta, id_ingrediente),
+
+    CONSTRAINT chk_ri_cantidad CHECK (cantidad > 0),
+
+    CONSTRAINT fk_ri_recetas FOREIGN KEY (id_receta) 
+        REFERENCES Recetas(id_receta) ON UPDATE CASCADE ON DELETE CASCADE,
+
+    CONSTRAINT fk_ri_ingredientes FOREIGN KEY (id_ingrediente) 
+        REFERENCES Ingredientes(id_ingrediente) ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+-- =========================================================
+-- 2. AGREGAR COLUMNAS FINALES (Avatares, biografía, roles, imágenes)
+-- =========================================================
+
+ALTER TABLE Usuarios ADD COLUMN avatar_url VARCHAR(255) NULL;
+ALTER TABLE Usuarios ADD COLUMN biografia TEXT NULL;
+ALTER TABLE Usuarios ADD COLUMN rol ENUM('usuario', 'admin') NOT NULL DEFAULT 'usuario';
+
+ALTER TABLE Recetas ADD COLUMN imagen_url VARCHAR(255) NULL;
+
+-- =========================================================
+-- 3. DATOS DE PRUEBA (Categorías, Ingredientes y Usuarios)
+-- =========================================================
+
+-- Categorías por defecto
+INSERT IGNORE INTO Categorias (nombre) VALUES
+('Desayunos'),
+('Almuerzos'),
+('Cenas'),
+('Postres'),
+('Bebidas'),
+('Saludable');
+
+-- Ingredientes base
+INSERT IGNORE INTO Ingredientes (nombre) VALUES
+('Harina de trigo'),
+('Leche'),
+('Huevo'),
+('Azúcar'),
+('Banano'),
+('Arroz'),
+('Pechuga de pollo'),
+('Tomate'),
+('Agua'),
+('Café molido');
+
+-- Usuarios de prueba (Contraseñas encriptadas como 'password123')
+INSERT INTO Usuarios (nombre, correo_electronico, contrasena_hash, rol) VALUES
+('Santiago Polanía', 'santiago@cookly.test', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'usuario'),
+('Laura Méndez', 'laura@cookly.test', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'usuario'),
+('Andrés Rojas', 'andres@cookly.test', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'usuario');
+
+-- Recetas de prueba
+INSERT INTO Recetas (id_categoria, id_usuario, titulo, descripcion, instrucciones, tiempo_preparacion, dificultad, porciones, estado) VALUES
+(1, 1, 'Panqueques de banano', 'Panqueques caseros con banano para el desayuno.', 'Mezclar los ingredientes y cocinar en una sartén caliente.', 20, 'Fácil', 2, 'Aceptado'),
+(2, 2, 'Arroz con pollo', 'Arroz acompañado de pollo y tomate.', 'Cocinar el arroz, preparar el pollo con tomate y mezclar.', 45, 'Media', 4, 'Aceptado'),
+(3, 3, 'Torta sencilla', 'Torta básica para compartir.', 'Mezclar harina, leche, huevo y azúcar; luego hornear.', 50, 'Media', 6, 'Aceptado'),
+(4, 1, 'Café caliente', 'Bebida caliente de café.', 'Agregar café al agua caliente y servir.', 5, 'Fácil', 1, 'Aceptado');
+
+-- Ingredientes de cada receta
+INSERT INTO Receta_Ingredientes (id_receta, id_ingrediente, cantidad, unidad_medida) VALUES
+(1, 1, 100, 'gramos'), (1, 2, 150, 'mililitros'), (1, 3, 1, 'unidad'), (1, 5, 1, 'unidad'),
+(2, 6, 2, 'tazas'), (2, 7, 500, 'gramos'), (2, 8, 2, 'unidades'),
+(3, 1, 250, 'gramos'), (3, 2, 200, 'mililitros'), (3, 3, 2, 'unidades'), (3, 4, 100, 'gramos'),
+(4, 9, 250, 'mililitros'), (4, 10, 2, 'cucharaditas');
+
+-- =========================================================
+-- 4. CREAR LA CUENTA DE ADMINISTRADOR POR DEFECTO
+-- =========================================================
+-- Correo: admin@cookly.com
+-- Contraseña: Admin1234 (Encriptada con Bcrypt)
+INSERT IGNORE INTO Usuarios (nombre, correo_electronico, contrasena_hash, rol) VALUES (
+    'Administrador Cookly', 
+    'admin@cookly.com', 
+    '$2y$10$wW58/8.9D9mEic1GZ2UuOe3Y1y1lD5K1zQ3K1x1.9z9x9x9x9x9x9', 
+    'admin'
+);
+
+-- =========================================================
+-- 5. PROCEDIMIENTOS ALMACENADOS (Consultas del sistema)
+-- =========================================================
+DELIMITER //
+
+CREATE PROCEDURE sp_consultar_recetas_detalladas()
+BEGIN
+    SELECT r.id_receta, r.titulo, r.descripcion, r.instrucciones, r.tiempo_preparacion, 
+           r.dificultad, r.porciones, r.estado, r.imagen_url, c.nombre AS categoria, 
+           u.nombre AS autor, u.correo_electronico AS correo_autor
+    FROM Recetas r
+    INNER JOIN Categorias c ON r.id_categoria = c.id_categoria
+    INNER JOIN Usuarios u ON r.id_usuario = u.id_usuario;
+END //
+
+CREATE PROCEDURE sp_consultar_ingredientes_receta()
+BEGIN
+    SELECT ri.id_receta, r.titulo AS receta, i.nombre AS ingrediente, ri.cantidad, ri.unidad_medida
+    FROM Receta_Ingredientes ri
+    INNER JOIN Recetas r ON ri.id_receta = r.id_receta
+    INNER JOIN Ingredientes i ON ri.id_ingrediente = i.id_ingrediente
+    ORDER BY ri.id_receta, i.nombre;
+END //
+
+CREATE PROCEDURE sp_consultar_recetas_por_categoria()
+BEGIN
+    SELECT c.id_categoria, c.nombre AS categoria, COUNT(r.id_receta) AS total_recetas
+    FROM Categorias c
+    LEFT JOIN Recetas r ON c.id_categoria = r.id_categoria
+    GROUP BY c.id_categoria, c.nombre;
+END //
+
+CREATE PROCEDURE sp_consultar_recetas_por_usuario()
+BEGIN
+    SELECT u.id_usuario, u.nombre AS usuario, u.correo_electronico, COUNT(r.id_receta) AS total_recetas
+    FROM Usuarios u
+    LEFT JOIN Recetas r ON u.id_usuario = r.id_usuario
+    GROUP BY u.id_usuario, u.nombre, u.correo_electronico;
+END //
+
+CREATE PROCEDURE sp_consultar_receta_completa(IN p_id_receta INT)
+BEGIN
+    SELECT r.titulo AS receta, c.nombre AS categoria, u.nombre AS autor, i.nombre AS ingrediente, ri.cantidad, ri.unidad_medida
+    FROM Recetas r
+    INNER JOIN Categorias c ON r.id_categoria = c.id_categoria
+    INNER JOIN Usuarios u ON r.id_usuario = u.id_usuario
+    INNER JOIN Receta_Ingredientes ri ON r.id_receta = ri.id_receta
+    INNER JOIN Ingredientes i ON ri.id_ingrediente = i.id_ingrediente
+    WHERE r.id_receta = p_id_receta
+    ORDER BY i.nombre;
+END //
+
+DELIMITER ;
+
+*/
