@@ -29,8 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
         inputCantidad.name = 'ing_cantidad[]';
         inputCantidad.placeholder = 'Cant.';
         inputCantidad.step = '0.01';
-        inputCantidad.min = '0';
-        inputCantidad.value = datos.cantidad || '';
+        inputCantidad.min = '0.1';
+        // AGREGA ESTA LÍNEA: Para que por defecto la cantidad sea 1 y no se envíe vacío
+        inputCantidad.value = datos.cantidad || '1'; 
 
         const selectUnidad = document.createElement('select');
         selectUnidad.name = 'ing_unidad[]';
@@ -54,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(() => row.remove(), 300);
             } else {
                 inputNombre.value = '';
-                inputCantidad.value = '';
+                inputCantidad.value = '1'; // También resetea a 1
                 selectUnidad.selectedIndex = 0;
             }
         });
@@ -76,7 +77,10 @@ document.addEventListener('DOMContentLoaded', () => {
             btnQuitar.innerHTML = '&times;';
             btnQuitar.addEventListener('click', () => {
                 if (contenedor.children.length > 1) row.remove();
-                else row.querySelectorAll('input').forEach(i => i.value = '');
+                else {
+                    row.querySelectorAll('input[type="text"]').forEach(i => i.value = '');
+                    row.querySelectorAll('input[type="number"]').forEach(i => i.value = '1');
+                }
             });
             row.appendChild(btnQuitar);
         });
@@ -88,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
         card.style.animationDelay = `${index * 0.1}s`;
     });
 
-    /* 5. Loader en formularios */
+    /* 4. Loader en formularios */
     const recipeForms = document.querySelectorAll('form[enctype="multipart/form-data"]');
     recipeForms.forEach(form => {
         form.addEventListener('submit', function() {
@@ -100,12 +104,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    /* 6. BUSCADOR EN TIEMPO REAL (AJAX) */
+    /* 5. BUSCADOR EN TIEMPO REAL (AJAX) */
     const searchInput = document.getElementById('input-busqueda');
     const contenedorRecetas = document.getElementById('contenedor-recetas');
 
     if (searchInput && contenedorRecetas) {
-        // Guardamos el HTML original (con la paginación y todo) por si borran la búsqueda
         const htmlOriginal = contenedorRecetas.innerHTML;
         let timeoutId;
 
@@ -118,7 +121,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Pequeño delay (debounce) para no saturar la base de datos en cada tecla
             timeoutId = setTimeout(() => {
                 fetch(`ajax_buscar.php?q=${encodeURIComponent(query)}`)
                     .then(response => response.json())
@@ -126,7 +128,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (data.html === '') {
                             contenedorRecetas.innerHTML = htmlOriginal;
                         } else {
-                            // Reemplazamos el grid con los resultados de la búsqueda
                             contenedorRecetas.innerHTML = `<div class="recipe-grid">${data.html}</div>`;
                         }
                     })
@@ -136,3 +137,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
+/* 6. Función para el Menú Hamburguesa (fuera del DOMContentLoaded para que sea global) */
+function toggleMenu() {
+    const nav = document.getElementById('nav-container');
+    if (nav) {
+        nav.classList.toggle('active');
+    }
+}

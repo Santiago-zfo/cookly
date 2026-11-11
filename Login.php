@@ -15,13 +15,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['id_usuario'] = $usuario['id_usuario'];
         $_SESSION['nombre'] = $usuario['nombre'];
         $_SESSION['correo_electronico'] = $usuario['correo_electronico'];
-        $_SESSION['rol'] = $usuario['rol'] ?? 'usuario'; 
-        
-        registrar_log("Inicio de sesión exitoso.", 'INFO');
+        // El permiso procede de la cuenta validada en la base de datos.
+        $_SESSION['rol'] = $usuario['rol'] ?? 'usuario';
         header('Location: index.php');
         exit;
     } else {
-        registrar_log("Intento de inicio de sesión fallido con el correo: $correo", 'WARNING');
         $error = 'Correo o contraseña incorrectos.';
     }
 }
@@ -31,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Cookly · Iniciar sesión</title>
-    <link rel="stylesheet" href="public/CSS/auth.css">
+    <link rel="stylesheet" href="public/css/auth.css">
 </head>
 <body>
 <main class="auth">

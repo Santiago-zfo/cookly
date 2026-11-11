@@ -12,10 +12,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $ings = [];
     if (!empty($_POST['ing_nombre'])) {
         foreach ($_POST['ing_nombre'] as $i => $nombre) {
+            // Si el nombre está vacío, lo saltamos
             if (trim($nombre) === '') continue;
+            
+            // Si la cantidad está vacía o es 0, le ponemos un 1 por defecto para evitar el error SQL
+            $cantidad = trim($_POST['ing_cantidad'][$i]);
+            if ($cantidad === '' || (float)$cantidad <= 0) {
+                $cantidad = 1; 
+            }
+            
             $ings[] = [
                 'nombre' => $nombre, 
-                'cantidad' => $_POST['ing_cantidad'][$i], 
+                'cantidad' => (float)$cantidad, 
                 'unidad_medida' => $_POST['ing_unidad'][$i]
             ];
         }
@@ -92,7 +100,8 @@ require_once __DIR__ . '/includes/header.php';
         <div id="ings">
             <div class="ing-row">
                 <input type="text" name="ing_nombre[]" placeholder="Ingrediente">
-                <input type="number" name="ing_cantidad[]" placeholder="Cant." step="0.01">
+                <!-- Ponemos value="1" por defecto para que nunca esté vacío -->
+                <input type="number" name="ing_cantidad[]" placeholder="Cant." step="0.01" min="0.1" value="1">
                 <select name="ing_unidad[]">
                     <option value="gramos">gramos</option>
                     <option value="kilogramos">kilogramos</option>

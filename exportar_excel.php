@@ -2,6 +2,7 @@
 // exportar_excel.php
 require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/includes/funciones_recetas.php';
+require_once __DIR__ . '/includes/funciones_admin.php';
 requerirAdmin();
 
 $stats = obtener_estadisticas_generales();

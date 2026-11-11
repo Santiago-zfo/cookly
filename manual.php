@@ -83,7 +83,7 @@ require_once __DIR__ . '/includes/header.php';
 
     .wiki-content .subtitle {
         color: var(--text-muted);
-        font-size: 1rem;
+        font-size: 1.1rem;
         margin-bottom: 2rem;
         font-style: italic;
     }
@@ -96,6 +96,14 @@ require_once __DIR__ . '/includes/header.php';
         padding-bottom: 0.5rem;
         margin-top: 3rem;
         margin-bottom: 1rem;
+    }
+
+    .wiki-content h3 {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--text-main);
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
     }
 
     .wiki-content ul {
@@ -179,16 +187,15 @@ require_once __DIR__ . '/includes/header.php';
     <aside class="wiki-sidebar">
         <h3>Contenido</h3>
         <ul>
-            <li><a href="#intro">1. Introducción a Cookly</a></li>
-            <li><a href="#registro">2. Registro y Acceso</a></li>
-            <li><a href="#perfil">3. Mi Perfil</a></li>
-            <li><a href="#crear">4. Crear una Receta</a></li>
-            <li><a href="#explorar">5. Explorar y Buscar</a></li>
-            <li><a href="#ver">6. Ver Detalle</a></li>
-            <li><a href="#editar">7. Editar Receta</a></li>
-            <li><a href="#eliminar">8. Eliminar Receta</a></li>
-            <li><a href="#consejos">9. Consejos Útiles</a></li>
-            <li><a href="#faq">10. Preguntas Frecuentes</a></li>
+            <li><a href="#intro">1. Introducción y Filosofía</a></li>
+            <li><a href="#registro">2. Registro y Seguridad</a></li>
+            <li><a href="#perfil">3. Gestión del Perfil</a></li>
+            <li><a href="#crear">4. Anatomía de una Receta</a></li>
+            <li><a href="#explorar">5. Exploración y Búsqueda</a></li>
+            <li><a href="#editar">6. Edición y Moderación</a></li>
+            <li><a href="#eliminar">7. Eliminación de Contenido</a></li>
+            <li><a href="#consejos">8. Mejores Prácticas</a></li>
+            <li><a href="#faq">9. Preguntas Frecuentes</a></li>
         </ul>
     </aside>
 
@@ -196,175 +203,172 @@ require_once __DIR__ . '/includes/header.php';
     <div class="wiki-content">
         
         <h1>Manual de Usuario de Cookly</h1>
-        <p class="subtitle">De la enciclopedia culinaria Cookly. Esta guía detalla todo el funcionamiento del sistema, desde el registro hasta los consejos para publicar recetas perfectas.</p>
+        <p class="subtitle">Documentación oficial del sistema. Aprende a gestionar tu recetario digital, interactuar con la comunidad y aprovechar todas las herramientas de la plataforma.</p>
 
         <div class="info-card">
-            <h4>📌 Información General</h4>
+            <h4>📌 Resumen de la Plataforma</h4>
             <p style="margin: 0; font-size: 0.95rem; color: var(--text-main);">
-                <strong>Plataforma:</strong> Cookly<br>
-                <strong>Propósito:</strong> Gestión, creación y compartición de recetas de cocina.<br>
+                <strong>Nombre:</strong> Cookly<br>
+                <strong>Propósito:</strong> Creación, organización y difusión de recetas de cocina.<br>
+                <strong>Modelo:</strong> Recetario comunitario con sistema de moderación.<br>
                 <strong>Idioma:</strong> Español.
             </p>
         </div>
 
         <!-- SECCIÓN 1: INTRO -->
         <section id="intro">
-            <h2>1. Introducción a Cookly</h2>
-            <p>Cookly es un recetario digital diseñado para almacenar, organizar y compartir los mejores platos. Su objetivo es brindar una experiencia intuitiva tanto para chefs experimentados como para principiantes que buscan inspiración.</p>
-            <p>Al ingresar, el usuario es recibido por su panel <strong>"Mis recetas"</strong>, donde puede administrar sus publicaciones personales, ver su estado de aprobación y crear nuevas recetas.</p>
+            <h2>1. Introducción y Filosofía</h2>
+            <p>Cookly nace con la idea de ser más que un simple bloc de notas. Es un ecosistema donde cocineros empíricos y profesionales pueden compartir su sazón. La plataforma está diseñada bajo un modelo de <strong>moderación previa</strong>: esto significa que cada receta pasa por una revisión antes de ser visible para el mundo, garantizando así la calidad y el respeto en la comunidad.</p>
+            <p>Al iniciar sesión, aterrizarás directamente en tu panel de control personal: <strong>"Mis recetas"</strong>.</p>
             
             <div class="wiki-image-box">
                 <img src="public/IMG/introduccion.jpg" alt="Pantalla de inicio" onerror="this.src='https://placehold.co/800x400/F3F4F6/6B7280?text=Imagen+de+Inicio';">
-                <div class="caption">Figura 1. Vista principal del panel de usuario.</div>
+                <div class="caption">Figura 1. Vista principal del panel de usuario al iniciar sesión.</div>
             </div>
         </section>
 
         <!-- SECCIÓN 2: REGISTRO -->
         <section id="registro">
-            <h2>2. Registro e Inicio de Sesión</h2>
-            <p>Para poder guardar recetas y acceder a la comunidad, es necesario contar con una cuenta.</p>
+            <h2>2. Registro, Acceso y Seguridad</h2>
+            <p>Para proteger tu contenido y evitar el spam, es obligatorio crear una cuenta. El proceso es rápido, pero cuenta con altos estándares de seguridad.</p>
+            
+            <h3>Creación de cuenta</h3>
             <ul>
-                <li><strong>Crear Cuenta:</strong> En la pantalla inicial, haz clic en <em>"¿No tienes cuenta? Regístrate"</em>. Se solicitará un nombre, correo y contraseña (mín. 8 caracteres, una letra y un número).</li>
-                <li><strong>Iniciar Sesión:</strong> Introduce tu correo y contraseña para acceder a tu panel.</li>
-                <li><strong>Seguridad:</strong> Las contraseñas son encriptadas con el algoritmo Bcrypt, garantizando que nadie, ni siquiera los administradores, puedan verla en texto plano.</li>
+                <li>Haz clic en el enlace inferior <em>"¿No tienes cuenta? Regístrate"</em>.</li>
+                <li><strong>Requisitos de contraseña:</strong> Debe tener un mínimo de 8 caracteres, incluyendo al menos una letra y un número. Esto evita que terceros accedan a tu perfil.</li>
             </ul>
 
             <div class="nota-box">
-                <strong>Nota de Seguridad:</strong> Nunca compartas tu contraseña con otras personas. Si olvidas tu contraseña, deberás contactar con el soporte del sistema para restablecerla.
+                <strong>Nota de Privacidad:</strong> Tu contraseña es procesada mediante el algoritmo de encriptación <em>Bcrypt</em>. Ni siquiera los administradores del sistema pueden verla; solo se comparan los hashes criptográficos al iniciar sesión.
             </div>
 
             <div class="wiki-image-box">
                 <img src="public/IMG/login.jpg" alt="Pantalla de Login" onerror="this.src='https://placehold.co/800x400/F3F4F6/6B7280?text=Imagen+de+Login';">
-                <div class="caption">Figura 2. Interfaz de inicio de sesión de Cookly.</div>
+                <div class="caption">Figura 2. Formulario de inicio de sesión con validación de credenciales.</div>
             </div>
         </section>
 
         <!-- SECCIÓN 3: PERFIL -->
         <section id="perfil">
-            <h2>3. Mi Perfil</h2>
-            <p>Al hacer clic en tu nombre (esquina superior derecha), accederás a la configuración del perfil. Esta sección es tu carta de presentación ante la comunidad.</p>
+            <h2>3. Gestión del Perfil</h2>
+            <p>Tu perfil es tu carta de presentación. Puedes acceder a él haciendo clic en tu nombre (con el ícono de saludo 👋) en la esquina superior derecha. Desde aquí podrás:</p>
             <ul>
-                <li><strong>Datos Personales:</strong> Permite cambiar nombre, correo y añadir una biografía. La biografía es el espacio para contar tu experiencia culinaria.</li>
-                <li><strong>Avatar:</strong> Se puede subir una imagen local o pegar una URL de internet. Se recomienda una imagen cuadrada o circular.</li>
-                <li><strong>Seguridad:</strong> Opción de cambiar la contraseña actual por una nueva en cualquier momento.</li>
-                <li><strong>Eliminar cuenta:</strong> Borra de forma permanente el perfil y <strong>todas las recetas asociadas</strong>. Esta acción no se puede deshacer.</li>
+                <li><strong>Actualizar datos personales:</strong> Nombre, correo electrónico y una biografía donde puedes contar tu experiencia en la cocina.</li>
+                <li><strong>Foto de perfil (Avatar):</strong> Puedes subir una imagen local (JPG, PNG, WEBP) o pegar una URL directa.</li>
+                <li><strong>Cambiar contraseña:</strong> Introduce tu contraseña actual y confirma la nueva.</li>
+                <li><strong>Zona de Peligro:</strong> Aquí puedes eliminar tu cuenta permanentemente. <em>Al hacerlo, todas tus recetas e ingredientes registrados desaparecerán en cascada.</em></li>
             </ul>
 
             <div class="wiki-image-box">
                 <img src="public/IMG/perfil.jpg" alt="Pantalla de Perfil" onerror="this.src='https://placehold.co/800x400/F3F4F6/6B7280?text=Imagen+de+Perfil';">
-                <div class="caption">Figura 3. Sección de edición del perfil de usuario.</div>
+                <div class="caption">Figura 3. Panel de configuración del perfil del usuario.</div>
             </div>
         </section>
 
         <!-- SECCIÓN 4: CREAR -->
         <section id="crear">
-            <h2>4. Crear una Receta</h2>
-            <p>Para publicar un plato, dirígete al botón <strong>"+ Nueva receta"</strong>. El formulario solicita los siguientes parámetros:</p>
-            <ul>
-                <li><strong>Título y Categoría:</strong> Identificación y clasificación del plato (Desayuno, Almuerzo, Postre, etc.).</li>
-                <li><strong>Tiempo, Dificultad y Porciones:</strong> Datos clave para el comensal. El tiempo se mide en minutos y las porciones deben ser mayores a cero.</li>
-                <li><strong>Ingredientes:</strong> Se pueden agregar filas ilimitadas indicando cantidad y unidad de medida (gramos, tazas, cucharadas, etc.).</li>
-                <li><strong>Imagen y Pasos:</strong> Fotografía del platillo e instrucciones detalladas. La imagen es opcional; si no se coloca, el sistema usa un ícono genérico.</li>
-            </ul>
+            <h2>4. Anatomía de una Receta</h2>
+            <p>Para publicar un plato, ve a la pestaña <strong>"+ Nueva receta"</strong>. El sistema te pedirá detalles precisos para que otros usuarios puedan replicarlo:</p>
             
+            <ul>
+                <li><strong>Información Básica:</strong> Título atractivo, categoría (Desayuno, Cena, Postre, etc.), tiempo estimado en minutos y número de porciones. Los valores deben ser mayores a 0.</li>
+                <li><strong>Imagen:</strong> Puedes subir una foto desde tu dispositivo o pegar el enlace de una imagen web. Si se deja en blanco, el sistema colocará un ícono por defecto.</li>
+                <li><strong>Ingredientes Dinámicos:</strong> Usa el botón <strong>"+ Ingrediente"</strong> para abrir cuantas filas necesites. Especifica el nombre, la cantidad numérica y selecciona la unidad (gramos, tazas, unidad, cucharadas, etc.).</li>
+                <li><strong>Instrucciones:</strong> El paso a paso. Sé muy claro, ya que es la base de la receta.</li>
+            </ul>
+
             <div class="nota-box">
-                <strong>Consejo:</strong> Al agregar ingredientes, escribe primero el nombre, luego la cantidad (ej. 200) y finalmente selecciona la unidad de medida. Puedes usar el botón <strong>"+ Ingrediente"</strong> para añadir más filas.
+                <strong>Estado Inicial:</strong> Toda receta nueva entra con el estado <strong>"Pendiente"</strong>. Esto significa que un moderador la revisará antes de publicarla en el catálogo global.
             </div>
 
             <div class="wiki-image-box">
                 <img src="public/IMG/crear_receta.jpg" alt="Formulario de nueva receta" onerror="this.src='https://placehold.co/800x400/F3F4F6/6B7280?text=Imagen+de+Crear+Receta';">
-                <div class="caption">Figura 4. Formulario de carga de recetas con ingredientes dinámicos.</div>
+                <div class="caption">Figura 4. Formulario de carga con campos dinámicos para ingredientes.</div>
             </div>
         </section>
 
         <!-- SECCIÓN 5: EXPLORAR -->
         <section id="explorar">
-            <h2>5. Explorar y Buscar</h2>
-            <p>La pestaña <strong>"Explorar"</strong> despliega un catálogo público con las recetas aprobadas. Es el espacio ideal para inspirarse.</p>
+            <h2>5. Exploración y Búsqueda</h2>
+            <p>La pestaña <strong>"Explorar"</strong> es el corazón público de Cookly. Aquí solo aparecen las recetas que han sido aprobadas por el equipo de moderación.</p>
+            
+            <h3>Buscador inteligente</h3>
+            <p>En la parte superior encontrarás una barra de búsqueda. Tiene la particularidad de ser <strong>reactiva (AJAX)</strong>: mientras escribes, las tarjetas se van filtrando instantáneamente sin recargar la página. Puedes buscar por:</p>
             <ul>
-                <li><strong>Galería:</strong> Las recetas se muestran en tarjetas con imagen, título, autor y categoría.</li>
-                <li><strong>Búsqueda:</strong> Puedes usar la barra de búsqueda para filtrar por el nombre del plato, la categoría o el nombre del autor.</li>
+                <li>Nombre del plato (Ej. "Pollo").</li>
+                <li>Categoría (Ej. "Postres").</li>
+                <li>Nombre del autor (Ej. "Alison").</li>
             </ul>
 
             <div class="wiki-image-box">
                 <img src="public/IMG/explorar.jpg" alt="Galería de recetas" onerror="this.src='https://placehold.co/800x400/F3F4F6/6B7280?text=Imagen+de+Explorar';">
-                <div class="caption">Figura 5. Galería general de la comunidad.</div>
+                <div class="caption">Figura 5. Galería general con buscador dinámico en tiempo real.</div>
             </div>
         </section>
 
-        <!-- SECCIÓN 6: VER DETALLE -->
-        <section id="ver">
-            <h2>6. Ver Detalle de una Receta</h2>
-            <p>Al hacer clic en el botón <strong>"Ver"</strong> de cualquier receta, accederás a su vista completa. En esta pantalla encontrarás:</p>
-            <ul>
-                <li>La imagen en alta resolución.</li>
-                <li>El autor y datos clave (tiempo, porciones, dificultad).</li>
-                <li>La lista completa de ingredientes con sus cantidades exactas.</li>
-                <li>Las instrucciones paso a paso para la preparación.</li>
-            </ul>
-            <p>Si la receta es de tu autoría, verás botones adicionales para <strong>Editar</strong> o <strong>Eliminar</strong> en la parte inferior.</p>
-        </section>
-
-        <!-- SECCIÓN 7: EDITAR -->
+        <!-- SECCIÓN 6: EDITAR -->
         <section id="editar">
-            <h2>7. Editar Receta</h2>
-            <p>Si necesitas hacer cambios en una receta que ya publicaste, dirígete a tu panel <strong>"Mis recetas"</strong> y busca la tarjeta de la receta. En la parte inferior verás los botones de acción.</p>
-            <p>Haz clic en el botón <strong>"Editar"</strong> (texto de color verde). Se abrirá el mismo formulario que usaste para crearla, pero con todos los datos ya cargados.</p>
+            <h2>6. Edición y Moderación</h2>
+            <p>Si cometes un error o quieres mejorar una receta que ya publicaste, dirígete a tu panel <strong>"Mis recetas"</strong> y pulsa el botón <strong>"Editar"</strong>.</p>
+            
             <ul>
-                <li>Puedes cambiar el título, categoría, tiempo, dificultad, porciones, descripción e instrucciones.</li>
-                <li>Puedes añadir, modificar o eliminar ingredientes existentes.</li>
-                <li>Puedes reemplazar la imagen de la receta (ya sea con una nueva URL o subiendo un archivo).</li>
+                <li>El formulario se abrirá con todos los datos precargados.</li>
+                <li>Puedes añadir nuevos ingredientes, borrar los que ya no uses o cambiar la foto.</li>
+                <li><strong>Regla de moderación:</strong> Cada vez que edites una receta (así ya estuviera aprobada), su estado volverá automáticamente a <strong>"Pendiente"</strong>. Esto obliga a los moderadores a revisar el nuevo contenido para asegurar que no se haya cambiado por algo inapropiado.</li>
             </ul>
-            <p>Una vez hayas terminado, pulsa el botón <strong>"Actualizar receta"</strong> para guardar los cambios.</p>
 
             <div class="wiki-image-box">
                 <img src="public/IMG/editar.jpg" alt="Editar receta" onerror="this.src='https://placehold.co/800x400/F3F4F6/6B7280?text=Imagen+de+Editar';">
-                <div class="caption">Figura 6. Formulario de edición con los datos precargados.</div>
+                <div class="caption">Figura 6. Formulario de edición con datos precargados de la base de datos.</div>
             </div>
         </section>
 
-        <!-- SECCIÓN 8: ELIMINAR -->
+        <!-- SECCIÓN 7: ELIMINAR -->
         <section id="eliminar">
-            <h2>8. Eliminar Receta</h2>
-            <p>Si ya no quieres que una receta aparezca en tu perfil ni en la comunidad, puedes borrarla. En tu panel <strong>"Mis recetas"</strong>, busca la receta y haz clic en el botón <strong>"Eliminar"</strong> (texto de color rojo).</p>
+            <h2>7. Eliminación de Contenido</h2>
+            <p>Si deseas retirar una receta de la plataforma, ve a "Mis recetas" y pulsa el botón <strong>"Eliminar"</strong>.</p>
             
             <div class="nota-box">
-                <strong>Advertencia:</strong> El sistema te pedirá una confirmación antes de borrarla definitivamente. Ten en cuenta que esta acción <strong>no se puede deshacer</strong> y la receta se eliminará de la base de datos junto con sus ingredientes.
+                <strong>Advertencia:</strong> El sistema te pedirá una confirmación. Si aceptas, la receta y <em>todos sus ingredientes asociados</em> se borrarán de forma permanente. Esta acción no se puede deshacer.
             </div>
 
             <div class="wiki-image-box">
                 <img src="public/IMG/eliminar.jpg" alt="Eliminar receta" onerror="this.src='https://placehold.co/800x400/F3F4F6/6B7280?text=Imagen+de+Eliminar';">
-                <div class="caption">Figura 7. Confirmación de eliminación de receta.</div>
+                <div class="caption">Figura 7. Cuadro de diálogo para confirmar la eliminación de una receta.</div>
             </div>
         </section>
 
-        <!-- SECCIÓN 9: CONSEJOS -->
+        <!-- SECCIÓN 8: CONSEJOS -->
         <section id="consejos">
-            <h2>9. Consejos Útiles</h2>
+            <h2>8. Mejores Prácticas para tus Recetas</h2>
             <ul>
-                <li><strong>Usa buenas fotos:</strong> Las recetas con imágenes atractivas reciben más visitas. Procura tener buena iluminación y un fondo limpio.</li>
-                <li><strong>Sé específico:</strong> En las instrucciones, detalla los tiempos de cocción y las temperaturas. Esto ayuda a otros usuarios a replicar tu receta con éxito.</li>
-                <li><strong>Clasifica bien:</strong> Elige la categoría correcta para que tu receta sea fácil de encontrar.</li>
-                <li><strong>Revisa antes de guardar:</strong> Asegúrate de que todos los ingredientes tengan cantidad y unidad antes de enviar el formulario.</li>
+                <li><strong>Fotografía gastronómica:</strong> Las recetas con fotos claras y bien iluminadas tienen un 80% más de probabilidades de ser guardadas por otros usuarios.</li>
+                <li><strong>Sé específico con las medidas:</strong> No escribas "un poco de sal". Usa "1 cucharadita de sal". La plataforma tiene unidades exactas; aprovéchalas.</li>
+                <li><strong>Revisa la ortografía:</strong> Un texto bien redactado inspira confianza y profesionalismo.</li>
+                <li><strong>Instrucciones ordenadas:</strong> Divide la preparación en pasos lógicos. Si usas el botón "Enter" para separar párrafos, el sistema lo respetará al mostrar la receta.</li>
             </ul>
         </section>
 
-        <!-- SECCIÓN 10: FAQ -->
+        <!-- SECCIÓN 9: FAQ -->
         <section id="faq">
-            <h2>10. Preguntas Frecuentes (FAQ)</h2>
-            <p><strong>¿Por qué no veo mi receta en "Explorar"?</strong><br>
-            Las recetas pasan por un proceso de revisión antes de ser públicas. Si tu receta no aparece, puede que esté en estado <em>Pendiente</em> o <em>Rechazada</em>. Puedes ver su estado en el panel "Mis recetas".</p>
+            <h2>9. Preguntas Frecuentes (FAQ)</h2>
             
-            <p><strong>¿Puedo cambiar mi foto de perfil?</strong><br>
-            Sí, desde tu perfil puedes subir una nueva imagen o pegar una URL. Los cambios se guardan al instante.</p>
+            <h3>¿Por qué no veo mi receta en la pestaña "Explorar"?</h3>
+            <p>Porque aún no ha sido aprobada. Ve a "Mis recetas" y revisa la etiqueta de color: si dice <span style="color:#F59E0B; font-weight:bold;">Pendiente</span>, significa que un administrador debe revisarla. Si dice <span style="color:var(--success); font-weight:bold;">Aceptado</span>, ya es pública.</p>
 
-            <p><strong>¿Qué pasa si elimino mi cuenta?</strong><br>
-            Al eliminar tu cuenta, todas tus recetas también serán eliminadas de la base de datos de manera permanente. Esta acción no se puede deshacer.</p>
+            <h3>¿Puedo cambiar mi foto de perfil cuando quiera?</h3>
+            <p>Sí. Desde tu perfil puedes subir una imagen nueva o pegar un enlace. Los cambios se reflejan de inmediato en tu barra de navegación.</p>
+
+            <h3>¿Olvidé mi contraseña, qué hago?</h3>
+            <p>Actualmente, por ser un sistema cerrado, debes contactar con el administrador del sistema para que te asigne una nueva o reinicie tu cuenta.</p>
+
+            <h3>¿Si elimino mi cuenta se borran mis recetas?</h3>
+            <p>Sí. Al eliminar el usuario, el sistema aplica un borrado en cascada (<em>ON DELETE CASCADE</em>) y elimina absolutamente todo tu historial culinario de la base de datos para no dejar basura digital.</p>
         </section>
 
         <div style="background: var(--primary-light); color: var(--primary-hover); padding: 2rem; border-radius: var(--radius-md); margin-top: 4rem; text-align: center; border: 1px solid var(--primary);">
             <strong style="font-size: 1.2rem;">¡Fin del manual! 🚀</strong><br>
-            <p style="margin-top: 0.5rem; margin-bottom: 0;">Ahora tienes el conocimiento para usar Cookly al máximo.</p>
+            <p style="margin-top: 0.5rem; margin-bottom: 0;">Ahora tienes el conocimiento técnico y práctico para dominar Cookly. ¡Buen provecho!</p>
         </div>
 
     </div>

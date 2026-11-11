@@ -2,6 +2,7 @@
 // reportes.php
 require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/includes/funciones_recetas.php';
+require_once __DIR__ . '/includes/funciones_admin.php';
 requerirLogin();
 
 $titulo = 'Reportes y Estadísticas';

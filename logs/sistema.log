@@ -1,4 +1,6 @@
-[2026-11-09 02:04:51] [CRITICAL] [Invitado/Anónimo] Fallo de conexión a la BD: SQLSTATE[HY000] [1049] Unknown database 'cookly'
-[2026-11-09 02:05:03] [CRITICAL] [Invitado/Anónimo] Fallo de conexión a la BD: SQLSTATE[HY000] [1049] Unknown database 'cookly'
-[2026-11-09 02:09:25] [INFO] [santi06132009@gmail.com] Inicio de sesión exitoso.
-[2026-11-09 02:11:10] [INFO] [santi06132009@gmail.com] Inicio de sesión exitoso.
+[2026-11-10 07:46:01] [INFO] [alisonnicol.c.c@gmail.com] Administración: receta ID 14 pasó de Aceptado a Aceptado.
+[2026-11-10 08:40:11] [INFO] [alisonnicol.c.c@gmail.com] Administración: receta ID 14 pasó de Aceptado a Pendiente.
+[2026-11-10 08:40:30] [INFO] [alisonnicol.c.c@gmail.com] Administración: receta ID 14 pasó de Pendiente a Aceptado.
+[2026-11-10 09:02:32] [INFO] [alisonnicol.c.c@gmail.com] Administración: receta ID 21 pasó de Pendiente a Aceptado.
+[2026-11-10 15:50:27] [INFO] [santi06132009@gmail.com] Administración: receta ID 14 pasó de Aceptado a Pendiente.
+[2026-11-10 15:51:24] [INFO] [santi06132009@gmail.com] Administración: receta ID 14 pasó de Pendiente a Aceptado.
