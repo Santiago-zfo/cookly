@@ -24,7 +24,7 @@ require_once __DIR__ . '/includes/header.php';
         Puedes subir tu video a la carpeta public/ y llamarlo 'presentacion.mp4'.
         -->
         <video 
-            src="public/" 
+            src="public/video.mp4" 
             controls 
             poster="public/IMG/logo.png" 
             style="width: 100%; display: block; max-height: 500px; object-fit: cover;">
