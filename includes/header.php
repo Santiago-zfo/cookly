@@ -6,6 +6,7 @@ $paginaActiva = basename($_SERVER['PHP_SELF'] ?? '');
 $base_url = rtrim(dirname($_SERVER['SCRIPT_NAME'] ?? ''), '/\\');
 $esAdminHeader = function_exists('esAdmin') && esAdmin();
 $navE = static function($s) { return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); };
+
 if (!function_exists('cookly_nav_icon')) {
     function cookly_nav_icon(string $name): string {
         $paths = [
@@ -14,6 +15,7 @@ if (!function_exists('cookly_nav_icon')) {
             'plus'=>'<path d="M12 5v14M5 12h14"/>',
             'shield'=>'<path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6z"/><path d="m8 12 3 3 5-6"/>',
             'book'=>'<path d="M12 5v16M12 5C8 2 3 4 3 4v15s5-2 9 2c4-4 9-2 9-2V4s-5-2-9 1Z"/>',
+            'folder'=>'<path d="M4 4h6l2 3h8v12H4z"/>', // Ícono nuevo para Anexos
             'chevron'=>'<path d="m6 9 6 6 6-6"/>',
             'menu'=>'<path d="M4 6h16M4 12h16M4 18h16"/>',
             'user'=>'<circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/>',
@@ -25,9 +27,20 @@ if (!function_exists('cookly_nav_icon')) {
         return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'.($paths[$name]??$paths['home']).'</svg>';
     }
 }
-$navItems = [ ['index.php','Mis recetas','home'], ['recetas.php','Explorar','search'], ['receta_crear.php','Nueva receta','plus'] ];
-if ($esAdminHeader && is_file(__DIR__.'/../admin.php')) $navItems[] = ['admin.php','Administrar','shield'];
+
+$navItems = [ 
+    ['index.php','Mis recetas','home'], 
+    ['recetas.php','Explorar','search'], 
+    ['receta_crear.php','Nueva receta','plus'] 
+];
+
+if ($esAdminHeader && is_file(__DIR__.'/../admin.php')) {
+    $navItems[] = ['admin.php','Administrar','shield'];
+}
+
 $navItems[] = ['manual.php','Manual de Usuario','book'];
+$navItems[] = ['anexos.php','Anexos','folder']; // BOTÓN NUEVO EN LA BARRA PRINCIPAL
+
 $nombreHeader = $usuarioHeader['nombre'] ?? '';
 $partesNombre = preg_split('/\s+/u', trim($nombreHeader), -1, PREG_SPLIT_NO_EMPTY);
 $iniciales = '';
@@ -71,9 +84,14 @@ foreach (array_slice($partesNombre ?: ['C'], 0, 2) as $parte) $iniciales .= func
         <div class="cookly-account-dropdown">
             <p><?= $navE($nombreHeader) ?><small><?= $esAdminHeader ? 'Cuenta administradora' : 'Cuenta de usuario' ?></small></p>
             <a href="<?= $navE($base_url) ?>/perfil.php"><?= cookly_nav_icon('user') ?>Mi perfil</a>
+            
+            <!-- ENLACE DE ANEXOS EN EL MENÚ DESPLEGABLE -->
+            <a href="<?= $navE($base_url) ?>/anexos.php"><?= cookly_nav_icon('folder') ?>Anexos y Documentos</a>
+
             <?php if ($esAdminHeader && is_file(__DIR__.'/../reportes.php')): ?><a href="<?= $navE($base_url) ?>/reportes.php"><?= cookly_nav_icon('chart') ?>Reportes</a><?php endif; ?>
             <?php if ($esAdminHeader && is_file(__DIR__.'/../logs.php')): ?><a href="<?= $navE($base_url) ?>/logs.php"><?= cookly_nav_icon('logs') ?>Registro del sistema</a><?php endif; ?>
             <?php if (is_file(__DIR__.'/../video.php')): ?><a href="<?= $navE($base_url) ?>/video.php"><?= cookly_nav_icon('video') ?>Video de presentación</a><?php endif; ?>
+            
             <a class="cookly-account-logout" href="<?= $navE($base_url) ?>/Logout.php"><?= cookly_nav_icon('logout') ?>Cerrar sesión</a>
         </div>
     </details>
