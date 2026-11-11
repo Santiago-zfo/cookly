@@ -7,6 +7,7 @@ requerirLogin();
 $id = (int) ($_GET['id'] ?? 0);
 $receta = obtener_receta($id);
 
+// Validar que la receta exista y pertenezca al usuario
 if (!$receta || $receta['id_usuario'] != $_SESSION['id_usuario']) {
     header('Location: index.php'); 
     exit;
@@ -22,9 +23,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!empty($_POST['ing_nombre'])) {
         foreach ($_POST['ing_nombre'] as $i => $nombre) {
             if (trim($nombre) === '') continue;
+            
+            // Validar cantidad para evitar error de MySQL
+            $cantidad = trim($_POST['ing_cantidad'][$i]);
+            if ($cantidad === '' || (float)$cantidad <= 0) {
+                $cantidad = 1; 
+            }
+            
             $ings[] = [
                 'nombre' => $nombre, 
-                'cantidad' => $_POST['ing_cantidad'][$i], 
+                'cantidad' => (float)$cantidad, 
                 'unidad_medida' => $_POST['ing_unidad'][$i]
             ];
         }
@@ -78,11 +86,12 @@ require_once __DIR__ . '/includes/header.php';
                 <input type="number" name="porciones" min="1" value="<?= $receta['porciones'] ?>" required>
             </label>
             
+            <!-- CAMPO DE IMAGEN CORREGIDO (type="text" en lugar de "url") -->
             <label class="full-width">
                 Imagen (URL o Archivo)
                 <div style="background: var(--bg-color); padding: 1rem; border-radius: var(--radius-md); display: flex; gap: 1rem; flex-direction: column;">
-                    <input type="url" name="imagen_url" value="<?= htmlspecialchars($receta['imagen_url'] ?? '') ?>" placeholder="https://...">
-                    <small style="color: var(--text-muted);">Sube un archivo si quieres reemplazar la imagen actual:</small>
+                    <input type="text" name="imagen_url" value="<?= htmlspecialchars($receta['imagen_url'] ?? '') ?>" placeholder="https://... (Opcional)">
+                    <small style="color: var(--text-muted);">Deja este campo como está si no deseas cambiar la imagen actual, o selecciona un archivo nuevo abajo.</small>
                     <input type="file" name="imagen_file" accept="image/*">
                 </div>
             </label>
@@ -100,17 +109,20 @@ require_once __DIR__ . '/includes/header.php';
             <?php if (empty($ings_db)): ?>
                 <div class="ing-row">
                     <input type="text" name="ing_nombre[]" placeholder="Ingrediente">
-                    <input type="number" name="ing_cantidad[]" placeholder="Cant." step="0.01">
+                    <input type="number" name="ing_cantidad[]" placeholder="Cant." step="0.01" min="0.1" value="1">
                     <select name="ing_unidad[]">
                         <option value="gramos">gramos</option>
                         <option value="unidad">unidad</option>
+                        <option value="mililitros">mililitros</option>
+                        <option value="tazas">tazas</option>
+                        <option value="cucharadas">cucharadas</option>
                     </select>
                 </div>
             <?php else: ?>
                 <?php foreach ($ings_db as $ing): ?>
                     <div class="ing-row">
                         <input type="text" name="ing_nombre[]" value="<?= htmlspecialchars($ing['nombre']) ?>">
-                        <input type="number" name="ing_cantidad[]" value="<?= $ing['cantidad'] ?>" step="0.01">
+                        <input type="number" name="ing_cantidad[]" value="<?= $ing['cantidad'] ?>" step="0.01" min="0.1">
                         <select name="ing_unidad[]">
                             <option value="gramos" <?= $ing['unidad_medida'] == 'gramos' ? 'selected' : '' ?>>gramos</option>
                             <option value="kilogramos" <?= $ing['unidad_medida'] == 'kilogramos' ? 'selected' : '' ?>>kilogramos</option>

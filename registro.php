@@ -5,7 +5,7 @@ require_once __DIR__ . '/includes/funciones_usuarios.php';
 
 if (estaAutenticado()) { header('Location: index.php'); exit; }
 
-$error = ''; $exito = '';
+$error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = trim($_POST['usuario'] ?? '');
     $correo = trim($_POST['correo'] ?? '');
@@ -17,7 +17,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (obtener_usuario_por_correo($correo)) {
         $error = 'Ese correo ya está registrado.';
     } elseif (crear_usuario($nombre, $correo, $password)) {
-        $exito = 'Cuenta creada. Ya puedes iniciar sesión.';
+        // ÉXITO: Redirigir al login automáticamente
+        set_flash_message('exito', 'Cuenta creada con éxito. Ya puedes iniciar sesión.');
+        header('Location: login.php'); 
+        exit;
     } else {
         $error = 'Error al crear la cuenta.';
     }
@@ -36,9 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <section class="vista">
         <h1>Crea tu cuenta</h1>
         <?php if ($error): ?><p class="estado error"><?= htmlspecialchars($error) ?></p><?php endif; ?>
-        <?php if ($exito): ?><p class="estado exito"><?= htmlspecialchars($exito) ?></p><?php endif; ?>
         <form method="POST">
-            <div class="campo"><label>Nombre Completo</label><input type="text" name="usuario" required></div>
+            <div class="campo"><label>Nombre</label><input type="text" name="usuario" required></div>
             <div class="campo"><label>Correo</label><input type="email" name="correo" required></div>
             <div class="campo"><label>Contraseña</label><input type="password" name="clave" required></div>
             <div class="campo"><label>Confirmar Contraseña</label><input type="password" name="confirmar" required></div>

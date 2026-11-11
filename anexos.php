@@ -169,14 +169,14 @@ require_once __DIR__ . '/includes/header.php';
             <div class="doc-icon">⚙️</div>
             <h3 class="doc-title">Manual Técnico</h3>
             <p class="doc-desc">Guía de instalación, configuración de la base de datos y detalles del código fuente.</p>
-            <button class="submit-btn" onclick="abrirModal('<?= $base_url ?>/public/docs/Manual_Tecnico.pdf', 'Manual Técnico')" style="width: 100%;">Ver Documento</button>
+            <button class="submit-btn" onclick="abrirModal('<?= $base_url ?>/public/docs/tecnico.pdf', 'Manual Técnico')" style="width: 100%;">Ver Documento</button>
         </div>
 
         <div class="doc-card">
             <div class="doc-icon">⚙️</div>
             <h3 class="doc-title">Manual de Usuario</h3>
             <p class="doc-desc">Guía de uso del sistema para los usuarios finales.</p>
-            <button class="submit-btn" onclick="abrirModal('<?= $base_url ?>/public/docs/Manual_Usuario.pdf', 'Manual de Usuario')" style="width: 100%;">Ver Documento</button>
+            <button class="submit-btn" onclick="abrirModal('<?= $base_url ?>/public/docs/Usuario.pdf', 'Manual de Usuario')" style="width: 100%;">Ver Documento</button>
         </div>
 
         <!-- 3. PAC -->
@@ -184,7 +184,7 @@ require_once __DIR__ . '/includes/header.php';
             <div class="doc-icon">📋</div>
             <h3 class="doc-title">Plan de Aseguramiento de Calidad (PAC)</h3>
             <p class="doc-desc">Metodología y estándares utilizados para garantizar la calidad del software.</p>
-            <button class="submit-btn" onclick="abrirModal('<?= $base_url ?>/public/docs/PAC_Cookly.pdf', 'Plan de Aseguramiento de Calidad')" style="width: 100%;">Ver Documento</button>
+            <button class="submit-btn" onclick="abrirModal('<?= $base_url ?>/public/docs/PAC.pdf', 'Plan de Aseguramiento de Calidad')" style="width: 100%;">Ver Documento</button>
         </div>
 
         <!-- 4. Errores y Soluciones -->
@@ -198,7 +198,7 @@ require_once __DIR__ . '/includes/header.php';
         <!-- 5. Herramientas de QA -->
         <div class="doc-card">
             <div class="doc-icon">✅</div>
-            <h3 class="doc-title">Herramientas de Aseguramiento</h3>
+            <h3 class="doc-title">Herramientas de Aseguramiento de calidad</h3>
             <p class="doc-desc">Documentación sobre las herramientas de testing y control de calidad aplicadas.</p>
             <button class="submit-btn" onclick="abrirModal('<?= $base_url ?>/public/docs/Herramientas_QA.pdf', 'Herramientas de Aseguramiento de Calidad')" style="width: 100%;">Ver Documento</button>
         </div>
