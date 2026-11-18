@@ -1,6 +1,6 @@
 <?php
 /**
- * includes/paths.php
+ * app/Core/paths.php
  * ------------------------------------------------------------
  * Rutas de la aplicación centralizadas. Permite que las páginas vivan en
  * public/pages/ sin depender de la profundidad de la URL ni de la carpeta
@@ -16,7 +16,7 @@ if (!defined('COOKLY_PAGES_DIR')) {
 if (!function_exists('cookly_app_root')) {
     function cookly_app_root(): string
     {
-        return dirname(__DIR__);
+        return dirname(__DIR__, 2);
     }
 }
 

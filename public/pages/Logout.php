@@ -1,6 +1,3 @@
 <?php
-// logout.php
-require_once __DIR__ . '/../../includes/auth.php';
-cerrarSesion();
-header('Location: ' . cookly_page('Login.php'));
-exit;
+require_once __DIR__ . '/../../app/bootstrap.php';
+(new AuthController())->logout();

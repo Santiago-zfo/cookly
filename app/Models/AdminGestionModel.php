@@ -1,8 +1,8 @@
 <?php
 /** Gestión administrativa aislada: no altera los permisos de las páginas de usuario. */
-require_once __DIR__ . '/auth.php';
-require_once __DIR__ . '/paths.php';
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../Core/auth.php';
+require_once __DIR__ . '/../Core/paths.php';
+require_once __DIR__ . '/../../config/database.php';
 
 function ca_e($value): string { return htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8'); }
 function ca_string($value): string { return is_string($value) ? trim($value) : ''; }
@@ -128,7 +128,7 @@ function ca_save_recipe(int $id,array $d,string $version,array $files): void {
             if(!is_array($file)||($file['error']??-1)!==UPLOAD_ERR_OK||($file['size']??0)>5*1024*1024||!is_string($file['tmp_name']??null)||!is_uploaded_file($file['tmp_name']))throw new InvalidArgumentException('No se pudo cargar la imagen. Usa un archivo de hasta 5 MB.');
             $info=@getimagesize($file['tmp_name']);$ext=['image/jpeg'=>'jpg','image/png'=>'png','image/webp'=>'webp','image/gif'=>'gif'][$info['mime']??'']??null;
             if(!$ext)throw new InvalidArgumentException('El archivo debe ser una imagen JPG, PNG, WEBP o GIF válida.');
-            $dir=__DIR__.'/../public/IMG/recetas';if(!is_dir($dir)&&!mkdir($dir,0755,true)&&!is_dir($dir))throw new RuntimeException('No se pudo preparar la carpeta de imágenes.');
+            $dir=__DIR__.'/../../public/IMG/recetas';if(!is_dir($dir)&&!mkdir($dir,0755,true)&&!is_dir($dir))throw new RuntimeException('No se pudo preparar la carpeta de imágenes.');
             $name='admin_'.bin2hex(random_bytes(16)).'.'.$ext;$uploaded=$dir.'/'.$name;
             if(!move_uploaded_file($file['tmp_name'],$uploaded))throw new RuntimeException('No se pudo guardar la imagen.');$url='public/IMG/recetas/'.$name;
         }

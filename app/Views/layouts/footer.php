@@ -1,12 +1,12 @@
 <?php
 /**
- * includes/footer.php
+ * app/Views/layouts/footer.php
  * ------------------------------------------------------------
  * Pie de página HTML reutilizable.
  * Cierra el <main>, el .page-shell y el <body>.
  * ------------------------------------------------------------
  */
-require_once __DIR__ . '/paths.php';
+require_once __DIR__ . '/../../Core/paths.php';
 ?>
     </main><!-- /dashboard -->
 </div><!-- /page-shell -->

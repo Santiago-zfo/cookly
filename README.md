@@ -208,14 +208,37 @@ cookly/
 ├── config/
 │   └── database.php
 │
-├── includes/
-│   ├── auth.php
-│   ├── admin_gestion.php
-│   ├── funciones_admin.php
-│   ├── funciones_recetas.php
-│   ├── funciones_usuarios.php
-│   ├── header.php
-│   └── footer.php
+├── app/
+│   ├── bootstrap.php              <- carga infraestructura, modelos y controladores
+│   ├── Core/
+│   │   ├── paths.php              <- URLs base, de páginas y de recursos
+│   │   ├── auth.php               <- sesión, permisos, flash y logs
+│   │   ├── Controller.php         <- clase base: render(), redirect(), pagina()
+│   │   └── View.php               <- renderiza vistas con layout
+│   │
+│   ├── Models/
+│   │   ├── RecipeModel.php        <- recetas, categorías,ingredientes, búsqueda
+│   │   ├── UserModel.php          <- usuarios y credenciales
+│   │   ├── AdminModel.php         <- estadísticas generales
+│   │   └── AdminGestionModel.php  <- panel de administración (ca_*)
+│   │
+│   ├── Controllers/
+│   │   ├── AuthController.php
+│   │   ├── RecipeController.php
+│   │   ├── AdminController.php
+│   │   ├── ReportController.php
+│   │   ├── ProfileController.php
+│   │   ├── SystemController.php
+│   │   └── PageController.php
+│   │
+│   └── Views/
+│       ├── layouts/               <- header.php y footer.php
+│       ├── auth/                  <- login.php y registro.php
+│       ├── recipes/               <- index, explorar, crear, detalle, editar
+│       ├── admin/                 <- index, editar, no_disponible
+│       ├── reports/               <- index y excel
+│       ├── profile/               <- index
+│       └── pages/                 <- manual, anexos, video, logs, 404
 │
 ├── public/
 │   ├── css/
@@ -223,54 +246,40 @@ cookly/
 │   ├── IMG/
 │   │   ├── recetas/
 │   │   └── avatares/
-│   └── docs/
+│   ├── docs/
+│   ├── video.mp4
+│   └── pages/                     <- controladores frontend (mantienen las URLs)
+│       ├── index.php, Login.php, Logout.php, registro.php, perfil.php
+│       ├── recetas.php, receta_crear.php, receta_detalle.php,
+│       │   receta_editar.php, receta_eliminar.php, ajax_buscar.php
+│       ├── admin.php, admin_receta_editar.php, reportes.php,
+│       │   exportar_excel.php, logs.php
+│       └── manual.php, anexos.php, video.php, 404.php
 │
-├── index.php
-├── Login.php
-├── Logout.php
-├── registro.php
-├── perfil.php
-│
-├── recetas.php
-├── receta_crear.php
-├── receta_detalle.php
-├── receta_editar.php
-├── receta_eliminar.php
-├── ajax_buscar.php
-│
-├── admin.php
-├── admin_receta_editar.php
-├── reportes.php
-├── exportar_excel.php
-├── logs.php
-│
-├── manual.php
-├── anexos.php
-├── video.php
-├── 404.php
-│
-└── README.md
+├── index.php                      <- único punto de entrada (redirige)
+├── README.md
+└── logs/
 ```
 
 ### Descripción de los directorios
 
-**`config/`**  
-Contiene la configuración de conexión a MySQL.
+**`app/Core/`**  
+Infraestructura transversal: rutas, autenticación, clase base de controladores y renderizador de vistas.
 
-**`includes/`**  
-Agrupa funciones reutilizables para autenticación, usuarios, recetas, administración y elementos comunes de interfaz.
+**`app/Models/`**  
+Acceso a datos y lógica de negocio. Son las funciones originales reubicadas, sin cambios en su comportamiento.
 
-**`public/css/`**  
-Contiene las hojas de estilo utilizadas en las distintas páginas.
+**`app/Controllers/`**  
+Reciben la petición, validan permisos, preparan los datos y seleccionan la vista. Contienen la lógica que antes estaba en la parte PHP de cada página.
 
-**`public/JS/`**  
-Incluye scripts para interactividad, búsqueda y navegación.
+**`app/Views/`**  
+Solo presentación (HTML + PHP para recorrer datos). Ninguna vista consulta la base de datos directamente.
 
-**`public/IMG/`**  
-Almacena recursos gráficos, imágenes de recetas y avatares.
+**`public/pages/`**  
+Puntos de entrada públicos muy delgados: cargan `app/bootstrap.php` e invocan un método del controlador. Las URLs no han cambiado.
 
-**`public/docs/`**  
-Contiene documentos relacionados con el proyecto.
+**`public/css/`, `public/JS/`, `public/IMG/`, `public/docs/`**  
+Recursos estáticos: hojas de estilo, scripts, imágenes y documentos.
 
 **`logs/`**  
 Directorio generado por el sistema para almacenar los eventos registrados. No se incluye como directorio inicial en el ZIP.

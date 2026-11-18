@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/auth.php';
-require_once __DIR__ . '/paths.php';
+require_once __DIR__ . '/../../Core/auth.php';
+require_once __DIR__ . '/../../Core/paths.php';
 $titulo = $titulo ?? 'Cookly';
 $usuarioHeader = usuarioActual();
 $paginaActiva = basename($_SERVER['PHP_SELF'] ?? '');

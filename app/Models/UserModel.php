@@ -1,6 +1,6 @@
 <?php
-// includes/funciones_usuarios.php
-require_once __DIR__ . '/../config/database.php';
+// app/Models/UserModel.php
+require_once __DIR__ . '/../../config/database.php';
 
 function crear_usuario($nombre, $correo, $password) {
     global $pdo;

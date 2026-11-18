@@ -1,7 +1,7 @@
 <?php
-// includes/funciones_recetas.php
-require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/auth.php';
+// app/Models/RecipeModel.php
+require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../Core/auth.php';
 
 function listar_categorias() {
     global $pdo;
@@ -119,7 +119,7 @@ function guardar_receta($datos, $ingredientes, $id = null) {
 
     $imagen_url = trim($datos['imagen_url'] ?? '');
     if (isset($_FILES['imagen_file']) && $_FILES['imagen_file']['error'] === UPLOAD_ERR_OK) {
-        $uploadDir = __DIR__ . '/../public/IMG/recetas/';
+        $uploadDir = __DIR__ . '/../../public/IMG/recetas/';
         if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
         
         $ext = strtolower(pathinfo($_FILES['imagen_file']['name'], PATHINFO_EXTENSION));

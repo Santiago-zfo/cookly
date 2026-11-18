@@ -1,6 +1,6 @@
 <?php
 /** Herramientas de administración que faltaban en pabon. */
-require_once __DIR__ . '/funciones_recetas.php';
+require_once __DIR__ . '/RecipeModel.php';
 
 if (!function_exists('obtener_estadisticas_generales')) {
 function obtener_estadisticas_generales() {

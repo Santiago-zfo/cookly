@@ -1,5 +1,5 @@
 <?php
-// includes/auth.php
+// app/Core/auth.php
 require_once __DIR__ . '/paths.php';
 
 if (session_status() === PHP_SESSION_NONE) {
@@ -71,7 +71,7 @@ function mostrar_flash_message() {
  * @param string $tipo    El tipo de log (ERROR, INFO, WARNING, CRITICAL).
  */
 function registrar_log($mensaje, $tipo = 'ERROR') {
-    $directorio = __DIR__ . '/../logs';
+    $directorio = __DIR__ . '/../../logs';
     $archivo = $directorio . '/sistema.log';
 
     if (!is_dir($directorio)) {
