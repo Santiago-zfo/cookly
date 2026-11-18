@@ -39,16 +39,25 @@
                 </div>
                 <?php if (!empty($errores['clave'])): ?><p class="error" role="alert"><?= htmlspecialchars($errores['clave']) ?></p><?php endif; ?>
                 <div class="medidor" id="medidor-clave" data-nivel="0" aria-live="polite">
-                    <div class="medidor-barras" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-                    <p class="medidor-texto">Escribe una contraseña para ver su seguridad</p>
+                    <div class="medidor-barra" role="progressbar" aria-label="Seguridad de la contraseña"
+                         aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                        <div class="medidor-relleno"></div>
+                    </div>
+                    <div class="medidor-cabecera">
+                        <span class="medidor-texto">Escribe una contraseña para ver su seguridad</span>
+                        <span class="medidor-porcentaje">0%</span>
+                    </div>
                 </div>
-                <ul class="requisitos" id="requisitos-clave" aria-label="Requisitos de la contraseña">
-                    <li data-regla="longitud">Mínimo 8 caracteres</li>
-                    <li data-regla="mayuscula">Una letra mayúscula</li>
-                    <li data-regla="minuscula">Una letra minúscula</li>
-                    <li data-regla="numero">Un número</li>
-                    <li data-regla="simbolo">Un símbolo</li>
-                </ul>
+                <details class="requisitos-panel" open>
+                    <summary>Requisitos de la contraseña</summary>
+                    <ul class="requisitos" id="requisitos-clave">
+                        <li data-regla="longitud">Mínimo 8 caracteres</li>
+                        <li data-regla="mayuscula">Una mayúscula</li>
+                        <li data-regla="minuscula">Una minúscula</li>
+                        <li data-regla="numero">Un número</li>
+                        <li data-regla="simbolo">Un símbolo</li>
+                    </ul>
+                </details>
             </div>
             <div class="campo">
                 <label for="reg-confirmar">Confirmar contraseña</label>

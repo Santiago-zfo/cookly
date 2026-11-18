@@ -90,8 +90,15 @@ final class AuthController extends Controller
                 $errores['correo'] = 'Ese correo ya está registrado.';
             }
 
-            if (strlen($password) < 8) {
-                $errores['clave'] = 'La contraseña debe tener al menos 8 caracteres.';
+            $requisitosClave = [
+                strlen($password) >= 8,
+                (bool) preg_match('/[A-ZÁÉÍÓÚÑ]/u', $password),
+                (bool) preg_match('/[a-záéíóúñ]/u', $password),
+                (bool) preg_match('/\d/', $password),
+                (bool) preg_match('/[^\p{L}\p{N}]/u', $password),
+            ];
+            if (in_array(false, $requisitosClave, true)) {
+                $errores['clave'] = 'Debe tener 8 caracteres, mayúscula, minúscula, número y símbolo.';
             }
 
             if ($password !== $confirmar) {

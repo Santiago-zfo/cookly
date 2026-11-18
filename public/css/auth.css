@@ -232,43 +232,73 @@ html, body {
     box-shadow: 0 0 0 4px #FEE2E2;
 }
 
-/* ---------- Medidor de seguridad de la contraseña ---------- */
+/* ---------- Barra de seguridad de la contraseña ---------- */
 .medidor { margin-top: 0.7rem; }
 
-.medidor-barras {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 5px;
-}
-.medidor-barras span {
-    height: 6px;
+.medidor-barra {
+    height: 8px;
     border-radius: 999px;
     background: var(--border-color);
-    transition: var(--transition);
+    overflow: hidden;
 }
-.medidor[data-nivel="1"] .medidor-barras span.activa { background: #EF4444; }
-.medidor[data-nivel="2"] .medidor-barras span.activa { background: #F59E0B; }
-.medidor[data-nivel="3"] .medidor-barras span.activa { background: #10B981; }
-.medidor[data-nivel="4"] .medidor-barras span.activa { background: var(--primary); }
+.medidor-relleno {
+    height: 100%;
+    width: 0;
+    border-radius: inherit;
+    background: var(--error);
+    transition: width 0.25s ease, background-color 0.25s ease;
+}
+.medidor[data-nivel="1"] .medidor-relleno { background: #EF4444; }
+.medidor[data-nivel="2"] .medidor-relleno { background: #F59E0B; }
+.medidor[data-nivel="3"] .medidor-relleno { background: #10B981; }
+.medidor[data-nivel="4"] .medidor-relleno { background: var(--primary); }
 
-.medidor-texto {
+.medidor-cabecera {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.45rem;
+}
+.medidor-texto,
+.medidor-porcentaje {
     font-size: 0.78rem;
     font-weight: 700;
     color: var(--text-muted);
-    margin: 0.45rem 0 0;
 }
+.medidor-porcentaje { font-variant-numeric: tabular-nums; }
 .medidor[data-nivel="1"] .medidor-texto { color: #EF4444; }
 .medidor[data-nivel="2"] .medidor-texto { color: #D97706; }
 .medidor[data-nivel="3"] .medidor-texto { color: #059669; }
 .medidor[data-nivel="4"] .medidor-texto { color: var(--primary); }
+
+/* ---------- Panel de requisitos ---------- */
+.requisitos-panel {
+    margin-top: 0.7rem;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--bg-color);
+    padding: 0.6rem 0.8rem;
+}
+.requisitos-panel summary {
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--text-main);
+    list-style: none;
+}
+.requisitos-panel summary::-webkit-details-marker { display: none; }
+.requisitos-panel summary::before { content: '▸ '; color: var(--primary); }
+.requisitos-panel[open] summary::before { content: '▾ '; }
 
 .requisitos {
     list-style: none;
     padding: 0;
     margin: 0.55rem 0 0;
     display: grid;
-    gap: 0.2rem;
-    font-size: 0.78rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.3rem 0.8rem;
+    font-size: 0.76rem;
     color: var(--text-muted);
 }
 .requisitos li::before { content: '○ '; }
