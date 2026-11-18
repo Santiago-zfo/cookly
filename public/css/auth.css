@@ -64,16 +64,19 @@ html, body {
     border: 1px solid rgba(255,255,255,0.5);
 }
 
-/* El contenedor del logo: usa el mismo padding que el panel */
-.auth .logo {
-    width: 100%;
-    height: 100%;
-    max-height: none;
-    object-fit: contain;
-    align-self: stretch;
-    background: var(--bg-color); /* Fondo gris perla para el logo */
+/* El panel del logo comparte el padding exacto del formulario */
+.logo-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: var(--auth-padding);
+    background: var(--bg-color);
     border-right: 1px solid var(--border-color);
+}
+.logo-panel .logo {
+    width: 100%;
+    max-width: 420px;
+    height: auto;
     display: block;
 }
 
@@ -83,12 +86,12 @@ html, body {
         grid-template-columns: 1fr;
         margin: 1rem;
     }
-    .auth .logo {
-        max-height: 200px;
+    .logo-panel {
+        padding: 2rem;
         border-right: none;
         border-bottom: 1px solid var(--border-color);
-        padding: 2rem;
     }
+    .logo-panel .logo { max-width: 240px; }
     .vista { padding: 2rem; }
 }
 
@@ -237,41 +240,31 @@ html, body {
     box-shadow: 0 0 0 4px #FEE2E2;
 }
 
-/* ---------- Barra de seguridad de la contraseña ---------- */
+/* ---------- Cuatro rectángulos de seguridad ---------- */
 .medidor { margin-top: 0.7rem; }
 
-.medidor-barra {
-    height: 8px;
-    border-radius: 999px;
+.medidor-barras {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+}
+.medidor-barras span {
+    height: 7px;
+    border-radius: 3px;
     background: var(--border-color);
-    overflow: hidden;
+    transition: var(--transition);
 }
-.medidor-relleno {
-    height: 100%;
-    width: 0;
-    border-radius: inherit;
-    background: var(--error);
-    transition: width 0.25s ease, background-color 0.25s ease;
-}
-.medidor[data-nivel="1"] .medidor-relleno { background: #EF4444; }
-.medidor[data-nivel="2"] .medidor-relleno { background: #F59E0B; }
-.medidor[data-nivel="3"] .medidor-relleno { background: #10B981; }
-.medidor[data-nivel="4"] .medidor-relleno { background: var(--primary); }
+.medidor[data-nivel="1"] .medidor-barras span.activa { background: #EF4444; }
+.medidor[data-nivel="2"] .medidor-barras span.activa { background: #F59E0B; }
+.medidor[data-nivel="3"] .medidor-barras span.activa { background: #10B981; }
+.medidor[data-nivel="4"] .medidor-barras span.activa { background: var(--primary); }
 
-.medidor-cabecera {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 0.45rem;
-}
-.medidor-texto,
-.medidor-porcentaje {
+.medidor-texto {
     font-size: 0.78rem;
     font-weight: 700;
     color: var(--text-muted);
+    margin: 0.45rem 0 0;
 }
-.medidor-porcentaje { font-variant-numeric: tabular-nums; }
 .medidor[data-nivel="1"] .medidor-texto { color: #EF4444; }
 .medidor[data-nivel="2"] .medidor-texto { color: #D97706; }
 .medidor[data-nivel="3"] .medidor-texto { color: #059669; }

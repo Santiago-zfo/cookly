@@ -8,7 +8,9 @@
 </head>
 <body>
 <main class="auth">
-    <img class="logo" src="<?= cookly_asset('IMG/logo.png') ?>" alt="Cookly">
+    <div class="logo-panel">
+        <img class="logo" src="<?= cookly_asset('IMG/logo.png') ?>" alt="Cookly">
+    </div>
     <section class="vista">
         <h1>Inicia sesión</h1>
         <?php if ($error): ?><p class="estado error" role="alert"><?= htmlspecialchars($error) ?></p><?php endif; ?>

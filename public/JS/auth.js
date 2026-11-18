@@ -25,10 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ---------- Registro: barra de seguridad y requisitos ---------- */
     if (clave) {
         const medidor = document.getElementById('medidor-clave');
-        const barra = medidor?.querySelector('.medidor-barra');
-        const relleno = medidor?.querySelector('.medidor-relleno');
+        const barras = Array.from(medidor?.querySelectorAll('.medidor-barras span') || []);
+        const barraMedidora = medidor?.querySelector('.medidor-barras');
         const texto = medidor?.querySelector('.medidor-texto');
-        const porcentajeEl = medidor?.querySelector('.medidor-porcentaje');
 
         const reglas = {
             longitud: valor => valor.length >= 8,
@@ -42,13 +41,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const actualizarMedidor = () => {
             const valor = clave.value;
             const cumplidas = Object.keys(reglas).filter(regla => reglas[regla](valor)).length;
-            const porcentaje = Math.round((cumplidas / 5) * 100);
             const nivel = valor === '' ? 0 : cumplidas <= 2 ? 1 : cumplidas === 3 ? 2 : cumplidas === 4 ? 3 : 4;
 
-            if (relleno) relleno.style.width = porcentaje + '%';
             if (medidor) medidor.dataset.nivel = String(nivel);
-            barra?.setAttribute('aria-valuenow', String(porcentaje));
-            if (porcentajeEl) porcentajeEl.textContent = porcentaje + '%';
+            barras.forEach((barra, i) => barra.classList.toggle('activa', i < nivel));
+            barraMedidora?.setAttribute('aria-valuenow', String(nivel));
             if (texto) {
                 texto.textContent = valor === ''
                     ? 'Escribe una contraseña para ver su seguridad'

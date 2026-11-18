@@ -8,7 +8,9 @@
 </head>
 <body>
 <main class="auth">
-    <img class="logo" src="<?= cookly_asset('IMG/logo.png') ?>" alt="Cookly">
+    <div class="logo-panel">
+        <img class="logo" src="<?= cookly_asset('IMG/logo.png') ?>" alt="Cookly">
+    </div>
     <section class="vista">
         <h1>Crea tu cuenta</h1>
         <?php if ($error): ?><p class="estado error" role="alert"><?= htmlspecialchars($error) ?></p><?php endif; ?>
@@ -39,14 +41,11 @@
                 </div>
                 <?php if (!empty($errores['clave'])): ?><p class="error" role="alert"><?= htmlspecialchars($errores['clave']) ?></p><?php endif; ?>
                 <div class="medidor" id="medidor-clave" data-nivel="0" aria-live="polite">
-                    <div class="medidor-barra" role="progressbar" aria-label="Seguridad de la contraseña"
-                         aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                        <div class="medidor-relleno"></div>
+                    <div class="medidor-barras" role="progressbar" aria-label="Seguridad de la contraseña"
+                         aria-valuemin="0" aria-valuemax="4" aria-valuenow="0">
+                        <span></span><span></span><span></span><span></span>
                     </div>
-                    <div class="medidor-cabecera">
-                        <span class="medidor-texto">Escribe una contraseña para ver su seguridad</span>
-                        <span class="medidor-porcentaje">0%</span>
-                    </div>
+                    <p class="medidor-texto">Escribe una contraseña para ver su seguridad</p>
                 </div>
                 <details class="requisitos-panel" open>
                     <summary>Requisitos de la contraseña</summary>
