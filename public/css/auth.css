@@ -241,24 +241,52 @@ html, body {
 .campo input.invalido:focus {
     box-shadow: 0 0 0 4px #FEE2E2;
 }
+.campo input.clave-debil {
+    border-color: var(--error);
+    background: #FFF7F7;
+}
+.campo input.clave-debil:focus {
+    box-shadow: 0 0 0 4px #FEE2E2;
+}
 
-/* ---------- Barra de seguridad de la contraseña ---------- */
+/* ---------- Barra continua de seguridad: rojo a verde ---------- */
 .medidor { margin-top: 0.7rem; }
 
-.medidor-barras {
-    height: 4px;
-    overflow: hidden;
+.medidor-barra {
+    height: 8px;
     border-radius: 999px;
-    background: #E9D5FF;
+    background: var(--border-color);
+    overflow: hidden;
+    margin-bottom: 6px;
 }
-.medidor-relleno {
-    display: block;
-    width: var(--progreso, 0%);
+.medidor-barra-relleno {
     height: 100%;
+    width: 0;
     border-radius: inherit;
-    background: #6D28D9;
-    transition: width 0.3s ease;
+    background: #EF4444;
+    transition: width 0.3s ease, background-color 0.3s ease;
 }
+.medidor[data-nivel="1"] .medidor-barra-relleno { background: #EF4444; }
+.medidor[data-nivel="2"] .medidor-barra-relleno { background: #F97316; }
+.medidor[data-nivel="3"] .medidor-barra-relleno { background: #84CC16; }
+.medidor[data-nivel="4"] .medidor-barra-relleno { background: #16A34A; }
+
+/* ---------- Cuatro rectángulos de seguridad: rojo a verde ---------- */
+.medidor-barras {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+}
+.medidor-barras span {
+    height: 7px;
+    border-radius: 3px;
+    background: var(--border-color);
+    transition: var(--transition);
+}
+.medidor[data-nivel="1"] .medidor-barras span.activa { background: #EF4444; }
+.medidor[data-nivel="2"] .medidor-barras span.activa { background: #F97316; }
+.medidor[data-nivel="3"] .medidor-barras span.activa { background: #84CC16; }
+.medidor[data-nivel="4"] .medidor-barras span.activa { background: #16A34A; }
 
 .medidor-texto {
     font-size: 0.78rem;
@@ -266,10 +294,10 @@ html, body {
     color: var(--text-muted);
     margin: 0.45rem 0 0;
 }
-.medidor[data-nivel="1"] .medidor-texto { color: #B91C1C; }
-.medidor[data-nivel="2"] .medidor-texto { color: #B45309; }
-.medidor[data-nivel="3"] .medidor-texto,
-.medidor[data-nivel="4"] .medidor-texto { color: #6D28D9; }
+.medidor[data-nivel="1"] .medidor-texto { color: #DC2626; }
+.medidor[data-nivel="2"] .medidor-texto { color: #EA580C; }
+.medidor[data-nivel="3"] .medidor-texto { color: #65A30D; }
+.medidor[data-nivel="4"] .medidor-texto { color: #15803D; }
 
 /* ---------- Panel de requisitos ---------- */
 .requisitos-panel {

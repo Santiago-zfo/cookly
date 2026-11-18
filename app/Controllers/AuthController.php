@@ -98,7 +98,7 @@ final class AuthController extends Controller
                 (bool) preg_match('/[^\p{L}\p{N}]/u', $password),
             ];
             if (in_array(false, $requisitosClave, true)) {
-                $errores['clave'] = 'Debe tener 8 caracteres, mayúscula, minúscula, número y símbolo.';
+                $errores['clave'] = 'Contraseña débil: debe tener 8 caracteres, mayúscula, minúscula, número y símbolo.';
             }
 
             if ($password !== $confirmar) {

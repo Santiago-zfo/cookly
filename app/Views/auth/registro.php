@@ -41,9 +41,12 @@
                 </div>
                 <?php if (!empty($errores['clave'])): ?><p class="error" role="alert"><?= htmlspecialchars($errores['clave']) ?></p><?php endif; ?>
                 <div class="medidor" id="medidor-clave" data-nivel="0" aria-live="polite">
-                    <div class="medidor-barras" role="progressbar" aria-label="Seguridad de la contraseña"
-                         aria-valuemin="0" aria-valuemax="4" aria-valuenow="0">
-                        <span class="medidor-relleno"></span>
+                    <div class="medidor-barra" role="progressbar" aria-label="Seguridad de la contraseña"
+                         aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                        <div class="medidor-barra-relleno"></div>
+                    </div>
+                    <div class="medidor-barras" aria-hidden="true">
+                        <span></span><span></span><span></span><span></span>
                     </div>
                     <p class="medidor-texto">Escribe una contraseña para ver su seguridad</p>
                 </div>

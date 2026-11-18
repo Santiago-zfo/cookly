@@ -25,8 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ---------- Registro: barra de seguridad y requisitos ---------- */
     if (clave) {
         const medidor = document.getElementById('medidor-clave');
-        const barraMedidora = medidor?.querySelector('.medidor-barras');
-        const rellenoMedidor = medidor?.querySelector('.medidor-relleno');
+        const barras = Array.from(medidor?.querySelectorAll('.medidor-barras span') || []);
+        const barraContinua = medidor?.querySelector('.medidor-barra');
+        const relleno = medidor?.querySelector('.medidor-barra-relleno');
         const texto = medidor?.querySelector('.medidor-texto');
 
         const reglas = {
@@ -42,15 +43,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const valor = clave.value;
             const cumplidas = Object.keys(reglas).filter(regla => reglas[regla](valor)).length;
             const nivel = valor === '' ? 0 : cumplidas <= 2 ? 1 : cumplidas === 3 ? 2 : cumplidas === 4 ? 3 : 4;
+            const porcentaje = Math.round((cumplidas / 5) * 100);
 
             if (medidor) medidor.dataset.nivel = String(nivel);
-            rellenoMedidor?.style.setProperty('--progreso', `${nivel * 25}%`);
-            barraMedidora?.setAttribute('aria-valuenow', String(nivel));
+            barras.forEach((barra, i) => barra.classList.toggle('activa', i < nivel));
+            if (relleno) relleno.style.width = porcentaje + '%';
+            barraContinua?.setAttribute('aria-valuenow', String(porcentaje));
             if (texto) {
                 texto.textContent = valor === ''
                     ? 'Escribe una contraseña para ver su seguridad'
-                    : 'Seguridad: ' + etiquetas[nivel - 1];
+                    : 'Contraseña ' + etiquetas[nivel - 1].toLowerCase();
             }
+            clave.classList.toggle('clave-debil', nivel === 1);
 
             document.querySelectorAll('#requisitos-clave li').forEach(li => {
                 const regla = reglas[li.dataset.regla];
@@ -64,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             const incompleto = Object.keys(reglas).some(regla => !reglas[regla](clave.value));
-            clave.setCustomValidity(incompleto ? 'La contraseña no cumple todos los requisitos.' : '');
+            clave.setCustomValidity(incompleto ? 'Contraseña débil: debe cumplir todos los requisitos.' : '');
         };
 
         const validarCoincidencia = () => {
