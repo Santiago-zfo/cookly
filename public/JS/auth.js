@@ -25,8 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ---------- Registro: barra de seguridad y requisitos ---------- */
     if (clave) {
         const medidor = document.getElementById('medidor-clave');
-        const barras = Array.from(medidor?.querySelectorAll('.medidor-barras span') || []);
         const barraMedidora = medidor?.querySelector('.medidor-barras');
+        const rellenoMedidor = medidor?.querySelector('.medidor-relleno');
         const texto = medidor?.querySelector('.medidor-texto');
 
         const reglas = {
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             numero: valor => /\d/.test(valor),
             simbolo: valor => /[^\p{L}\p{N}]/u.test(valor)
         };
-        const etiquetas = ['Débil', 'Aceptable', 'Buena', 'Excelente'];
+        const etiquetas = ['Débil', 'Aceptable', 'Fuerte', 'Muy fuerte'];
 
         const actualizarMedidor = () => {
             const valor = clave.value;
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const nivel = valor === '' ? 0 : cumplidas <= 2 ? 1 : cumplidas === 3 ? 2 : cumplidas === 4 ? 3 : 4;
 
             if (medidor) medidor.dataset.nivel = String(nivel);
-            barras.forEach((barra, i) => barra.classList.toggle('activa', i < nivel));
+            rellenoMedidor?.style.setProperty('--progreso', `${nivel * 25}%`);
             barraMedidora?.setAttribute('aria-valuenow', String(nivel));
             if (texto) {
                 texto.textContent = valor === ''

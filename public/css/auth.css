@@ -77,6 +77,8 @@ html, body {
     width: 100%;
     max-width: 420px;
     height: auto;
+    max-height: 70vh;
+    object-fit: contain;
     display: block;
 }
 
@@ -240,24 +242,23 @@ html, body {
     box-shadow: 0 0 0 4px #FEE2E2;
 }
 
-/* ---------- Cuatro rectángulos de seguridad ---------- */
+/* ---------- Barra de seguridad de la contraseña ---------- */
 .medidor { margin-top: 0.7rem; }
 
 .medidor-barras {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 5px;
+    height: 4px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #E9D5FF;
 }
-.medidor-barras span {
-    height: 7px;
-    border-radius: 3px;
-    background: var(--border-color);
-    transition: var(--transition);
+.medidor-relleno {
+    display: block;
+    width: var(--progreso, 0%);
+    height: 100%;
+    border-radius: inherit;
+    background: #6D28D9;
+    transition: width 0.3s ease;
 }
-.medidor[data-nivel="1"] .medidor-barras span.activa { background: #EF4444; }
-.medidor[data-nivel="2"] .medidor-barras span.activa { background: #F59E0B; }
-.medidor[data-nivel="3"] .medidor-barras span.activa { background: #10B981; }
-.medidor[data-nivel="4"] .medidor-barras span.activa { background: var(--primary); }
 
 .medidor-texto {
     font-size: 0.78rem;
@@ -265,10 +266,10 @@ html, body {
     color: var(--text-muted);
     margin: 0.45rem 0 0;
 }
-.medidor[data-nivel="1"] .medidor-texto { color: #EF4444; }
-.medidor[data-nivel="2"] .medidor-texto { color: #D97706; }
-.medidor[data-nivel="3"] .medidor-texto { color: #059669; }
-.medidor[data-nivel="4"] .medidor-texto { color: var(--primary); }
+.medidor[data-nivel="1"] .medidor-texto { color: #B91C1C; }
+.medidor[data-nivel="2"] .medidor-texto { color: #B45309; }
+.medidor[data-nivel="3"] .medidor-texto,
+.medidor[data-nivel="4"] .medidor-texto { color: #6D28D9; }
 
 /* ---------- Panel de requisitos ---------- */
 .requisitos-panel {

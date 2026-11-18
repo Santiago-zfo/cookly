@@ -43,7 +43,7 @@
                 <div class="medidor" id="medidor-clave" data-nivel="0" aria-live="polite">
                     <div class="medidor-barras" role="progressbar" aria-label="Seguridad de la contraseña"
                          aria-valuemin="0" aria-valuemax="4" aria-valuenow="0">
-                        <span></span><span></span><span></span><span></span>
+                        <span class="medidor-relleno"></span>
                     </div>
                     <p class="medidor-texto">Escribe una contraseña para ver su seguridad</p>
                 </div>
