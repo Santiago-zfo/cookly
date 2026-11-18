@@ -535,11 +535,88 @@ button.secondary:hover {
 
 /* ---------- Footer ---------- */
 .site-footer {
-    text-align: center;
+    margin-top: 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+.footer-inner { padding: 2.5rem 2rem 1.25rem; }
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1.6fr repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.footer-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    color: var(--text-main);
+}
+.footer-logo img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: var(--radius-sm);
+}
+.footer-logo span {
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+.footer-logo:hover { color: var(--primary); }
+.footer-brand p {
+    margin: 0.85rem 0 0;
+    max-width: 32ch;
     color: var(--text-muted);
     font-size: 0.9rem;
-    padding: 2rem 0;
+    line-height: 1.6;
+}
+
+.footer-col { display: flex; flex-direction: column; gap: 0.55rem; }
+.footer-col h2 {
+    margin: 0 0 0.35rem;
+    color: var(--primary);
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+}
+.footer-col a {
+    width: fit-content;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+.footer-col a:hover { color: var(--primary); transform: translateX(3px); }
+
+.footer-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
     margin-top: 2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-muted);
+    font-size: 0.82rem;
+}
+.footer-bottom p { margin: 0; }
+.footer-top { display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 800; color: var(--primary); }
+.footer-top:hover { text-decoration: underline; }
+
+@media (max-width: 860px) {
+    .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem 1.5rem; }
+    .footer-brand { grid-column: 1 / -1; }
+}
+@media (max-width: 520px) {
+    .footer-inner { padding: 2rem 1.25rem 1rem; }
+    .footer-grid { grid-template-columns: 1fr; gap: 1.75rem; }
+    .footer-bottom { justify-content: center; text-align: center; }
 }
 
 /* ---------- Utilidades ---------- */

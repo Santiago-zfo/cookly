@@ -61,7 +61,7 @@ foreach (array_slice($partesNombre ?: ['C'], 0, 2) as $parte) $iniciales .= func
 <script src="<?= $navE(cookly_asset('JS/navegacion.js')) ?>?v=20261110" defer></script>
 <?php foreach (($scriptsPagina ?? []) as $script): ?><script src="<?= $navE(cookly_url($script)) ?>"></script><?php endforeach; ?>
 </head>
-<body class="<?= $navE($claseBody ?? '') ?>">
+<body id="top" class="<?= $navE($claseBody ?? '') ?>">
 <div class="page-shell">
 <header class="topbar cookly-nav <?= $esAdminHeader ? 'cookly-nav-admin' : '' ?>">
     <a href="<?= $navE(cookly_page('index.php')) ?>" class="brand-wrap cookly-brand" aria-label="Cookly, volver al inicio">
