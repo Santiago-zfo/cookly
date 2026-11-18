@@ -10,3 +10,12 @@
 [2026-11-11 12:42:59] [INFO] [Invitado/Anónimo] Solicitud de recuperación de contraseña para: santi06132009@gmail.com
 [2026-11-11 12:46:01] [INFO] [Invitado/Anónimo] Solicitud de recuperación para: santi06132009@gmail.com
 [2026-11-11 12:49:54] [INFO] [santi06132009@gmail.com] Administración: receta ID 21 pasó de Pendiente a Aceptado.
+[2026-11-11 19:11:35] [CRITICAL] [Invitado/Anónimo] Fallo de conexión a la BD: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+[2026-11-11 19:12:33] [CRITICAL] [Invitado/Anónimo] Fallo de conexión a la BD: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+[2026-11-11 19:40:23] [CRITICAL] [Invitado/Anónimo] Fallo de conexión a la BD: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+[2026-11-11 19:41:04] [CRITICAL] [Invitado/Anónimo] Fallo de conexión a la BD: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+[2026-11-18 19:07:35] [INFO] [santi06132009@gmail.com] Receta creada con éxito (ID: 22) por el usuario ID: 5
+[2026-11-18 19:07:51] [INFO] [santi06132009@gmail.com] Receta editada (ID: 22). Volvió a estado Pendiente.
+[2026-11-18 19:08:23] [INFO] [santi06132009@gmail.com] Administración: receta ID 22 pasó de Pendiente a Aceptado.
+[2026-11-18 19:08:48] [INFO] [santi06132009@gmail.com] Receta eliminada (ID: 22)
+[2026-11-18 19:15:19] [INFO] [santi06132009@gmail.com] Administración: se editó la receta ID 21 conservando autor ID 6. Estado: Aceptado.

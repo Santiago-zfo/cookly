@@ -1,7 +1,7 @@
 <?php
 // ajax_buscar.php
-require_once __DIR__ . '/includes/auth.php';
-require_once __DIR__ . '/includes/funciones_recetas.php';
+require_once __DIR__ . '/../../includes/auth.php';
+require_once __DIR__ . '/../../includes/funciones_recetas.php';
 requerirLogin();
 
 header('Content-Type: application/json');
@@ -23,7 +23,7 @@ if (empty($resultados)) {
 $html = '';
 foreach ($resultados as $r) {
     $imagen = !empty($r['imagen_url']) 
-        ? '<img src="' . htmlspecialchars($r['imagen_url']) . '" alt="Imagen">' 
+        ? '<img src="' . htmlspecialchars(cookly_media_url($r['imagen_url'])) . '" alt="Imagen">' 
         : '🍲';
         
     $html .= '
@@ -38,7 +38,7 @@ foreach ($resultados as $r) {
             <h4>' . htmlspecialchars($r['titulo']) . '</h4>
             <p>Por <strong>' . htmlspecialchars($r['autor']) . '</strong></p>
             <div class="acciones">
-                <a href="receta_detalle.php?id=' . $r['id_receta'] . '">Ver</a>
+                <a href="' . cookly_page('receta_detalle.php') . '?id=' . $r['id_receta'] . '">Ver</a>
             </div>
         </div>
     </article>';

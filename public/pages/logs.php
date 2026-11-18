@@ -1,12 +1,12 @@
 <?php
 // logs.php
-require_once __DIR__ . '/includes/auth.php';
+require_once __DIR__ . '/../../includes/auth.php';
 requerirAdmin(); // Bloquea el acceso a usuarios normales
 
 $titulo = 'Registro de Logs';
-require_once __DIR__ . '/includes/header.php';
+require_once __DIR__ . '/../../includes/header.php';
 
-$rutaLog = __DIR__ . '/logs/sistema.log';
+$rutaLog = __DIR__ . '/../../logs/sistema.log';
 $logs = [];
 
 if (file_exists($rutaLog)) {
@@ -18,7 +18,7 @@ if (file_exists($rutaLog)) {
 <section class="panel">
     <div class="section-heading">
         <h2>📋 Registro del Sistema (Logs)</h2>
-        <a href="<?= $base_url ?>/admin.php" class="logout-btn">← Volver al Admin</a>
+        <a href="<?= cookly_page('admin.php') ?>" class="logout-btn">← Volver al Admin</a>
     </div>
 
     <?php if (empty($logs)): ?>
@@ -41,4 +41,4 @@ if (file_exists($rutaLog)) {
     <?php endif; ?>
 </section>
 
-<?php require_once __DIR__ . '/includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../../includes/footer.php'; ?>

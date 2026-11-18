@@ -1,7 +1,7 @@
 <?php
 // recetas.php
-require_once __DIR__ . '/includes/auth.php';
-require_once __DIR__ . '/includes/funciones_recetas.php';
+require_once __DIR__ . '/../../includes/auth.php';
+require_once __DIR__ . '/../../includes/funciones_recetas.php';
 requerirLogin();
 
 $titulo = 'Explorar';
@@ -18,7 +18,7 @@ $offset = ($pagina_actual - 1) * $por_pagina;
 
 $todas = listar_todas_las_recetas($por_pagina, $offset);
 
-require_once __DIR__ . '/includes/header.php';
+require_once __DIR__ . '/../../includes/header.php';
 ?>
 <section class="panel">
     <div class="section-heading" style="margin-bottom: 1rem;">
@@ -48,7 +48,7 @@ require_once __DIR__ . '/includes/header.php';
                     <article class="recipe-card">
                         <div class="recipe-image-wrap">
                             <?php if (!empty($r['imagen_url'])): ?>
-                                <img src="<?= htmlspecialchars($r['imagen_url']) ?>" alt="Imagen">
+                                <img src="<?= htmlspecialchars(cookly_media_url($r['imagen_url'])) ?>" alt="Imagen">
                             <?php else: ?>
                                 🍲
                             <?php endif; ?>
@@ -60,7 +60,7 @@ require_once __DIR__ . '/includes/header.php';
                             <h4><?= htmlspecialchars($r['titulo']) ?></h4>
                             <p>Por <strong><?= htmlspecialchars($r['autor']) ?></strong></p>
                             <div class="acciones">
-                                <a href="receta_detalle.php?id=<?= $r['id_receta'] ?>">Ver</a>
+                                <a href="<?= cookly_page('receta_detalle.php') ?>?id=<?= $r['id_receta'] ?>">Ver</a>
                             </div>
                         </div>
                     </article>
@@ -86,4 +86,4 @@ require_once __DIR__ . '/includes/header.php';
         <?php endif; ?>
     </div>
 </section>
-<?php require_once __DIR__ . '/includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../../includes/footer.php'; ?>

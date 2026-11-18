@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__.'/includes/auth.php';
+require_once __DIR__.'/../../includes/auth.php';
 requerirAdmin();
-require_once __DIR__.'/includes/admin_gestion.php';
+require_once __DIR__.'/../../includes/admin_gestion.php';
 if(!in_array($_SERVER['REQUEST_METHOD'],['GET','POST'],true)){http_response_code(405);header('Allow: GET, POST');exit('Método no permitido.');}
 $filtros=ca_filters($_SERVER['REQUEST_METHOD']==='POST'?$_POST:$_GET);
 $error='';$confirmacion=null;$flash=ca_take_flash();
@@ -23,13 +23,13 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
 }
 $stats=ca_statistics();$catalogos=ca_catalogs();$listado=ca_listing($filtros);$filtros=$listado['filtros'];
 $titulo='Administrar recetas';$estilosPagina=['public/css/admin.css'];$scriptsPagina=['public/JS/admin.js'];$claseBody='cookly-admin-body';
-require __DIR__.'/includes/header.php';
+require __DIR__.'/../../includes/header.php';
 ?>
 <div class="ca-root">
     <div class="ca-breadcrumb">COOKLY <span>/</span> ADMINISTRACIÓN</div>
     <header class="ca-hero">
         <div><p class="ca-eyebrow">TU COMUNIDAD, EN ORDEN</p><h1>Todas las recetas<span>.</span></h1><p>Revisa y administra las preparaciones de toda la comunidad, en cualquier estado.</p></div>
-        <div class="ca-hero-actions"><a class="ca-button" href="#reportes"><?= cookly_nav_icon('chart') ?>Reportes</a><a class="ca-button ca-primary" href="receta_crear.php"><?= cookly_nav_icon('plus') ?>Nueva receta</a></div>
+        <div class="ca-hero-actions"><a class="ca-button" href="#reportes"><?= cookly_nav_icon('chart') ?>Reportes</a><a class="ca-button ca-primary" href="<?= cookly_page('receta_crear.php') ?>"><?= cookly_nav_icon('plus') ?>Nueva receta</a></div>
     </header>
     <?php if($flash): ?><div class="ca-alert ca-alert-success" role="status"><?= ca_e($flash) ?></div><?php endif; ?>
     <?php if($error): ?><div class="ca-alert ca-alert-error" role="alert"><?= ca_e($error) ?></div><?php endif; ?>
@@ -50,20 +50,20 @@ require __DIR__.'/includes/header.php';
             <label class="ca-search">Buscar recetas<div><?= cookly_nav_icon('search') ?><input type="search" name="q" value="<?= ca_e($filtros['q']) ?>" placeholder="Título, autor o categoría" maxlength="160"></div></label>
             <label>Estado<select name="estado"><option value="">Todos los estados</option><?php foreach(ca_states() as $state): ?><option value="<?= ca_e($state) ?>" <?= $state===$filtros['estado']?'selected':'' ?>><?= ca_e($state) ?></option><?php endforeach; ?></select></label>
             <label>Categoría<select name="categoria"><option value="0">Todas las categorías</option><?php foreach($catalogos['categorias'] as $c): ?><option value="<?= (int)$c['id_categoria'] ?>" <?= (int)$c['id_categoria']===$filtros['categoria']?'selected':'' ?>><?= ca_e($c['nombre']) ?></option><?php endforeach; ?></select></label>
-            <button class="ca-button ca-primary" type="submit">Buscar</button><a class="ca-clear" href="admin.php">Limpiar filtros</a>
+            <button class="ca-button ca-primary" type="submit">Buscar</button><a class="ca-clear" href="<?= cookly_page('admin.php') ?>">Limpiar filtros</a>
             <details class="ca-advanced" <?= $filtros['autor']||$filtros['orden']!=='recientes'?'open':'' ?>><summary>Más opciones</summary><div><label>Autor<select name="autor"><option value="0">Todos los autores</option><?php foreach($catalogos['usuarios'] as $u): ?><option value="<?= (int)$u['id_usuario'] ?>" <?= (int)$u['id_usuario']===$filtros['autor']?'selected':'' ?>><?= ca_e($u['nombre']) ?></option><?php endforeach; ?></select></label><label>Orden<select name="orden"><?php foreach(['recientes'=>'Más recientes','antiguas'=>'Más antiguas','titulo'=>'Título A–Z'] as $key=>$label): ?><option value="<?= $key ?>" <?= $key===$filtros['orden']?'selected':'' ?>><?= $label ?></option><?php endforeach; ?></select></label></div></details>
         </form>
         <?php if(!$listado['recetas']): ?>
-        <div class="ca-empty"><div aria-hidden="true"><?= cookly_nav_icon('search') ?></div><h3>No encontramos recetas con esos filtros</h3><p>Prueba con otro título, estado o autor.</p><a class="ca-button" href="admin.php">Ver todas las recetas</a></div>
+        <div class="ca-empty"><div aria-hidden="true"><?= cookly_nav_icon('search') ?></div><h3>No encontramos recetas con esos filtros</h3><p>Prueba con otro título, estado o autor.</p><a class="ca-button" href="<?= cookly_page('admin.php') ?>">Ver todas las recetas</a></div>
         <?php else: ?>
         <p class="ca-table-hint">Desliza la tabla hacia la izquierda para ver el estado y las acciones de cada receta.</p>
         <div class="ca-table-wrap" role="region" aria-label="Listado de recetas" tabindex="0"><table class="ca-table"><thead><tr><th scope="col">Receta</th><th scope="col">Autor</th><th scope="col">Estado</th><th scope="col">Acciones</th></tr></thead><tbody>
         <?php foreach($listado['recetas'] as $r): $stateClass=['Pendiente'=>'pending','Aceptado'=>'accepted','Rechazado'=>'rejected'][$r['estado']]??'pending'; ?>
         <tr data-recipe-id="<?= (int)$r['id_receta'] ?>">
-            <td><div class="ca-recipe"><div class="ca-thumbnail"><?php if($r['imagen_url']): ?><img src="<?= ca_e($r['imagen_url']) ?>" alt="<?= ca_e($r['titulo']) ?>" width="64" height="64" loading="lazy"><?php else: ?><?= cookly_nav_icon('book') ?><?php endif; ?></div><div><a class="ca-recipe-title" href="receta_detalle.php?id=<?= (int)$r['id_receta'] ?>"><?= ca_e($r['titulo']) ?></a><p><?= ca_e($r['categoria']) ?><span>·</span><?= (int)$r['tiempo_preparacion'] ?> min<span>·</span>#<?= (int)$r['id_receta'] ?></p></div></div></td>
+            <td><div class="ca-recipe"><div class="ca-thumbnail"><?php if($r['imagen_url']): ?><img src="<?= ca_e(cookly_media_url($r['imagen_url'])) ?>" alt="<?= ca_e($r['titulo']) ?>" width="64" height="64" loading="lazy"><?php else: ?><?= cookly_nav_icon('book') ?><?php endif; ?></div><div><a class="ca-recipe-title" href="<?= cookly_page('receta_detalle.php') ?>?id=<?= (int)$r['id_receta'] ?>"><?= ca_e($r['titulo']) ?></a><p><?= ca_e($r['categoria']) ?><span>·</span><?= (int)$r['tiempo_preparacion'] ?> min<span>·</span>#<?= (int)$r['id_receta'] ?></p></div></div></td>
             <td><span class="ca-author"><?= ca_e($r['autor']) ?></span></td>
             <td><form method="post" class="ca-state-form"><?php ca_hidden($filtros); ?><input type="hidden" name="_csrf" value="<?= ca_e(ca_token()) ?>"><input type="hidden" name="id_receta" value="<?= (int)$r['id_receta'] ?>"><input type="hidden" name="accion" value="estado"><input type="hidden" name="version" value="<?= ca_e(ca_signature($r)) ?>"><select name="nuevo_estado" class="ca-state ca-state-<?= $stateClass ?>" aria-label="Estado de <?= ca_e($r['titulo']) ?>"><?php foreach(ca_states() as $state): ?><option value="<?= ca_e($state) ?>" <?= $r['estado']===$state?'selected':'' ?>><?= ca_e($state) ?></option><?php endforeach; ?></select><button type="submit" class="ca-state-save" aria-label="Guardar estado de <?= ca_e($r['titulo']) ?>">Guardar</button></form></td>
-            <td><div class="ca-row-actions"><a href="receta_detalle.php?id=<?= (int)$r['id_receta'] ?>">Ver</a><a href="admin_receta_editar.php?id=<?= (int)$r['id_receta'] ?>">Editar</a><form method="post"><?php ca_hidden($filtros); ?><input type="hidden" name="_csrf" value="<?= ca_e(ca_token()) ?>"><input type="hidden" name="id_receta" value="<?= (int)$r['id_receta'] ?>"><input type="hidden" name="accion" value="solicitar_eliminacion"><button type="submit" class="ca-delete-start">Eliminar</button></form></div></td>
+            <td><div class="ca-row-actions"><a href="<?= cookly_page('receta_detalle.php') ?>?id=<?= (int)$r['id_receta'] ?>">Ver</a><a href="<?= cookly_page('admin_receta_editar.php') ?>?id=<?= (int)$r['id_receta'] ?>">Editar</a><form method="post"><?php ca_hidden($filtros); ?><input type="hidden" name="_csrf" value="<?= ca_e(ca_token()) ?>"><input type="hidden" name="id_receta" value="<?= (int)$r['id_receta'] ?>"><input type="hidden" name="accion" value="solicitar_eliminacion"><button type="submit" class="ca-delete-start">Eliminar</button></form></div></td>
         </tr>
         <?php endforeach; ?>
         </tbody></table></div>
@@ -71,9 +71,9 @@ require __DIR__.'/includes/header.php';
         <?php endif; ?>
     </section>
     <details class="ca-reports" id="reportes"><summary><div><?= cookly_nav_icon('chart') ?><span><strong>Reportes de la comunidad</strong><small>Estadísticas por categoría, dificultad y autor</small></span></div><span class="ca-reports-toggle">Ver resumen <?= cookly_nav_icon('chevron') ?></span></summary><div class="ca-reports-content">
-        <div class="ca-report-heading"><div><h2>Resumen general</h2><p><?= $stats['usuarios'] ?> usuarios · <?= $stats['categorias'] ?> categorías · <?= $stats['Total'] ?> recetas</p></div><div class="ca-report-actions"><?php if(is_file(__DIR__.'/exportar_excel.php')): ?><a class="ca-button" href="exportar_excel.php">Descargar Excel</a><?php endif; ?><button class="ca-button" type="button" id="ca-print" hidden>Guardar PDF</button><?php if(is_file(__DIR__.'/reportes.php')): ?><a class="ca-button" href="reportes.php">Reportes completos</a><?php endif; ?></div></div>
+        <div class="ca-report-heading"><div><h2>Resumen general</h2><p><?= $stats['usuarios'] ?> usuarios · <?= $stats['categorias'] ?> categorías · <?= $stats['Total'] ?> recetas</p></div><div class="ca-report-actions"><?php if(is_file(__DIR__.'/exportar_excel.php')): ?><a class="ca-button" href="<?= cookly_page('exportar_excel.php') ?>">Descargar Excel</a><?php endif; ?><button class="ca-button" type="button" id="ca-print" hidden>Guardar PDF</button><?php if(is_file(__DIR__.'/reportes.php')): ?><a class="ca-button" href="<?= cookly_page('reportes.php') ?>">Reportes completos</a><?php endif; ?></div></div>
         <div class="ca-report-grid"><?php foreach([['por_categoria','Recetas por categoría'],['por_dificultad','Recetas por dificultad'],['top','Autores con más recetas']] as [$key,$label]): ?><section><h3><?= $label ?></h3><?php if(!$stats[$key]): ?><p>Aún no hay datos.</p><?php else: foreach($stats[$key] as $row): $pct=$stats['Total']?round((int)$row['cantidad']/$stats['Total']*100,1):0; ?><div class="ca-bar-label"><span><?= ca_e($row['nombre']??$row['dificultad']) ?></span><strong><?= (int)$row['cantidad'] ?></strong></div><div class="ca-bar" role="img" aria-label="<?= ca_e($row['nombre']??$row['dificultad']) ?>: <?= (int)$row['cantidad'] ?> recetas"><span style="width:<?= $pct ?>%"></span></div><?php endforeach; endif; ?></section><?php endforeach; ?></div>
     </div></details>
     <p class="ca-footnote"><?= cookly_nav_icon('shield') ?>Las acciones de este panel están disponibles únicamente para administradores.</p>
 </div>
-<?php require __DIR__.'/includes/footer.php'; ?>
+<?php require __DIR__.'/../../includes/footer.php'; ?>

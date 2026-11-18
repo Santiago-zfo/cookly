@@ -1,9 +1,10 @@
 <?php
 require_once __DIR__ . '/auth.php';
+require_once __DIR__ . '/paths.php';
 $titulo = $titulo ?? 'Cookly';
 $usuarioHeader = usuarioActual();
 $paginaActiva = basename($_SERVER['PHP_SELF'] ?? '');
-$base_url = rtrim(dirname($_SERVER['SCRIPT_NAME'] ?? ''), '/\\');
+$base_url = cookly_base_url();
 $esAdminHeader = function_exists('esAdmin') && esAdmin();
 $navE = static function($s) { return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); };
 
@@ -34,7 +35,7 @@ $navItems = [
     ['receta_crear.php','Nueva receta','plus'] 
 ];
 
-if ($esAdminHeader && is_file(__DIR__.'/../admin.php')) {
+if ($esAdminHeader && is_file(cookly_app_root().'/public/pages/admin.php')) {
     $navItems[] = ['admin.php','Administrar','shield'];
 }
 
@@ -51,19 +52,20 @@ foreach (array_slice($partesNombre ?: ['C'], 0, 2) as $parte) $iniciales .= func
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><?= $navE($titulo) ?> · Cookly</title>
-<link rel="icon" type="image/png" href="<?= $navE($base_url) ?>/public/IMG/logo.png">
+<link rel="icon" type="image/png" href="<?= $navE(cookly_asset('IMG/logo.png')) ?>">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="<?= $navE($base_url) ?>/public/css/main.css">
-<link rel="stylesheet" href="<?= $navE($base_url) ?>/public/css/navegacion.css?v=20261110">
-<?php foreach (($estilosPagina ?? []) as $estilo): ?><link rel="stylesheet" href="<?= $navE($base_url.'/'.$estilo) ?>"><?php endforeach; ?>
-<script src="<?= $navE($base_url) ?>/public/JS/navegacion.js?v=20261110" defer></script>
+<link rel="stylesheet" href="<?= $navE(cookly_asset('css/main.css')) ?>">
+<link rel="stylesheet" href="<?= $navE(cookly_asset('css/navegacion.css')) ?>?v=20261110">
+<?php foreach (($estilosPagina ?? []) as $estilo): ?><link rel="stylesheet" href="<?= $navE(cookly_url($estilo)) ?>"><?php endforeach; ?>
+<script src="<?= $navE(cookly_asset('JS/navegacion.js')) ?>?v=20261110" defer></script>
+<?php foreach (($scriptsPagina ?? []) as $script): ?><script src="<?= $navE(cookly_url($script)) ?>"></script><?php endforeach; ?>
 </head>
 <body class="<?= $navE($claseBody ?? '') ?>">
 <div class="page-shell">
 <header class="topbar cookly-nav <?= $esAdminHeader ? 'cookly-nav-admin' : '' ?>">
-    <a href="<?= $navE($base_url) ?>/index.php" class="brand-wrap cookly-brand" aria-label="Cookly, volver al inicio">
-        <img class="brand-logo" src="<?= $navE($base_url) ?>/public/IMG/logo.png" alt="Logo de Cookly" width="44" height="44">
+    <a href="<?= $navE(cookly_page('index.php')) ?>" class="brand-wrap cookly-brand" aria-label="Cookly, volver al inicio">
+        <img class="brand-logo" src="<?= $navE(cookly_asset('IMG/logo.png')) ?>" alt="Logo de Cookly" width="44" height="44">
         <div><h1>Cookly</h1><p class="brand-kicker"><?= $esAdminHeader ? 'Espacio de administración' : 'Recetas para compartir' ?></p></div>
     </a>
     <?php if ($usuarioHeader): ?>
@@ -71,7 +73,7 @@ foreach (array_slice($partesNombre ?: ['C'], 0, 2) as $parte) $iniciales .= func
         <summary aria-label="Menú de navegación"><?= cookly_nav_icon('menu') ?><span>Menú</span></summary>
         <nav class="top-actions" aria-label="Navegación principal">
         <?php foreach ($navItems as [$pagina,$label,$icono]): $activa = $paginaActiva === $pagina || ($pagina === 'admin.php' && $paginaActiva === 'admin_receta_editar.php'); ?>
-            <a class="nav-btn <?= $activa ? 'active' : '' ?> <?= $pagina==='admin.php' ? 'cookly-nav-control' : '' ?>" href="<?= $navE($base_url.'/'.$pagina) ?>" <?= $activa ? 'aria-current="page"' : '' ?>><?= cookly_nav_icon($icono) ?><span><?= $navE($label) ?></span></a>
+            <a class="nav-btn <?= $activa ? 'active' : '' ?> <?= $pagina==='admin.php' ? 'cookly-nav-control' : '' ?>" href="<?= $navE(cookly_page($pagina)) ?>" <?= $activa ? 'aria-current="page"' : '' ?>><?= cookly_nav_icon($icono) ?><span><?= $navE($label) ?></span></a>
         <?php endforeach; ?>
         </nav>
     </details>
@@ -83,20 +85,20 @@ foreach (array_slice($partesNombre ?: ['C'], 0, 2) as $parte) $iniciales .= func
         </summary>
         <div class="cookly-account-dropdown">
             <p><?= $navE($nombreHeader) ?><small><?= $esAdminHeader ? 'Cuenta administradora' : 'Cuenta de usuario' ?></small></p>
-            <a href="<?= $navE($base_url) ?>/perfil.php"><?= cookly_nav_icon('user') ?>Mi perfil</a>
+            <a href="<?= $navE(cookly_page('perfil.php')) ?>"><?= cookly_nav_icon('user') ?>Mi perfil</a>
             
             <!-- ENLACE DE ANEXOS EN EL MENÚ DESPLEGABLE -->
-            <a href="<?= $navE($base_url) ?>/anexos.php"><?= cookly_nav_icon('folder') ?>Anexos y Documentos</a>
+            <a href="<?= $navE(cookly_page('anexos.php')) ?>"><?= cookly_nav_icon('folder') ?>Anexos y Documentos</a>
 
-            <?php if ($esAdminHeader && is_file(__DIR__.'/../reportes.php')): ?><a href="<?= $navE($base_url) ?>/reportes.php"><?= cookly_nav_icon('chart') ?>Reportes</a><?php endif; ?>
-            <?php if ($esAdminHeader && is_file(__DIR__.'/../logs.php')): ?><a href="<?= $navE($base_url) ?>/logs.php"><?= cookly_nav_icon('logs') ?>Registro del sistema</a><?php endif; ?>
-            <?php if (is_file(__DIR__.'/../video.php')): ?><a href="<?= $navE($base_url) ?>/video.php"><?= cookly_nav_icon('video') ?>Video de presentación</a><?php endif; ?>
+            <?php if ($esAdminHeader && is_file(cookly_app_root().'/public/pages/reportes.php')): ?><a href="<?= $navE(cookly_page('reportes.php')) ?>"><?= cookly_nav_icon('chart') ?>Reportes</a><?php endif; ?>
+            <?php if ($esAdminHeader && is_file(cookly_app_root().'/public/pages/logs.php')): ?><a href="<?= $navE(cookly_page('logs.php')) ?>"><?= cookly_nav_icon('logs') ?>Registro del sistema</a><?php endif; ?>
+            <?php if (is_file(cookly_app_root().'/public/pages/video.php')): ?><a href="<?= $navE(cookly_page('video.php')) ?>"><?= cookly_nav_icon('video') ?>Video de presentación</a><?php endif; ?>
             
-            <a class="cookly-account-logout" href="<?= $navE($base_url) ?>/Logout.php"><?= cookly_nav_icon('logout') ?>Cerrar sesión</a>
+            <a class="cookly-account-logout" href="<?= $navE(cookly_page('Logout.php')) ?>"><?= cookly_nav_icon('logout') ?>Cerrar sesión</a>
         </div>
     </details>
     <?php elseif ($paginaActiva === 'manual.php'): ?>
-    <nav class="cookly-guest-nav" aria-label="Navegación principal"><a href="<?= $navE($base_url) ?>/Login.php">Iniciar sesión</a><a href="<?= $navE($base_url) ?>/registro.php">Crear cuenta</a><a class="active" href="<?= $navE($base_url) ?>/manual.php" aria-current="page">Manual de Usuario</a></nav>
+    <nav class="cookly-guest-nav" aria-label="Navegación principal"><a href="<?= $navE(cookly_page('Login.php')) ?>">Iniciar sesión</a><a href="<?= $navE(cookly_page('registro.php')) ?>">Crear cuenta</a><a class="active" href="<?= $navE(cookly_page('manual.php')) ?>" aria-current="page">Manual de Usuario</a></nav>
     <?php endif; ?>
 </header>
 <main class="dashboard">

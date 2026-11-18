@@ -1,10 +1,10 @@
 <?php
 // anexos.php
-require_once __DIR__ . '/includes/auth.php';
+require_once __DIR__ . '/../../includes/auth.php';
 requerirLogin();
 
 $titulo = 'Anexos y Documentación';
-require_once __DIR__ . '/includes/header.php';
+require_once __DIR__ . '/../../includes/header.php';
 ?>
 
 <style>
@@ -161,7 +161,7 @@ require_once __DIR__ . '/includes/header.php';
             <h3 class="doc-title">Especificación de Requisitos (SRS)</h3>
             <p class="doc-desc">Documento detallado que describe la arquitectura del sistema y los requisitos funcionales.</p>
             <!-- IMPORTANTE: Cambia .docx por .pdf si es posible -->
-            <button class="submit-btn" onclick="abrirModal('<?= $base_url ?>/public/docs/SRS.pdf', 'Especificación de Requisitos (SRS)')" style="width: 100%;">Ver Documento</button>
+            <button class="submit-btn" onclick="abrirModal('<?= cookly_asset('docs/SRS.pdf') ?>', 'Especificación de Requisitos (SRS)')" style="width: 100%;">Ver Documento</button>
         </div>
 
         <!-- 2. Manual Técnico -->
@@ -169,14 +169,14 @@ require_once __DIR__ . '/includes/header.php';
             <div class="doc-icon">⚙️</div>
             <h3 class="doc-title">Manual Técnico</h3>
             <p class="doc-desc">Guía de instalación, configuración de la base de datos y detalles del código fuente.</p>
-            <button class="submit-btn" onclick="abrirModal('<?= $base_url ?>/public/docs/tecnico.pdf', 'Manual Técnico')" style="width: 100%;">Ver Documento</button>
+            <button class="submit-btn" onclick="abrirModal('<?= cookly_asset('docs/tecnico.pdf') ?>', 'Manual Técnico')" style="width: 100%;">Ver Documento</button>
         </div>
 
         <div class="doc-card">
             <div class="doc-icon">⚙️</div>
             <h3 class="doc-title">Manual de Usuario</h3>
             <p class="doc-desc">Guía de uso del sistema para los usuarios finales.</p>
-            <button class="submit-btn" onclick="abrirModal('<?= $base_url ?>/public/docs/Usuario.pdf', 'Manual de Usuario')" style="width: 100%;">Ver Documento</button>
+            <button class="submit-btn" onclick="abrirModal('<?= cookly_asset('docs/Usuario.pdf') ?>', 'Manual de Usuario')" style="width: 100%;">Ver Documento</button>
         </div>
 
         <!-- 3. PAC -->
@@ -184,7 +184,7 @@ require_once __DIR__ . '/includes/header.php';
             <div class="doc-icon">📋</div>
             <h3 class="doc-title">Plan de Aseguramiento de Calidad (PAC)</h3>
             <p class="doc-desc">Metodología y estándares utilizados para garantizar la calidad del software.</p>
-            <button class="submit-btn" onclick="abrirModal('<?= $base_url ?>/public/docs/PAC.pdf', 'Plan de Aseguramiento de Calidad')" style="width: 100%;">Ver Documento</button>
+            <button class="submit-btn" onclick="abrirModal('<?= cookly_asset('docs/PAC.pdf') ?>', 'Plan de Aseguramiento de Calidad')" style="width: 100%;">Ver Documento</button>
         </div>
 
         <!-- 4. Errores y Soluciones -->
@@ -192,7 +192,7 @@ require_once __DIR__ . '/includes/header.php';
             <div class="doc-icon">🐛</div>
             <h3 class="doc-title">Errores y Soluciones</h3>
             <p class="doc-desc">Registro histórico de los errores encontrados durante el desarrollo y sus soluciones.</p>
-            <button class="submit-btn" onclick="abrirModal('<?= $base_url ?>/public/docs/errores.pdf', 'Errores y Soluciones')" style="width: 100%;">Ver Documento</button>
+            <button class="submit-btn" onclick="abrirModal('<?= cookly_asset('docs/errores.pdf') ?>', 'Errores y Soluciones')" style="width: 100%;">Ver Documento</button>
         </div>
 
         <!-- 5. Herramientas de QA -->
@@ -200,7 +200,7 @@ require_once __DIR__ . '/includes/header.php';
             <div class="doc-icon">✅</div>
             <h3 class="doc-title">Herramientas de Aseguramiento de calidad</h3>
             <p class="doc-desc">Documentación sobre las herramientas de testing y control de calidad aplicadas.</p>
-            <button class="submit-btn" onclick="abrirModal('<?= $base_url ?>/public/docs/Herramientas_QA.pdf', 'Herramientas de Aseguramiento de Calidad')" style="width: 100%;">Ver Documento</button>
+            <button class="submit-btn" onclick="abrirModal('<?= cookly_asset('docs/Herramientas_QA.pdf') ?>', 'Herramientas de Aseguramiento de Calidad')" style="width: 100%;">Ver Documento</button>
         </div>
     </div>
 </section>
@@ -241,4 +241,4 @@ require_once __DIR__ . '/includes/header.php';
     });
 </script>
 
-<?php require_once __DIR__ . '/includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../../includes/footer.php'; ?>

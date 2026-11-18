@@ -1,6 +1,7 @@
 <?php
 /** Gestión administrativa aislada: no altera los permisos de las páginas de usuario. */
 require_once __DIR__ . '/auth.php';
+require_once __DIR__ . '/paths.php';
 require_once __DIR__ . '/../config/database.php';
 
 function ca_e($value): string { return htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8'); }
@@ -32,7 +33,7 @@ function ca_filters(array $input): array {
     $order=ca_string($input['orden']??'recientes');if(!in_array($order,['recientes','antiguas','titulo'],true))$order='recientes';
     return ['q'=>$q,'estado'=>$state,'categoria'=>ca_id($input['categoria']??0),'autor'=>ca_id($input['autor']??0),'orden'=>$order,'pagina'=>max(1,ca_id($input['pagina']??1))];
 }
-function ca_url(array $filters, array $changes=[]): string { return 'admin.php?'.http_build_query(array_merge($filters,$changes),'','&',PHP_QUERY_RFC3986); }
+function ca_url(array $filters, array $changes=[]): string { return cookly_page('admin.php').'?'.http_build_query(array_merge($filters,$changes),'','&',PHP_QUERY_RFC3986); }
 function ca_hidden(array $filters): void { foreach($filters as $k=>$v) echo '<input type="hidden" name="'.ca_e($k).'" value="'.ca_e($v).'">'; }
 function ca_catalogs(): array {
     global $pdo;

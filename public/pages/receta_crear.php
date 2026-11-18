@@ -1,7 +1,7 @@
 <?php
 // receta_crear.php
-require_once __DIR__ . '/includes/auth.php';
-require_once __DIR__ . '/includes/funciones_recetas.php';
+require_once __DIR__ . '/../../includes/auth.php';
+require_once __DIR__ . '/../../includes/funciones_recetas.php';
 requerirLogin();
 
 $titulo = 'Nueva receta';
@@ -36,16 +36,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (guardar_receta($datos, $ings)) {
         set_flash_message('exito', '¡Receta creada con éxito! Está pendiente de aprobación.');
-        header('Location: index.php'); 
+        header('Location: ' . cookly_page('index.php')); 
         exit;
     } else {
         $error = 'Error al guardar la receta.';
     }
 }
-require_once __DIR__ . '/includes/header.php';
+require_once __DIR__ . '/../../includes/header.php';
 ?>
 <section class="panel">
-    <div class="section-heading"><h2>Nueva receta</h2><a href="index.php" class="logout-btn">×</a></div>
+    <div class="section-heading"><h2>Nueva receta</h2><a href="<?= cookly_page('index.php') ?>" class="logout-btn">×</a></div>
     
     <?php if ($error): ?>
         <div class="estado error"><?= htmlspecialchars($error) ?></div>
@@ -130,4 +130,4 @@ require_once __DIR__ . '/includes/header.php';
         <button type="submit" class="submit-btn" style="margin-top: 1rem;">Guardar</button>
     </form>
 </section>
-<?php require_once __DIR__ . '/includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../../includes/footer.php'; ?>

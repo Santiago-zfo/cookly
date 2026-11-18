@@ -1,9 +1,9 @@
 <?php
 // login.php
-require_once __DIR__ . '/includes/auth.php';
-require_once __DIR__ . '/includes/funciones_usuarios.php';
+require_once __DIR__ . '/../../includes/auth.php';
+require_once __DIR__ . '/../../includes/funciones_usuarios.php';
 
-if (estaAutenticado()) { header('Location: index.php'); exit; }
+if (estaAutenticado()) { header('Location: ' . cookly_page('index.php')); exit; }
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['correo_electronico'] = $usuario['correo_electronico'];
         // El permiso procede de la cuenta validada en la base de datos.
         $_SESSION['rol'] = $usuario['rol'] ?? 'usuario';
-        header('Location: index.php');
+        header('Location: ' . cookly_page('index.php'));
         exit;
     } else {
         $error = 'Correo o contraseña incorrectos.';
@@ -29,11 +29,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Cookly · Iniciar sesión</title>
-    <link rel="stylesheet" href="public/css/auth.css">
+    <link rel="stylesheet" href="<?= cookly_asset('css/auth.css') ?>">
 </head>
 <body>
 <main class="auth">
-    <img class="logo" src="public/IMG/logo.png" alt="Cookly">
+    <img class="logo" src="<?= cookly_asset('IMG/logo.png') ?>" alt="Cookly">
     <section class="vista">
         <h1>Inicia sesión</h1>
         <?php if ($error): ?><p class="estado error"><?= htmlspecialchars($error) ?></p><?php endif; ?>
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <button class="principal" type="submit">Iniciar sesión</button>
         </form>
-        <p class="enlaces"><a href="registro.php">¿No tienes cuenta? Regístrate</a></p>
+        <p class="enlaces"><a href="<?= cookly_page('registro.php') ?>">¿No tienes cuenta? Regístrate</a></p>
     </section>
 </main>
 </body>

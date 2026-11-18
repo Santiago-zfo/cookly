@@ -1,10 +1,10 @@
 <?php
 // manual.php
-require_once __DIR__ . '/includes/auth.php';
+require_once __DIR__ . '/../../includes/auth.php';
 requerirLogin();
 
 $titulo = 'Manual de Usuario';
-require_once __DIR__ . '/includes/header.php';
+require_once __DIR__ . '/../../includes/header.php';
 ?>
 
 <style>
@@ -222,7 +222,7 @@ require_once __DIR__ . '/includes/header.php';
             <p>Al iniciar sesión, aterrizarás directamente en tu panel de control personal: <strong>"Mis recetas"</strong>.</p>
             
             <div class="wiki-image-box">
-                <img src="public/IMG/introduccion.jpg" alt="Pantalla de inicio" onerror="this.src='https://placehold.co/800x400/F3F4F6/6B7280?text=Imagen+de+Inicio';">
+                <img src="<?= cookly_asset('IMG/introduccion.jpg') ?>" alt="Pantalla de inicio" onerror="this.src='https://placehold.co/800x400/F3F4F6/6B7280?text=Imagen+de+Inicio';">
                 <div class="caption">Figura 1. Vista principal del panel de usuario al iniciar sesión.</div>
             </div>
         </section>
@@ -243,7 +243,7 @@ require_once __DIR__ . '/includes/header.php';
             </div>
 
             <div class="wiki-image-box">
-                <img src="public/IMG/login.jpg" alt="Pantalla de Login" onerror="this.src='https://placehold.co/800x400/F3F4F6/6B7280?text=Imagen+de+Login';">
+                <img src="<?= cookly_asset('IMG/login.jpg') ?>" alt="Pantalla de Login" onerror="this.src='https://placehold.co/800x400/F3F4F6/6B7280?text=Imagen+de+Login';">
                 <div class="caption">Figura 2. Formulario de inicio de sesión con validación de credenciales.</div>
             </div>
         </section>
@@ -260,7 +260,7 @@ require_once __DIR__ . '/includes/header.php';
             </ul>
 
             <div class="wiki-image-box">
-                <img src="public/IMG/perfil.jpg" alt="Pantalla de Perfil" onerror="this.src='https://placehold.co/800x400/F3F4F6/6B7280?text=Imagen+de+Perfil';">
+                <img src="<?= cookly_asset('IMG/perfil.jpg') ?>" alt="Pantalla de Perfil" onerror="this.src='https://placehold.co/800x400/F3F4F6/6B7280?text=Imagen+de+Perfil';">
                 <div class="caption">Figura 3. Panel de configuración del perfil del usuario.</div>
             </div>
         </section>
@@ -282,7 +282,7 @@ require_once __DIR__ . '/includes/header.php';
             </div>
 
             <div class="wiki-image-box">
-                <img src="public/IMG/crear_receta.jpg" alt="Formulario de nueva receta" onerror="this.src='https://placehold.co/800x400/F3F4F6/6B7280?text=Imagen+de+Crear+Receta';">
+                <img src="<?= cookly_asset('IMG/crear_receta.jpg') ?>" alt="Formulario de nueva receta" onerror="this.src='https://placehold.co/800x400/F3F4F6/6B7280?text=Imagen+de+Crear+Receta';">
                 <div class="caption">Figura 4. Formulario de carga con campos dinámicos para ingredientes.</div>
             </div>
         </section>
@@ -301,7 +301,7 @@ require_once __DIR__ . '/includes/header.php';
             </ul>
 
             <div class="wiki-image-box">
-                <img src="public/IMG/explorar.jpg" alt="Galería de recetas" onerror="this.src='https://placehold.co/800x400/F3F4F6/6B7280?text=Imagen+de+Explorar';">
+                <img src="<?= cookly_asset('IMG/explorar.jpg') ?>" alt="Galería de recetas" onerror="this.src='https://placehold.co/800x400/F3F4F6/6B7280?text=Imagen+de+Explorar';">
                 <div class="caption">Figura 5. Galería general con buscador dinámico en tiempo real.</div>
             </div>
         </section>
@@ -318,7 +318,7 @@ require_once __DIR__ . '/includes/header.php';
             </ul>
 
             <div class="wiki-image-box">
-                <img src="public/IMG/editar.jpg" alt="Editar receta" onerror="this.src='https://placehold.co/800x400/F3F4F6/6B7280?text=Imagen+de+Editar';">
+                <img src="<?= cookly_asset('IMG/editar.jpg') ?>" alt="Editar receta" onerror="this.src='https://placehold.co/800x400/F3F4F6/6B7280?text=Imagen+de+Editar';">
                 <div class="caption">Figura 6. Formulario de edición con datos precargados de la base de datos.</div>
             </div>
         </section>
@@ -333,7 +333,7 @@ require_once __DIR__ . '/includes/header.php';
             </div>
 
             <div class="wiki-image-box">
-                <img src="public/IMG/eliminar.jpg" alt="Eliminar receta" onerror="this.src='https://placehold.co/800x400/F3F4F6/6B7280?text=Imagen+de+Eliminar';">
+                <img src="<?= cookly_asset('IMG/eliminar.jpg') ?>" alt="Eliminar receta" onerror="this.src='https://placehold.co/800x400/F3F4F6/6B7280?text=Imagen+de+Eliminar';">
                 <div class="caption">Figura 7. Cuadro de diálogo para confirmar la eliminación de una receta.</div>
             </div>
         </section>
@@ -374,4 +374,4 @@ require_once __DIR__ . '/includes/header.php';
     </div>
 </div>
 
-<?php require_once __DIR__ . '/includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../../includes/footer.php'; ?>

@@ -122,7 +122,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             timeoutId = setTimeout(() => {
-                fetch(`ajax_buscar.php?q=${encodeURIComponent(query)}`)
+                const endpoint = `${window.COOKLY?.pagesUrl || ''}/ajax_buscar.php`;
+                fetch(`${endpoint}?q=${encodeURIComponent(query)}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.html === '') {

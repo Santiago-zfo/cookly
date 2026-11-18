@@ -6,6 +6,7 @@
  * Cierra el <main>, el .page-shell y el <body>.
  * ------------------------------------------------------------
  */
+require_once __DIR__ . '/paths.php';
 ?>
     </main><!-- /dashboard -->
 </div><!-- /page-shell -->
@@ -14,6 +15,11 @@
     <p>© <?= date('Y') ?> Cookly · Comparte tu sazón 🍳</p>
 </footer>
 
-<script src="public/JS/main.js"></script>
+<script>window.COOKLY = {
+    baseUrl: <?= json_encode(cookly_base_url(), JSON_UNESCAPED_SLASHES) ?>,
+    pagesUrl: <?= json_encode(cookly_page(), JSON_UNESCAPED_SLASHES) ?>,
+    assetsUrl: <?= json_encode(cookly_url('public'), JSON_UNESCAPED_SLASHES) ?>
+};</script>
+<script src="<?= cookly_asset('JS/main.js') ?>"></script>
 </body>
 </html>

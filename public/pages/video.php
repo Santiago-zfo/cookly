@@ -1,10 +1,10 @@
 <?php
 // video.php
-require_once __DIR__ . '/includes/auth.php';
+require_once __DIR__ . '/../../includes/auth.php';
 requerirLogin(); // Solo los usuarios logueados pueden verlo
 
 $titulo = 'Video de Presentación';
-require_once __DIR__ . '/includes/header.php';
+require_once __DIR__ . '/../../includes/header.php';
 ?>
 
 <section class="panel" style="max-width: 900px; margin: 0 auto;">
@@ -24,9 +24,9 @@ require_once __DIR__ . '/includes/header.php';
         Puedes subir tu video a la carpeta public/ y llamarlo 'presentacion.mp4'.
         -->
         <video 
-            src="public/video.mp4" 
+            src="<?= cookly_asset('video.mp4') ?>" 
             controls 
-            poster="public/IMG/logo.png" 
+            poster="<?= cookly_asset('IMG/logo.png') ?>" 
             style="width: 100%; display: block; max-height: 500px; object-fit: cover;">
             Tu navegador no soporta la etiqueta de video.
         </video>
@@ -49,4 +49,4 @@ require_once __DIR__ . '/includes/header.php';
     </div>
 </section>
 
-<?php require_once __DIR__ . '/includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../../includes/footer.php'; ?>

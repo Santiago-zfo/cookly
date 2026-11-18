@@ -1,5 +1,7 @@
 <?php
 // includes/auth.php
+require_once __DIR__ . '/paths.php';
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -10,7 +12,7 @@ function estaAutenticado(): bool {
 
 function requerirLogin(): void {
     if (!estaAutenticado()) {
-        header('Location: login.php');
+        header('Location: ' . cookly_page('Login.php'));
         exit;
     }
 }
@@ -22,7 +24,7 @@ function esAdmin(): bool {
 function requerirAdmin(): void {
     requerirLogin();
     if (!esAdmin()) {
-        header('Location: index.php');
+        header('Location: ' . cookly_page('index.php'));
         exit;
     }
 }

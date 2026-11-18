@@ -1,9 +1,9 @@
 <?php
 // 404.php
-require_once __DIR__ . '/includes/auth.php';
+require_once __DIR__ . '/../../includes/auth.php';
 // No requerimos login estricto aquí por si la sesión expiró
 $titulo = 'Página no encontrada';
-require_once __DIR__ . '/includes/header.php';
+require_once __DIR__ . '/../../includes/header.php';
 ?>
 
 <section class="panel" style="text-align: center; padding: 5rem 2rem; max-width: 800px; margin: 4rem auto;">
@@ -16,9 +16,9 @@ require_once __DIR__ . '/includes/header.php';
     </p>
     
     <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-        <a href="index.php" class="submit-btn">Volver al inicio</a>
-        <a href="recetas.php" class="secondary" style="text-decoration: none;">Explorar recetas</a>
+        <a href="<?= cookly_page('index.php') ?>" class="submit-btn">Volver al inicio</a>
+        <a href="<?= cookly_page('recetas.php') ?>" class="secondary" style="text-decoration: none;">Explorar recetas</a>
     </div>
 </section>
 
-<?php require_once __DIR__ . '/includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../../includes/footer.php'; ?>

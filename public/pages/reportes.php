@@ -1,20 +1,20 @@
 <?php
 // reportes.php
-require_once __DIR__ . '/includes/auth.php';
-require_once __DIR__ . '/includes/funciones_recetas.php';
-require_once __DIR__ . '/includes/funciones_admin.php';
+require_once __DIR__ . '/../../includes/auth.php';
+require_once __DIR__ . '/../../includes/funciones_recetas.php';
+require_once __DIR__ . '/../../includes/funciones_admin.php';
 requerirLogin();
 
 $titulo = 'Reportes y Estadísticas';
 $stats = obtener_estadisticas_generales();
 
-require_once __DIR__ . '/includes/header.php';
+require_once __DIR__ . '/../../includes/header.php';
 ?>
 
 <section class="panel">
     <div class="section-heading">
         <h2>📊 Reportes del Sistema</h2>
-        <a href="index.php" class="logout-btn">← Volver</a>
+        <a href="<?= cookly_page('index.php') ?>" class="logout-btn">← Volver</a>
     </div>
 
     <!-- TARJETAS DE RESUMEN (KPIs) -->
@@ -98,4 +98,4 @@ require_once __DIR__ . '/includes/header.php';
     </div>
 </section>
 
-<?php require_once __DIR__ . '/includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../../includes/footer.php'; ?>

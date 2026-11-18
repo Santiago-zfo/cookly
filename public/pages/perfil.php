@@ -1,7 +1,7 @@
 <?php
 // perfil.php
-require_once __DIR__ . '/includes/auth.php';
-require_once __DIR__ . '/includes/funciones_usuarios.php';
+require_once __DIR__ . '/../../includes/auth.php';
+require_once __DIR__ . '/../../includes/funciones_usuarios.php';
 requerirLogin();
 
 $titulo = 'Mi Perfil';
@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $avatar = trim($_POST['avatar_url'] ?? '');
 
         if (isset($_FILES['avatar_file']) && $_FILES['avatar_file']['error'] === UPLOAD_ERR_OK) {
-            $uploadDir = __DIR__ . '/public/IMG/avatares/';
+            $uploadDir = __DIR__ . '/../IMG/avatares/';
             if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
             $ext = strtolower(pathinfo($_FILES['avatar_file']['name'], PATHINFO_EXTENSION));
             if (in_array($ext, ['jpg', 'jpeg', 'png', 'webp'])) {
@@ -33,11 +33,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['nombre'] = $nombre;
             $_SESSION['correo_electronico'] = $correo;
             set_flash_message('exito', 'Perfil actualizado correctamente.');
-            header('Location: perfil.php');
+            header('Location: ' . cookly_page('perfil.php'));
             exit;
         } else {
             set_flash_message('error', 'Error al guardar los cambios.');
-            header('Location: perfil.php');
+            header('Location: ' . cookly_page('perfil.php'));
             exit;
         }
 
@@ -56,31 +56,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             set_flash_message('error', 'La contraseña actual es incorrecta.');
         }
-        header('Location: perfil.php');
+        header('Location: ' . cookly_page('perfil.php'));
         exit;
 
     } elseif ($accion === 'eliminar_cuenta') {
         eliminar_usuario($id_usuario);
         cerrarSesion();
-        header('Location: login.php');
+        header('Location: ' . cookly_page('Login.php'));
         exit;
     }
 }
 
-require_once __DIR__ . '/includes/header.php';
+require_once __DIR__ . '/../../includes/header.php';
 ?>
 
 <section class="panel">
     <div class="section-heading">
         <h2>Mi Perfil</h2>
-        <a href="index.php" class="logout-btn">← Volver al inicio</a>
+        <a href="<?= cookly_page('index.php') ?>" class="logout-btn">← Volver al inicio</a>
     </div>
 
     <!-- FOTO Y DATOS PRINCIPALES -->
     <div style="display: flex; gap: 2rem; align-items: flex-start; margin-bottom: 2rem; flex-wrap: wrap;">
         <div style="text-align: center;">
             <?php if (!empty($perfil['avatar_url'])): ?>
-                <img src="<?= htmlspecialchars($perfil['avatar_url']) ?>" alt="Avatar" 
+                <img src="<?= htmlspecialchars(cookly_media_url($perfil['avatar_url'])) ?>" alt="Avatar" 
                      style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 4px solid var(--primary-light); box-shadow: var(--shadow-sm);">
             <?php else: ?>
                 <div style="width: 150px; height: 150px; border-radius: 50%; background: var(--bg-color); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: var(--text-muted); border: 4px solid var(--border-color);">
@@ -163,4 +163,4 @@ function confirmarEliminacion() {
 }
 </script>
 
-<?php require_once __DIR__ . '/includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../../includes/footer.php'; ?>

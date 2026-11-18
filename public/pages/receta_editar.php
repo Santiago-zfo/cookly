@@ -1,7 +1,7 @@
 <?php
 // receta_editar.php
-require_once __DIR__ . '/includes/auth.php';
-require_once __DIR__ . '/includes/funciones_recetas.php';
+require_once __DIR__ . '/../../includes/auth.php';
+require_once __DIR__ . '/../../includes/funciones_recetas.php';
 requerirLogin();
 
 $id = (int) ($_GET['id'] ?? 0);
@@ -9,7 +9,7 @@ $receta = obtener_receta($id);
 
 // Validar que la receta exista y pertenezca al usuario
 if (!$receta || $receta['id_usuario'] != $_SESSION['id_usuario']) {
-    header('Location: index.php'); 
+    header('Location: ' . cookly_page('index.php')); 
     exit;
 }
 
@@ -40,16 +40,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (guardar_receta($_POST, $ings, $id)) {
         set_flash_message('exito', '¡Receta actualizada! Ha vuelto a estado Pendiente para revisión.');
-        header('Location: index.php'); 
+        header('Location: ' . cookly_page('index.php')); 
         exit;
     } else {
         $error = 'Error al actualizar la receta.';
     }
 }
-require_once __DIR__ . '/includes/header.php';
+require_once __DIR__ . '/../../includes/header.php';
 ?>
 <section class="panel">
-    <div class="section-heading"><h2>Editar receta</h2><a href="index.php" class="logout-btn">×</a></div>
+    <div class="section-heading"><h2>Editar receta</h2><a href="<?= cookly_page('index.php') ?>" class="logout-btn">×</a></div>
     
     <?php if ($error): ?>
         <div class="estado error"><?= htmlspecialchars($error) ?></div>
@@ -153,4 +153,4 @@ require_once __DIR__ . '/includes/header.php';
         <button type="submit" class="submit-btn" style="margin-top: 1rem;">Actualizar receta</button>
     </form>
 </section>
-<?php require_once __DIR__ . '/includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../../includes/footer.php'; ?>

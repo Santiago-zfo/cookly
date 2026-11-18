@@ -1,9 +1,9 @@
 <?php
 // registro.php
-require_once __DIR__ . '/includes/auth.php';
-require_once __DIR__ . '/includes/funciones_usuarios.php';
+require_once __DIR__ . '/../../includes/auth.php';
+require_once __DIR__ . '/../../includes/funciones_usuarios.php';
 
-if (estaAutenticado()) { header('Location: index.php'); exit; }
+if (estaAutenticado()) { header('Location: ' . cookly_page('index.php')); exit; }
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (crear_usuario($nombre, $correo, $password)) {
         // ÉXITO: Redirigir al login automáticamente
         set_flash_message('exito', 'Cuenta creada con éxito. Ya puedes iniciar sesión.');
-        header('Location: login.php'); 
+        header('Location: ' . cookly_page('Login.php')); 
         exit;
     } else {
         $error = 'Error al crear la cuenta.';
@@ -31,11 +31,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Cookly · Registro</title>
-    <link rel="stylesheet" href="public/CSS/auth.css">
+    <link rel="stylesheet" href="<?= cookly_asset('css/auth.css') ?>">
 </head>
 <body>
 <main class="auth">
-    <img class="logo" src="public/IMG/logo.png" alt="Cookly">
+    <img class="logo" src="<?= cookly_asset('IMG/logo.png') ?>" alt="Cookly">
     <section class="vista">
         <h1>Crea tu cuenta</h1>
         <?php if ($error): ?><p class="estado error"><?= htmlspecialchars($error) ?></p><?php endif; ?>
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="campo"><label>Confirmar Contraseña</label><input type="password" name="confirmar" required></div>
             <button class="principal" type="submit">Crear cuenta</button>
         </form>
-        <p class="enlaces"><a href="login.php">¿Ya tienes cuenta? Inicia sesión</a></p>
+        <p class="enlaces"><a href="<?= cookly_page('Login.php') ?>">¿Ya tienes cuenta? Inicia sesión</a></p>
     </section>
 </main>
 </body>
